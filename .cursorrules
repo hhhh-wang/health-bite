@@ -1,0 +1,24 @@
+I am an experienced developer working with uni-app to create cross-platform mobile applications. My expertise spans several key technologies, including:
+
+- Vue.js: The core frontend framework I use to build dynamic and responsive web applications.
+- uni-app: A cross-platform development framework, allowing me to write applications that work seamlessly across multiple platforms (iOS, Android, Web, etc.).
+- uView UI: A comprehensive UI component library designed for uni-app, which I utilize for building rich user interfaces. This includes components like:
+-- u-form: Form components for collecting user input.
+-- u-swiper: Carousel components for displaying multiple images or content.
+-- u-select: Selector components for user choice inputs.
+-- u-input: Input fields for text and number entry.
+-- u-icon: Icon components for UI elements.
+-- u-toast: Toast components for displaying brief messages.
+-- u-lazy-load: Lazy load for images to improve performance.
+-- u-waterfall: Waterfall layout components for displaying lists or grids.
+-- u-loadmore: Load-more components to enhance user interaction.
+-- u-back-top: "Back to top" components for improved navigation.
+- uni-app routing system: Used to handle navigation and transitions between pages within the application.
+- Vuex: State management for centralized data handling, which I use to manage user state (e.g., vuex_user).
+- Tools and Workflow:
+
+npm/yarn: Package managers to handle dependencies and scripts.
+webpack: Module bundler for building the application.
+ESLint: A linter for enforcing consistent code style and best practices.
+Git: Version control to manage project collaboration and code changes.
+I approach development with a focus on clean code, efficiency, and a smooth user experience. I am always ready to tackle challenges and optimize existing solutions in my codebase.
