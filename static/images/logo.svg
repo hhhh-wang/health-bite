@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Enhanced apple leaf with natural curve -->
+  <path fill="url(#grad-leaf)" d="M65 12c0 0-8-4-8 4c0 6 4 8 4 8s8-2 8-8S65 12 65 12z"/>
+  
+  <!-- Apple body with soft gradient -->
+  <path fill="url(#grad-apple)" d="M84.5 42c0-10-8-18-18-18h-33c-10 0-18 8-18 18c0 25 15 45 34.5 45S84.5 67 84.5 42z"/>
+  
+  <!-- Gentle curved eyes that suggest happiness -->
+  <path fill="#47caab" d="M39 41c0 2.2-1.8 4-4 4s-4-1.8-4-4s1.8-4 4-4S39 38.8 39 41z"/>
+  <path fill="#47caab" d="M69 41c0 2.2-1.8 4-4 4s-4-1.8-4-4s1.8-4 4-4S69 38.8 69 41z"/>
+  <!-- Eye creases to show genuine joy -->
+  <path fill="none" stroke="#47caab" stroke-width="1.5" d="M33 39c2-2 6-2 8 0" />
+  <path fill="none" stroke="#47caab" stroke-width="1.5" d="M63 39c2-2 6-2 8 0" />
+  
+  <!-- Warm, natural smile with subtle dimples -->
+  <path fill="none" stroke="#47caab" stroke-width="2.5" d="M35 55c5 8 25 8 30 0" />
+  <circle fill="#47caab" opacity="0.3" cx="35" cy="55" r="2" />
+  <circle fill="#47caab" opacity="0.3" cx="65" cy="55" r="2" />
+  
+  <!-- Gradient definitions -->
+  <defs>
+    <linearGradient id="grad-leaf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9be7a1; stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#47caab; stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad-apple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f3f3f3; stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#81d8d0; stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>
