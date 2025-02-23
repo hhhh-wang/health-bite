@@ -13,24 +13,23 @@
     <!-- 主要内容区 -->
     <view class="guide-content">
       <view class="plate-wrapper">
-        <image class="food-plate" src="/static/images/guide/guide1.png" mode="aspectFit"></image>
+        <image class="guide-img" src="/static/images/guide/guide3.png" mode="aspectFit"></image>
       </view>
     </view>
 
     <!-- 底部区域 -->
     <view class="guide-footer">
       <view class="guide-text">
-        <text class="title">知道你应该吃什么</text>
-        <text class="subtitle">了解您的营养习惯</text>
-        <text class="desc">详细统计数据</text>
+        <text class="title">健康生活获得荣誉</text>
+        <text class="subtitle">让我们开始这段旅程</text>
+        <text class="desc">一起健康生活</text>
       </view>
       
       <view class="bottom-controls">
-
         <view @click="handleNext">
           <u-circle-progress 
             class="progress-btn"
-            :percent="currentProgress" 
+            :percent="100" 
             :width="300"
             activeColor="#42d392"
             inactiveColor="rgba(66, 211, 146, 0.2)"
@@ -40,11 +39,10 @@
           </u-circle-progress>
         </view>
         <view class="dot-indicators">
+          <view class="dot"></view>
+          <view class="dot"></view>
           <view class="dot active"></view>
-          <view class="dot"></view>
-          <view class="dot"></view>
         </view>
-        
       </view>
     </view>
   </view>
@@ -54,9 +52,8 @@
 export default {
   data() {
     return {
-      currentPage: 1,
-      totalPages: 3,
-      currentProgress: 33 // 第一页进度33%
+      currentPage: 3,
+      totalPages: 3
     }
   },
   methods: {
@@ -66,22 +63,14 @@ export default {
       })
     },
     handleNext() {
-      if (this.currentPage < this.totalPages) {
-        // 更新进度
-        this.currentProgress = (this.currentPage + 1) * 33
-        // 跳转到下一个引导页
-        uni.redirectTo({
-          url: '/pages/guide/guide2'
-        })
-      } else {
-        this.handleSkip()
-      }
+      this.handleSkip()
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+// 复用引导页1的样式
 .container {
   width: 100%;
   min-height: 100vh;
@@ -129,7 +118,7 @@ export default {
       align-items: center;
       justify-content: center;
       
-      .food-plate {
+      .guide-img {
         width: 100%;
         height: 100%;
       }
