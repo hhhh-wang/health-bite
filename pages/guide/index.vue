@@ -91,11 +91,10 @@ export default {
   margin: 0 auto;
   
   .header {
-
-
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 60rpx 40rpx 0;
     
     .top-logo {
       image {
@@ -110,6 +109,9 @@ export default {
       background: rgba(0, 0, 0, 0.05);
       color: #666;
       font-size: 28rpx;
+      margin: 20rpx 20rpx 0 0;
+      min-width: 100rpx;
+      text-align: center;
     }
   }
   
