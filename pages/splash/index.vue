@@ -28,7 +28,7 @@ export default {
           url: '/pages/sys/login/index'
         })
       }
-    }, 3000)
+    }, 1000)
   }
 }
 </script>

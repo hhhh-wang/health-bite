@@ -1,42 +1,49 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
-  <!-- 餐盘外圈 -->
-  <circle cx="200" cy="200" r="180" fill="none" stroke="#eee" stroke-width="4"/>
+  <!-- 餐盘 - 更大更突出 -->
+  <circle cx="200" cy="200" r="190" fill="white" stroke="#e8e8e8" stroke-width="2"/>
   
-  <!-- 煎蛋 -->
-  <g transform="translate(120,140)">
-    <circle cx="0" cy="0" r="40" fill="#fff" stroke="#ddd" stroke-width="2"/>
-    <circle cx="0" cy="0" r="25" fill="#FFA500"/>
-  </g>
-  <g transform="translate(280,140)">
-    <circle cx="0" cy="0" r="40" fill="#fff" stroke="#ddd" stroke-width="2"/>
-    <circle cx="0" cy="0" r="25" fill="#FFA500"/>
-  </g>
-  
-  <!-- 草莓 -->
-  <g transform="translate(160,240)">
-    <path d="M0,0 C10,-10 20,-10 30,0 C40,10 30,30 15,40 C0,30 -10,10 0,0Z" 
-          fill="#FF4444"/>
-    <circle cx="5" cy="10" r="2" fill="#fff" opacity="0.5"/>
-  </g>
-  <g transform="translate(200,240)">
-    <path d="M0,0 C10,-10 20,-10 30,0 C40,10 30,30 15,40 C0,30 -10,10 0,0Z" 
-          fill="#FF4444"/>
-    <circle cx="5" cy="10" r="2" fill="#fff" opacity="0.5"/>
-  </g>
-  <g transform="translate(240,240)">
-    <path d="M0,0 C10,-10 20,-10 30,0 C40,10 30,30 15,40 C0,30 -10,10 0,0Z" 
-          fill="#FF4444"/>
-    <circle cx="5" cy="10" r="2" fill="#fff" opacity="0.5"/>
+  <!-- 左边的西兰花 -->
+  <g transform="translate(130,150)">
+    <circle cx="0" cy="0" r="20" fill="#4CAF50"/>
+    <circle cx="-15" cy="-15" r="15" fill="#4CAF50"/>
+    <circle cx="15" cy="-15" r="15" fill="#4CAF50"/>
+    <circle cx="-10" cy="15" r="15" fill="#4CAF50"/>
+    <circle cx="10" cy="15" r="15" fill="#4CAF50"/>
   </g>
   
-  <!-- 黄瓜 -->
-  <path d="M100,280 C150,280 250,280 300,280" 
-        stroke="#4CAF50" 
-        stroke-width="20" 
-        stroke-linecap="round"
-        fill="none"/>
+  <!-- 右边的胡萝卜 -->
+  <g transform="translate(270,150)">
+    <path d="M-10,-20 L10,-20 L0,30" fill="#FF7043"/>
+    <path d="M0,-25 C-10,-35 -5,-45 0,-40 C5,-45 10,-35 0,-25" fill="#4CAF50"/>
+  </g>
   
-  <!-- 装饰叶子 -->
-  <path d="M280,260 C290,250 300,260 290,270" 
-        fill="#4CAF50"/>
-</svg> 
+  <!-- 底部的生菜叶 -->
+  <g transform="translate(200,250)">
+    <path d="M-80,-10 Q0,60 80,-10" 
+          stroke="#8BC34A" 
+          stroke-width="25" 
+          stroke-linecap="round"
+          fill="none"/>
+    <path d="M-70,-20 Q0,40 70,-20" 
+          stroke="#A5D6A7" 
+          stroke-width="15" 
+          stroke-linecap="round"
+          fill="none"/>
+  </g>
+
+  <!-- 小番茄 -->
+  <g transform="translate(180,220)">
+    <g transform="translate(-30,0)">
+      <circle cx="0" cy="0" r="12" fill="#F44336"/>
+      <path d="M0,-8 C-3,-12 3,-12 0,-8" fill="#4CAF50"/>
+    </g>
+    <g transform="translate(0,0)">
+      <circle cx="0" cy="0" r="12" fill="#F44336"/>
+      <path d="M0,-8 C-3,-12 3,-12 0,-8" fill="#4CAF50"/>
+    </g>
+    <g transform="translate(30,0)">
+      <circle cx="0" cy="0" r="12" fill="#F44336"/>
+      <path d="M0,-8 C-3,-12 3,-12 0,-8" fill="#4CAF50"/>
+    </g>
+  </g>
+</svg>
