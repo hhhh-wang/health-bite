@@ -8,8 +8,6 @@
 			<view class="date-display">
 				<text class="date-text">2023-12-01</text>
 			</view>
-
-			
 			<view class="date-picker" @click="handleSkip">
 				<u-icon 
 					name="calendar" 
@@ -20,10 +18,7 @@
 			</view>
 
 		</view>
-
-		<!-- 主要内容区 -->
-		<view class="content">
-			<view class="text-content">
+		<view class="text-content">
 				<view class="hello">
 					您好, KOTO
 				</view>
@@ -31,26 +26,20 @@
 					你昨天增加了2kg, 继续保持!
 				</view>
 			</view>
-
+		<!-- 主要内容区 -->
+		<view class="content">
+			
 			<view class="progress-circle">
-				<view class="circle-wrapper">
-					<!-- 这里使用自定义组件或canvas绘制半圆进度 -->
-					<u-circle-progress
-						:percentage="60"
-						:width="200"
-						activeColor="#42d392"
-						inactiveColor="#eee"
-					></u-circle-progress>
-					<view class="circle-content">
-						<u-icon name="fire" size="24" color="#ff9500"></u-icon>
-						<text class="unit">大卡</text>
-						<text class="value">1739</text>
-						<text class="total">/ 2925 kcal</text>
-					</view>
+				<canvas canvas-id="progressCanvas" class="progress-canvas"></canvas>
+				<view class="circle-content">
+					<u-icon name="fire" size="24" color="#ff9500"></u-icon>
+					<text class="unit">大卡</text>
+					<text class="value">1739</text>
+					<text class="total">2925 kcal</text>
 				</view>
 			</view>
-
-			<view class="nutrition-stats">
+		</view>
+		<view class="nutrition-stats">
 				<view class="stat-item left">
 					<view class="number">134<text class="unit">g</text></view>
 					<view class="label">
@@ -72,7 +61,8 @@
 					</view>
 				</view>
 			</view>
-		</view>
+
+
 	</view>
 </template>
 
@@ -83,12 +73,46 @@
 export default {
 	data() {
 		return {
-			
+			percentage: 60, // 进度百分比
 		}
+	},
+	mounted() {
+		this.drawProgress()
 	},
 	methods: {
 		handleSkip() {
 			// 处理日期选择
+		},
+		drawProgress() {
+			const ctx = uni.createCanvasContext('progressCanvas', this)
+			const width = 150 // 半径
+			const lineWidth = 15 // 圆环宽度
+			const centerX = width
+			const centerY = width
+			
+			// 绘制底色圆环
+			ctx.beginPath()
+			ctx.arc(centerX, centerY, width - lineWidth, Math.PI, 0)
+			ctx.setLineWidth(lineWidth)
+			ctx.setStrokeStyle('rgb(212, 235, 164)') // 底色
+			ctx.setLineCap('round')
+			ctx.stroke()
+			
+			// 绘制进度圆环
+			ctx.beginPath()
+			ctx.arc(
+				centerX,
+				centerY,
+				width - lineWidth,
+				Math.PI,
+				Math.PI + (Math.PI * this.percentage) / 100
+			)
+			ctx.setLineWidth(lineWidth)
+			ctx.setStrokeStyle('rgb(157, 208, 48)') // 进度条颜色
+			ctx.setLineCap('round')
+			ctx.stroke()
+			
+			ctx.draw()
 		}
 	}
 };
@@ -117,7 +141,6 @@ page {
 		height: 120rpx;
 		border-radius: 50%;
 		overflow: hidden;
-		margin-right: 20rpx;
 		
 		image {
 			width: 120rpx;
@@ -158,12 +181,7 @@ page {
 	}
 }
 
-.content {
-	background: #fff;
-	border-radius: 20rpx;
-	padding: 30rpx;
-	
-	.text-content {
+.text-content {
 		margin-bottom: 40rpx;
 		
 		.hello {
@@ -178,43 +196,53 @@ page {
 			color: #666;
 		}
 	}
-	
+
+.content {
+	background: #fff;
+	border-radius: 20rpx;
+
 	.progress-circle {
+		position: relative;
 		display: flex;
 		justify-content: center;
 		margin: 60rpx 0;
+		background-color: rgb(235, 246, 214);
+		border-radius: 20rpx;
+		padding: 40rpx;
 		
-		.circle-wrapper {
-			position: relative;
+		.progress-canvas {
+			width: 610rpx;
+			height: 400rpx;
+			display: block;
+		}
+		
+		.circle-content {
+			position: absolute;
+			top: 60%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			text-align: center;
 			
-			.circle-content {
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				text-align: center;
-				
-				.unit {
-					font-size: 24rpx;
-					color: #666;
-					display: block;
-				}
-				
-				.value {
-					font-size: 48rpx;
-					color: #333;
-					font-weight: bold;
-					margin: 10rpx 0;
-				}
-				
-				.total {
-					font-size: 24rpx;
-					color: #999;
-				}
+			.unit {
+				font-size: 24rpx;
+				color: #666;
+				display: block;
+			}
+			
+			.value {
+				font-size: 48rpx;
+				color: #333;
+				font-weight: bold;
+				margin: 10rpx 0;
+			}
+			
+			.total {
+				font-size: 24rpx;
+				color: #999;
 			}
 		}
 	}
-	
+}
 	.nutrition-stats {
 		display: flex;
 		justify-content: space-between;
@@ -269,5 +297,4 @@ page {
 			}
 		}
 	}
-}
 </style>
