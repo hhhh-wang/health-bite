@@ -3,7 +3,7 @@
     <!-- 顶部区域 -->
     <view class="header">
       <view class="top-logo">
-        <image src="/static/images/logo-green.svg" mode="aspectFit"></image>
+        <image src="/static/images/logo.svg" mode="aspectFit"></image>
       </view>
       <view class="skip-btn" @click="handleSkip">
         跳过

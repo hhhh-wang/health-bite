@@ -2,7 +2,7 @@
 	<view class="wrap">
 		<js-lang title="login.title" :showBtn="true"></js-lang>
 		<view class="logo">
-			<image src="/static/images/logo-green.svg" mode="aspectFit"></image>
+			<image src="/static/images/logo.svg" mode="aspectFit"></image>
 		</view>
 		<view class="welcome-text">
 			<text class="title">欢迎回来</text>
