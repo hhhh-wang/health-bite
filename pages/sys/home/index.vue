@@ -6,7 +6,7 @@
 				<image src="/static/images/avatar.png" ></image>
 			</view>
 			<view class="date-display">
-				<text class="date-text">2023-12-01</text>
+				<text class="date-text">2025-02-01</text>
 			</view>
 			<view class="date-picker" @click="handleSkip">
 				<u-icon 
@@ -19,23 +19,25 @@
 
 		</view>
 		<view class="text-content">
-				<view class="hello">
-					您好, KOTO
-				</view>
-				<view class="weight-tip">
-					你昨天增加了2kg, 继续保持!
-				</view>
+			<view class="hello">
+				您好, KOTO
 			</view>
+			<view class="weight-tip">
+				你昨天增加了2kg, 继续保持!
+			</view>
+		</view>
 		<!-- 主要内容区 -->
 		<view class="content">
 			
 			<view class="progress-circle">
 				<canvas canvas-id="progressCanvas" class="progress-canvas"></canvas>
 				<view class="circle-content">
-					<u-icon name="fire" size="24" color="#ff9500"></u-icon>
-					<text class="unit">大卡</text>
-					<text class="value">1739</text>
-					<text class="total">2925 kcal</text>
+					<text class="fire-icon">🔥</text>
+					<view class="calorie-info">
+						<text class="unit">大卡</text>
+						<text class="value">1739 kcal</text>
+						<text class="total">2925 kcal</text>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -111,7 +113,6 @@ export default {
 			ctx.setStrokeStyle('rgb(157, 208, 48)') // 进度条颜色
 			ctx.setLineCap('round')
 			ctx.stroke()
-			
 			ctx.draw()
 		}
 	}
@@ -182,24 +183,27 @@ page {
 }
 
 .text-content {
-		margin-bottom: 40rpx;
-		
-		.hello {
-			font-size: 40rpx;
-			font-weight: bold;
-			color: #333;
-			margin-bottom: 10rpx;
-		}
-		
-		.weight-tip {
-			font-size: 28rpx;
-			color: #666;
-		}
+	margin-bottom: 40rpx;
+	text-align: center;
+	display: block;
+	
+	.hello {
+		font-size: 50rpx;
+		font-weight: bold;
+		color: #333;
+		margin-bottom: 30rpx;
 	}
+	
+	.weight-tip {
+		font-size: 28rpx;
+		font-weight: bold;
+		color: #666;
+	}
+}
 
 .content {
-	background: #fff;
-	border-radius: 20rpx;
+	background: transparent;
+	border-radius: 50rpx;
 
 	.progress-circle {
 		position: relative;
@@ -207,8 +211,9 @@ page {
 		justify-content: center;
 		margin: 60rpx 0;
 		background-color: rgb(235, 246, 214);
-		border-radius: 20rpx;
+		border-radius: 50rpx;
 		padding: 40rpx;
+		overflow: hidden;
 		
 		.progress-canvas {
 			width: 610rpx;
@@ -218,27 +223,42 @@ page {
 		
 		.circle-content {
 			position: absolute;
-			top: 60%;
+			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
 			text-align: center;
 			
-			.unit {
-				font-size: 24rpx;
-				color: #666;
+			.fire-icon {
+				font-size: 40rpx;
+				color: #ff9500;
+				margin-bottom: 20rpx;
 				display: block;
 			}
 			
-			.value {
-				font-size: 48rpx;
-				color: #333;
-				font-weight: bold;
-				margin: 10rpx 0;
-			}
-			
-			.total {
-				font-size: 24rpx;
-				color: #999;
+			.calorie-info {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 8rpx;
+				
+				.unit {
+					font-size: 39rpx;
+					color: #666;
+					line-height: 1;
+				}
+				
+				.value {
+					font-size: 60rpx;
+					color: #333;
+					font-weight: 700;
+					line-height: 1.2;
+				}
+				
+				.total {
+					font-size: 39rpx;
+					color: #999;
+					line-height: 1;
+				}
 			}
 		}
 	}
@@ -247,19 +267,22 @@ page {
 		display: flex;
 		justify-content: space-between;
 		margin-top: 40rpx;
+		background-color: rgb(240, 241, 241);
+		padding: 30rpx;
+		border-radius: 50rpx;
 		
 		.stat-item {
 			flex: 1;
 			padding: 0 20rpx;
 			
 			.number {
-				font-size: 40rpx;
+				font-size: 50rpx;
 				font-weight: bold;
 				color: #333;
-				margin-bottom: 10rpx;
+				margin-bottom: 20rpx;
 				
 				.unit {
-					font-size: 24rpx;
+					font-size: 30rpx;
 					margin-left: 4rpx;
 				}
 			}
@@ -267,9 +290,9 @@ page {
 			.label {
 				display: flex;
 				justify-content: space-between;
-				font-size: 24rpx;
+				font-size: 30rpx;
 				color: #666;
-				margin-bottom: 10rpx;
+				margin-bottom: 30rpx;
 				
 				.percentage {
 					color: #42d392;
@@ -279,17 +302,18 @@ page {
 			.progress-bar {
 				height: 6rpx;
 				background: #eee;
-				border-radius: 3rpx;
+				border-radius: 50rpx;
+				margin-bottom: 30rpx;
 				
 				.progress {
 					height: 100%;
 					background: #42d392;
-					border-radius: 3rpx;
+					border-radius: 50rpx;
 				}
 			}
 			
 			&.left .progress {
-				background: #42d392;
+				background: #ff9500;
 			}
 			
 			&.right .progress {
