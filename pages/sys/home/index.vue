@@ -42,29 +42,103 @@
 			</view>
 		</view>
 		<view class="nutrition-stats">
-				<view class="stat-item left">
-					<view class="number">134<text class="unit">g</text></view>
-					<view class="label">
-						<text>总碳水化合物</text>
-						<text class="percentage">28%</text>
-					</view>
-					<view class="progress-bar">
-						<view class="progress" style="width: 28%;"></view>
-					</view>
+			<view class="stat-item left">
+				<view class="number">134<text class="unit">g</text></view>
+				<view class="label">
+					<text>总碳水化合物</text>
+					<text class="percentage">28%</text>
 				</view>
-				<view class="stat-item right">
-					<view class="number">94<text class="unit">g</text></view>
-					<view class="label">
-						<text>总脂肪</text>
-						<text class="percentage">81%</text>
+				<view class="progress-bar">
+					<view class="progress" style="width: 28%;"></view>
+				</view>
+			</view>
+			<view class="stat-item right">
+				<view class="number">94<text class="unit">g</text></view>
+				<view class="label">
+					<text>总脂肪</text>
+					<text class="percentage">81%</text>
+				</view>
+				<view class="progress-bar">
+					<view class="progress" style="width: 81%;"></view>
+				</view>
+			</view>
+		</view>
+
+		<!-- 在原有代码后添加新的内容区 -->
+		<view class="content-area">
+			<!-- 饮食列表区域 -->
+			<view class="today-header">
+				<text class="title">今天的饮食</text>
+				<u-icon name="more-dot-fill" size="40" color="#42d392"></u-icon>
+			</view>
+
+			<view class="diet-list">
+				<!-- 早餐 -->
+				<view class="food-item">
+					<image src="/static/images/breakfast.png" class="meal-icon"></image>
+					<view class="food-info">
+						<text class="meal-type">早餐</text>
+						<view class="food-stats">
+							<text>3 食物</text>
+							<text class="calories">582 / 631 kcal</text>
+						</view>
 					</view>
-					<view class="progress-bar">
-						<view class="progress" style="width: 81%;"></view>
+					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+				</view>
+
+				<!-- 午餐 -->
+				<view class="food-item">
+					<image src="/static/images/lunch.png" class="meal-icon"></image>
+					<view class="food-info">
+						<text class="meal-type">午餐</text>
+						<view class="food-stats">
+							<text>3 食物</text>
+							<text class="calories">1157 / 1262 kcal</text>
+						</view>
+					</view>
+					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+				</view>
+
+				<!-- 晚餐 -->
+				<view class="food-item">
+					<image src="/static/images/dinner.png" class="meal-icon"></image>
+					<view class="food-info">
+						<text class="meal-type">晚餐</text>
+						<view class="food-stats">
+							<text>0 食物</text>
+							<text class="calories">0 / 946 kcal</text>
+						</view>
+					</view>
+					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+				</view>
+			</view>
+			
+			<!-- 饮水区域 -->
+			<view class="water-section">
+				<view class="water-header">
+					<text class="title">饮水量</text>
+					<u-icon name="more-dot-fill" size="40" color="#42d392"></u-icon>
+				</view>
+
+				<view class="water-meter">
+					<view class="water-cups">
+						<view class="cup active"></view>
+						<view class="cup active"></view>
+						<view class="cup add"></view>
+						<view class="cup"></view>
+						<view class="cup"></view>
+						<view class="cup"></view>
+						<view class="cup"></view>
+					</view>
+					<view class="water-stats">
+						<text class="amount">570</text>
+						<text class="separator">/</text>
+						<text class="total">2000ml</text>
+						<text class="percentage">20%</text>
 					</view>
 				</view>
 			</view>
-
-
+		</view>
 	</view>
 </template>
 
@@ -123,6 +197,7 @@ export default {
 @import 'index.scss';
 page {
 	background-color: #f8f8f8;
+	font-family: "Microsoft YaHei", sans-serif;
 }
 
 .container {
@@ -157,7 +232,6 @@ page {
 		align-items: center;
 		
 		.date-text {
-			font-family: "Microsoft YaHei", sans-serif;
 			font-size: 32rpx;
 			font-weight: bold;
 			color: #333;
@@ -321,4 +395,146 @@ page {
 			}
 		}
 	}
+
+.content-area {
+	margin-top: 40rpx;
+	
+	.today-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin: 30rpx 0 40rpx;
+			
+			.title {
+				font-size: 32rpx;
+				font-weight: bold;
+				color: #333;
+				margin-left: 20rpx;
+			}
+			
+			.u-icon {
+				margin-right: 20rpx;
+			}
+		}
+
+
+	.diet-list {
+		background-color: rgb(240, 241, 241);
+		border-radius: 50rpx;
+		padding: 30rpx;
+		margin-bottom: 30rpx;
+		
+		
+		.food-item {
+			display: flex;
+			align-items: center;
+			padding: 30rpx;
+			background: #f8f8f8;
+			border-radius: 50rpx;
+			margin-bottom: 20rpx;
+			
+			&:last-child {
+				margin-bottom: 0;
+			}
+			
+			.meal-icon {
+				width: 80rpx;
+				height: 80rpx;
+				border-radius: 50%;
+			}
+			
+			.food-info {
+				flex: 1;
+				margin-left: 30rpx;
+				
+				.meal-type {
+					font-size: 32rpx;
+					color: #333;
+					font-weight: bold;
+					margin-bottom: 10rpx;
+				}
+				
+				.food-stats {
+					font-size: 28rpx;
+					color: #666;
+					display: flex;
+					gap: 20rpx;
+					font-weight: bold;
+					
+					.calories {
+						color: #42d392;
+					}
+				}
+			}
+		}
+	}
+	
+	.water-section {
+		background-color: rgb(240, 241, 241);
+		border-radius: 50rpx;
+		padding: 30rpx;
+		
+		.water-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin: 30rpx 0 40rpx;
+			
+			.title {
+				font-size: 32rpx;
+				font-weight: bold;
+				color: #333;
+				margin-left: 20rpx;
+			}
+			
+			.u-icon {
+				margin-right: 20rpx;
+			}
+		}
+		
+		.water-meter {
+			.water-cups {
+				display: flex;
+				justify-content: space-between;
+				margin-bottom: 20rpx;
+				
+				.cup {
+					width: 60rpx;
+					height: 80rpx;
+					background: #eee;
+					border-radius: 20rpx;
+					
+					&.active {
+						background: #42d392;
+					}
+					
+					&.add {
+						background: #fff;
+						border: 2rpx dashed #42d392;
+					}
+				}
+			}
+			
+			.water-stats {
+				text-align: center;
+				font-size: 28rpx;
+				color: #666;
+				
+				.amount, .total {
+					font-weight: bold;
+					color: #333;
+				}
+				
+				.separator {
+					margin: 0 10rpx;
+				}
+				
+				.percentage {
+					margin-left: 20rpx;
+					color: #42d392;
+				}
+			}
+		}
+	}
+}
 </style>
