@@ -1,15 +1,21 @@
 <template>
 	<view class="wrap">
 		<js-lang title="login.title" :showBtn="true"></js-lang>
-		<view class="logo"><image src="/static/jeesite/logo200.png"></image></view>
+		<view class="logo">
+			<image src="/static/images/logo-green.svg" mode="aspectFit"></image>
+		</view>
+		<view class="welcome-text">
+			<text class="title">欢迎回来</text>
+			<text class="subtitle">让我们一起开启健康生活</text>
+		</view>
 		<view class="list">
 			<view class="list-call">
-				<u-icon class="u-icon" size="40" name="account"></u-icon>
+				<u-icon class="u-icon" size="40" name="account" color="#42d392"></u-icon>
 				<input class="u-input" type="text" v-model="username" maxlength="32" :placeholder="$t('login.placeholderAccount')" />
-				<u-checkbox v-model="remember" active-color="#69cbff">{{$t('login.autoLogin')}}</u-checkbox>
+				<u-checkbox v-model="remember" active-color="#42d392">{{$t('login.autoLogin')}}</u-checkbox>
 			</view>
 			<view class="list-call">
-				<u-icon class="u-icon" size="40" name="lock"></u-icon>
+				<u-icon class="u-icon" size="40" name="lock" color="#42d392"></u-icon>
 				<input class="u-input" type="text" v-model="password" maxlength="32" :placeholder="$t('login.placeholderPassword')" :password="!showPassword" />
 				<image class="u-icon-right" :src="'/static/jeesite/login/eye_' + (showPassword ? 'open' : 'close') + '.png'" @click="showPass()"></image>
 			</view>
@@ -23,15 +29,23 @@
 				<js-select v-model="baseUrlValue" :items="baseUrlList" placeholder="快速切换服务器地址" @confirm="updateBaseUrl"></js-select>
 			</view>
 		</view>
-		<view class="button" hover-class="button-hover" @click="submit()"><text>{{$t('login.loginButton')}}</text></view>
+		<view class="button health-button" hover-class="button-hover" @click="submit()">
+			<text>{{$t('login.loginButton')}}</text>
+		</view>
 		<view class="footer">
 			<navigator url="forget" open-type="navigate">{{$t('login.forget')}}</navigator>
 			<text>|</text>
 			<navigator url="reg" open-type="navigate">{{$t('login.reg')}}</navigator>
 		</view>
 		<view class="oauth2">
-			<u-icon class="u-icon" size="120" color="#00d969" name="weixin-circle-fill" @click="wxLogin"></u-icon>
-			<u-icon class="u-icon" size="120" color="#4fa1e8" name="qq-circle-fill" @click="qqLogin"></u-icon>
+			<view class="oauth-btn" @click="wxLogin">
+				<u-icon size="50" color="#42d392" name="weixin-circle-fill"></u-icon>
+				<text>微信登录</text>
+			</view>
+			<view class="oauth-btn" @click="toPhoneLogin">
+				<u-icon size="50" color="#42d392" name="phone"></u-icon>
+				<text>手机号登录</text>
+			</view>
 		</view>
 	</view>
 </template>
@@ -52,7 +66,10 @@ export default {
 			validCode: '',
 			imgValidCodeSrc: null,
 			baseUrlList: config.baseUrlList,
-			baseUrlValue: ''
+			baseUrlValue: '',
+			counter: 60,
+			counting: false,
+			loading: false
 		};
 	},
 	onLoad() {
@@ -169,8 +186,10 @@ export default {
 				}
 			});
 		},
-		qqLogin() {
-			this.$u.toast('QQ 登录');
+		toPhoneLogin() {
+			uni.navigateTo({
+				url: '/pages/sys/login/phone'
+			});
 		},
 		updateBaseUrl() {
 			this.baseUrlList.forEach(item => {
@@ -190,18 +209,37 @@ export default {
 @import 'index.scss';
 
 .logo {
-	width: 260rpx;
-	height: 260rpx;
-	background: rgba(59, 121, 235, 1);
-	box-shadow: 0rpx 5rpx 20rpx 5rpx rgba(45, 127, 235, 0.5);
+	width: 200rpx;
+	height: 200rpx;
+	background: #ffffff;
+	box-shadow: 0rpx 5rpx 20rpx 5rpx rgba(66, 211, 146, 0.2);
 	border-radius: 50%;
 	margin: 70rpx auto 10rpx auto;
+	
+	image {
+		width: 120rpx;
+		height: 120rpx;
+		border-radius: 50%;
+		margin: 40rpx;
+	}
 }
 
-.logo image {
-	width: 260rpx;
-	height: 260rpx;
-	border-radius: 50%;
+.welcome-text {
+	text-align: center;
+	margin: 40rpx 0;
+	
+	.title {
+		font-size: 48rpx;
+		color: #333;
+		font-weight: bold;
+		display: block;
+		margin-bottom: 20rpx;
+	}
+	
+	.subtitle {
+		font-size: 32rpx;
+		color: #666;
+	}
 }
 
 .base-url js-select {
@@ -210,6 +248,12 @@ export default {
 
 .button {
 	margin: 30rpx auto 0;
+	background: linear-gradient(to right, #42d392, #47caab);
+	box-shadow: 0 8rpx 16rpx rgba(66, 211, 146, 0.3);
+	
+	&.button-hover {
+		background: linear-gradient(to right, #3bc085, #41b69a);
+	}
 }
 
 .footer {
@@ -218,7 +262,7 @@ export default {
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	color: #46afff;
+	color: #42d392;
 	height: 40rpx;
 	line-height: 40rpx;
 	font-size: 35rpx;
@@ -237,9 +281,36 @@ export default {
 	justify-content: space-around;
 	margin: 55rpx 100rpx;
 
-	image {
-		height: 100rpx;
-		width: 100rpx;
+	.oauth-btn {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 20rpx;
+		
+		text {
+			font-size: 24rpx;
+			color: #666;
+			margin-top: 10rpx;
+		}
+	}
+}
+
+.phone-login-section {
+	width: 100%;
+	padding: 20rpx;
+	
+	.verify-code-wrapper {
+		display: flex;
+		align-items: center;
+		
+		.u-input {
+			flex: 1;
+		}
+		
+		.u-button {
+			margin-left: 20rpx;
+			white-space: nowrap;
+		}
 	}
 }
 </style>
