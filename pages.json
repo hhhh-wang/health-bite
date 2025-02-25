@@ -158,7 +158,8 @@
 		{
 			"path": "pages/meal/copy/index",
 			"style": {
-				"navigationBarTitleText": "复制饮食"
+				"navigationBarTitleText": "复制饮食",
+				"navigationBarBackgroundColor": "#ffffff"
 			}
 		}
 	],
