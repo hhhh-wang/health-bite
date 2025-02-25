@@ -184,13 +184,22 @@ export default {
 			percentage: 60, // 进度百分比
 			showCalendar: false,
 			selectedDate: '2025-02-01',
-			maxDate: new Date().getTime() // 最大日期为今天
+			maxDate: this.getFormatDate() // 修改为格式化的日期字符串
 		}
 	},
 	mounted() {
 		this.drawProgress()
 	},
 	methods: {
+		// 添加日期格式化方法
+		getFormatDate() {
+			const date = new Date()
+			const year = date.getFullYear()
+			const month = String(date.getMonth() + 1).padStart(2, '0')
+			const day = String(date.getDate()).padStart(2, '0')
+			return `${year}-${month}-${day}`
+		},
+
 		// 显示日期选择器
 		showDatePicker() {
 			this.showCalendar = true
@@ -200,7 +209,10 @@ export default {
 		confirmDate(e) {
 			this.selectedDate = e.result
 			this.showCalendar = false
-			// 这里可以添加获取所选日期的数据
+			// 更新显示的日期文本
+			this.$nextTick(() => {
+				this.date_text = this.selectedDate
+			})
 			this.fetchDayData(this.selectedDate)
 		},
 		
