@@ -149,7 +149,7 @@
 			</view>
 			<view class="diet-list">
 				<view class="food-item">
-					<image src="/static/images/sport.png" class="meal-icon"></image>
+					<image src="/static/common/img/sports.png" class="meal-icon"></image>
 					<view class="food-info">
 						<text class="meal-type">运动</text>
 						<view class="food-stats">
