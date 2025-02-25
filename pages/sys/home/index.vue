@@ -76,7 +76,8 @@
 			<view class="diet-list">
 				<!-- 早餐 -->
 				<view class="food-item">
-					<image src="/static/images/breakfast.png" class="meal-icon"></image>
+
+					<image src="/static/common/img/egg-outline.svg" class="meal-icon"></image>
 					<view class="food-info">
 						<text class="meal-type">早餐</text>
 						<view class="food-stats">
@@ -89,7 +90,7 @@
 
 				<!-- 午餐 -->
 				<view class="food-item">
-					<image src="/static/images/lunch.png" class="meal-icon"></image>
+					<image src="/static/common/img/Hamburger.svg" class="meal-icon"></image>
 					<view class="food-info">
 						<text class="meal-type">午餐</text>
 						<view class="food-stats">
@@ -102,7 +103,7 @@
 
 				<!-- 晚餐 -->
 				<view class="food-item">
-					<image src="/static/images/dinner.png" class="meal-icon"></image>
+					<image src="/static/common/img/rice.svg" class="meal-icon"></image>
 					<view class="food-info">
 						<text class="meal-type">晚餐</text>
 						<view class="food-stats">
@@ -530,11 +531,6 @@ page {
 			font-size: 28rpx;
 			color: #ffffff;
 			font-weight: bold;
-			.amount, .total {
-				
-			
-			}
-			
 			.separator {
 				margin: 0 10rpx;
 			}
