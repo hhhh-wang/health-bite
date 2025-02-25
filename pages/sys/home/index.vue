@@ -6,7 +6,7 @@
 				<image src="/static/images/avatar.png" ></image>
 			</view>
 			<view class="date-display">
-				<text class="date-text">2025-02-01</text>
+				<text class="date-text">{{ date_text }}</text>
 			</view>
 			<view class="date-picker" @click="showDatePicker">
 				<u-icon 
@@ -192,7 +192,8 @@ export default {
 			percentage: 60, // 进度百分比
 			showCalendar: false,
 			selectedDate: this.getFormatDate(),
-			currentDate: this.getFormatDate()
+			currentDate: this.getFormatDate(),
+			date_text: this.getFormatDate()
 		}
 	},
 	mounted() {
@@ -222,12 +223,13 @@ export default {
 		// 确认日期
 		confirmDate(e) {
 			console.log('确认日期:', e)
-			this.selectedDate = e.result
-			// 更新显示的日期
-			this.date_text = this.selectedDate
+			// 格式化日期字符串
+			const date = `${e.year}-${e.month}-${e.day}`
+			this.selectedDate = date
+			this.date_text = date
 			this.showCalendar = false
 			// 获取选中日期的数据
-			this.fetchDayData(this.selectedDate)
+			this.fetchDayData(date)
 		},
 		
 		// 关闭日期选择器
