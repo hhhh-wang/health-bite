@@ -26,15 +26,18 @@
 
     <!-- 已选食物列表 -->
     <view class="meal-section">
-      <view class="section-title">已选食物</view>
-      <view class="meal-list">
+      <view class="section-header">
+        <text class="section-title">已选食物</text>
+        <view class="count-badge">1</view>
+      </view>
+      <view class="meal-list selected">
         <view class="meal-item">
           <view class="meal-info">
             <text class="meal-name">炸鸡</text>
             <text class="meal-cal">164kcal</text>
           </view>
-          <text class="meal-count">1份食物</text>
-          <u-icon name="close" color="#ff0000" @click="removeMeal(0)"></u-icon>
+          <view class="meal-count">1份食物</view>
+          <view class="delete-btn" @click="removeMeal(0)">×</view>
         </view>
       </view>
     </view>
@@ -48,10 +51,21 @@
             <text class="meal-name">三文鱼</text>
             <text class="meal-cal">166kcal</text>
           </view>
-          <text class="meal-count">2份食物</text>
-          <u-icon name="plus" color="#42d392" @click="addMeal(0)"></u-icon>
+          <view class="meal-count">2份食物</view>
+          <view class="add-btn" @click="addMeal(0)">+</view>
         </view>
       </view>
+    </view>
+
+    <!-- 选择饮食按钮 -->
+    <view class="select-meal" @click="goToSelectMeal">
+      <text>选择饮食</text>
+      <u-icon name="arrow-right" color="#666"></u-icon>
+    </view>
+
+    <!-- 取消按钮 -->
+    <view class="cancel-btn" @click="cancel">
+      <text>现在取消</text>
     </view>
   </view>
 </template>
@@ -153,12 +167,24 @@ export default {
       }
     },
 
+    goToSelectMeal() {
+      uni.navigateTo({
+        url: '/pages/meal/select/index'
+      })
+    },
+    
+    cancel() {
+      uni.navigateBack()
+    },
+    
     addMeal(index) {
       // 添加食物逻辑
+      console.log('添加食物:', index)
     },
-
+    
     removeMeal(index) {
       // 移除食物逻辑
+      console.log('移除食物:', index)
     }
   }
 }
@@ -167,6 +193,7 @@ export default {
 <style lang="scss">
 .container {
   padding: 30rpx;
+  font-family: "Microsoft YaHei", sans-serif;
 }
 
 .date-selector {
@@ -217,50 +244,145 @@ export default {
 }
 
 .meal-section {
-  margin-bottom: 30rpx;
+  margin-bottom: 50rpx;
   
-  .section-title {
-    font-size: 32rpx;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20rpx;
+  .section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50rpx;
+    
+    .section-title {
+      font-size: 32rpx;
+      font-weight: bold;
+      color: #333;
+      
+    }
+    
+    .count-badge {
+      
+      margin-left: 20rpx;
+      padding: 4rpx 16rpx;
+      background: #42d392;
+      color: #fff;
+      border-radius: 20rpx;
+      font-size: 24rpx;
+    }
   }
   
   .meal-list {
-    background: #fff;
-    border-radius: 20rpx;
+    // 全部饮食列表样式
+    
+    background: rgb(246, 247, 247);
+    border-radius: 50rpx;
+    padding: 20rpx;
+    font-weight: bold;
+    
+    &.selected {
+      background: rgb(235, 246, 214);
+
+      padding: 20rpx;
+      
+      // 已选食物项的样式
+      .meal-item {
+        
+        background: rgb(235, 246, 214);
+        .meal-info {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          
+          .meal-name {
+            font-size: 35rpx;
+            color: #333;
+            margin-bottom: 15rpx;
+          }
+          
+          .meal-cal {
+            font-size: 30rpx;
+            color: #999;
+          }
+        }
+        
+        .meal-count {
+          font-size: 30rpx;
+          color: #666;
+          margin: 0 20rpx;
+        }
+        
+        .delete-btn {
+          color: #ff0000;
+          font-size: 32rpx;
+        }
+      }
+    }
+    
+
     
     .meal-item {
       display: flex;
       align-items: center;
-      padding: 30rpx;
-      border-bottom: 1rpx solid #f5f5f5;
+      padding: 40rpx 30rpx;
+      background: rgb(246, 247, 247);
+
+      margin-bottom: 20rpx;
       
       &:last-child {
-        border-bottom: none;
+        margin-bottom: 0;
       }
       
       .meal-info {
         flex: 1;
+        display: flex;
+        flex-direction: column;
         
         .meal-name {
-          font-size: 28rpx;
+          font-size: 35rpx;
           color: #333;
-          margin-bottom: 8rpx;
+          margin-bottom: 15rpx;
         }
         
         .meal-cal {
-          font-size: 24rpx;
+          font-size: 30rpx;
           color: #999;
         }
       }
       
       .meal-count {
-        font-size: 24rpx;
+        font-size: 30rpx;
         color: #666;
         margin: 0 20rpx;
       }
+      
+      .add-btn {
+        color: #42d392;
+        font-size: 32rpx;
+      }
     }
+  }
+}
+
+.select-meal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 30rpx;
+  
+  text {
+    font-size: 28rpx;
+    color: #333;
+  }
+}
+
+.cancel-btn {
+  text-align: center;
+  padding: 30rpx;
+  
+  text {
+    color: #ff0000;
+    font-size: 28rpx;
   }
 }
 </style> 
