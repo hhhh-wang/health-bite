@@ -68,7 +68,7 @@
 			<!-- 饮食区域 -->
 			<view class="today-header">
 				<text class="title">今天的饮食</text>
-				<view class="more-btn">
+				<view class="more-btn" @click="showActionSheet">
 					<u-icon name="more-dot-fill" size="40" color="#42d392"></u-icon>
 				</view>
 			</view>
@@ -179,6 +179,15 @@
 			></u-calendar>
 		</u-picker>
 
+		<!-- 添加操作菜单 -->
+		<u-action-sheet
+			:list="actionList"
+			v-model="showActions"
+			@click="handleAction"
+			:border-radius="20"
+			cancel-text="取消"
+		></u-action-sheet>
+
 	</view>
 </template>
 
@@ -193,7 +202,22 @@ export default {
 			showCalendar: false,
 			selectedDate: this.getFormatDate(),
 			currentDate: this.getFormatDate(),
-			date_text: this.getFormatDate()
+			date_text: this.getFormatDate(),
+			showActions: false,
+			actionList: [
+				{
+					text: '忽略今天',
+					icon: 'calendar-fill'
+				},
+				{
+					text: '复制另一天的饮食',
+					icon: 'calendar'
+				},
+				{
+					text: '设置',
+					icon: 'setting'
+				}
+			]
 		}
 	},
 	mounted() {
@@ -271,6 +295,39 @@ export default {
 			ctx.setLineCap('round')
 			ctx.stroke()
 			ctx.draw()
+		},
+		// 显示操作菜单
+		showActionSheet() {
+			this.showActions = true
+		},
+		
+		// 处理菜单选择
+		handleAction(index) {
+			switch(index) {
+				case 0: // 忽略今天
+					this.ignoreTodayMeal()
+					break
+				case 1: // 复制另一天的饮食
+					this.goToCopyMeal()
+					break
+				case 2: // 设置
+					this.goToSettings()
+					break
+			}
+		},
+		
+		// 跳转到复制饮食页面
+		goToCopyMeal() {
+			uni.navigateTo({
+				url: '/pages/meal/copy/index'
+			})
+		},
+		
+		// 跳转到设置页面
+		goToSettings() {
+			uni.navigateTo({
+				url: '/pages/meal/settings'
+			})
 		}
 	}
 };
@@ -620,6 +677,12 @@ page {
 		&.negative {
 			color: #ff9500;  // 运动消耗卡路里显示为橙色
 		}
+	}
+}
+
+.more-btn {
+	&:active {
+		opacity: 0.8;
 	}
 }
 </style>

@@ -154,6 +154,12 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/meal/copy/index",
+			"style": {
+				"navigationBarTitleText": "复制饮食"
+			}
 		}
 	],
 	"subPackages": [
