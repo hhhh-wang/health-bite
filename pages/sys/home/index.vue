@@ -161,15 +161,23 @@
 			</view>
 		</view>
 
-		<!-- 添加日期选择器组件 -->
-		<u-calendar
-			:show="showCalendar"
+		<!-- 日期选择器 -->
+		<u-picker
+			v-model="showCalendar"
+			mode="time"
 			@confirm="confirmDate"
-			@close="closeCalendar"
-			mode="single"
-			:max-date="maxDate"
-			color="#42d392"
-		></u-calendar>
+			@cancel="closeCalendar"
+		>
+			<u-calendar
+				:show="showCalendar"
+				mode="single"
+				:defaultDate="selectedDate"
+				@change="dateChange"
+				@confirm="confirmDate"
+				@close="closeCalendar"
+				color="#42d392"
+			></u-calendar>
+		</u-picker>
 
 	</view>
 </template>
@@ -183,15 +191,15 @@ export default {
 		return {
 			percentage: 60, // 进度百分比
 			showCalendar: false,
-			selectedDate: '2025-02-01',
-			maxDate: this.getFormatDate() // 修改为格式化的日期字符串
+			selectedDate: this.getFormatDate(),
+			currentDate: this.getFormatDate()
 		}
 	},
 	mounted() {
 		this.drawProgress()
 	},
 	methods: {
-		// 添加日期格式化方法
+		// 格式化日期
 		getFormatDate() {
 			const date = new Date()
 			const year = date.getFullYear()
@@ -202,17 +210,23 @@ export default {
 
 		// 显示日期选择器
 		showDatePicker() {
+			console.log('显示日期选择器')
 			this.showCalendar = true
 		},
 		
-		// 确认选择日期
+		// 日期改变
+		dateChange(e) {
+			console.log('日期改变:', e)
+		},
+		
+		// 确认日期
 		confirmDate(e) {
+			console.log('确认日期:', e)
 			this.selectedDate = e.result
+			// 更新显示的日期
+			this.date_text = this.selectedDate
 			this.showCalendar = false
-			// 更新显示的日期文本
-			this.$nextTick(() => {
-				this.date_text = this.selectedDate
-			})
+			// 获取选中日期的数据
 			this.fetchDayData(this.selectedDate)
 		},
 		
