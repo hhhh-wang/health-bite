@@ -7,7 +7,6 @@
         scroll-x 
         :scroll-left="scrollLeft"
         scroll-with-animation
-        :scroll-into-view="scrollIntoViewId"
         @scroll="onScroll"
       >
         <view class="date-wrapper">
@@ -65,8 +64,6 @@ export default {
       dates: [],
       scrollLeft: 0,
       itemWidth: 140,
-      scrollIntoViewId: '',
-      // 添加缺少的变量
       selectedDate: ''
     }
   },
@@ -81,7 +78,7 @@ export default {
       }
       
       setTimeout(() => {
-        this.scrollToSelected(this.selectedIndex)
+        this.centerSelectedDate(this.selectedIndex)
       }, 100)
     })
   },
@@ -121,17 +118,10 @@ export default {
         this.selectedDate = this.dates[index].fullDate
       }
       
-      this.scrollToSelected(index)
+      // 直接调用居中方法，不使用scrollIntoView
+      this.centerSelectedDate(index)
     },
 
-    scrollToSelected(index) {
-      this.scrollIntoViewId = 'date-' + index
-      
-      setTimeout(() => {
-        this.centerSelectedDate(index)
-      }, 100)
-    },
-    
     centerSelectedDate(index) {
       try {
         const query = uni.createSelectorQuery().in(this)
