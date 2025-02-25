@@ -66,12 +66,13 @@
 
 		<!-- 在原有代码后添加新的内容区 -->
 		<view class="content-area">
-			<!-- 饮食列表区域 -->
+			<!-- 饮食区域 -->
 			<view class="today-header">
 				<text class="title">今天的饮食</text>
-				<u-icon name="more-dot-fill" size="40" color="#42d392"></u-icon>
+				<view class="more-btn">
+					<u-icon name="more-dot-fill" size="40" color="#42d392"></u-icon>
+				</view>
 			</view>
-
 			<view class="diet-list">
 				<!-- 早餐 -->
 				<view class="food-item">
@@ -114,31 +115,55 @@
 			</view>
 			
 			<!-- 饮水区域 -->
-			<view class="water-section">
-				<view class="water-header">
-					<text class="title">饮水量</text>
+			<view class="today-header">
+				<text class="title">饮水量</text>
+				<view class="more-btn">
 					<u-icon name="more-dot-fill" size="40" color="#42d392"></u-icon>
 				</view>
+			</view>
+			<view class="water-section">
+				<view class="water-cups">
+					<view class="cup active"></view>
+					<view class="cup active"></view>
+					<view class="cup"></view>
+					<view class="cup"></view>
+					<view class="cup"></view>
+					<view class="cup"></view>
+					<view class="cup"></view>
+				</view>
+				<view class="water-stats">
+					<text class="amount">570</text>
+					<text class="separator">/</text>
+					<text class="total">2000ml</text>
+					<text class="percentage">20%</text>
+				</view>
+			</view>
 
-				<view class="water-meter">
-					<view class="water-cups">
-						<view class="cup active"></view>
-						<view class="cup active"></view>
-						<view class="cup add"></view>
-						<view class="cup"></view>
-						<view class="cup"></view>
-						<view class="cup"></view>
-						<view class="cup"></view>
+			<!-- 运动区域 -->
+			<view class="today-header">
+				<text class="title">运动</text>
+				<view class="more-btn">
+					<u-icon name="more-dot-fill" size="40" color="#42d392"></u-icon>
+				</view>
+			</view>
+			<view class="diet-list">
+				<view class="food-item">
+					<image src="/static/images/sport.png" class="meal-icon"></image>
+					<view class="food-info">
+						<text class="meal-type">运动</text>
+						<view class="food-stats">
+							<text>2 活动</text>
+							<text class="calories" style="color: #ff9500;">-545 kcal</text>
+						</view>
 					</view>
-					<view class="water-stats">
-						<text class="amount">570</text>
-						<text class="separator">/</text>
-						<text class="total">2000ml</text>
-						<text class="percentage">20%</text>
-					</view>
+					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
 				</view>
 			</view>
 		</view>
+
+
+
+		
 	</view>
 </template>
 
@@ -400,31 +425,42 @@ page {
 	margin-top: 40rpx;
 	
 	.today-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: 30rpx 0 40rpx;
+		
+		.title {
+			font-size: 32rpx;
+			font-weight: bold;
+			color: #333;
+			margin-left: 20rpx;
+		}
+		
+		.more-btn {
+			width: 120rpx;
+			height: 80rpx;
+			background-color: rgb(23, 52, 48);
+			border-radius: 40rpx;
 			display: flex;
-			justify-content: space-between;
 			align-items: center;
-			margin: 30rpx 0 40rpx;
-			
-			.title {
-				font-size: 32rpx;
-				font-weight: bold;
-				color: #333;
-				margin-left: 20rpx;
-			}
+			justify-content: center;
+			margin-right: 20rpx;
 			
 			.u-icon {
-				margin-right: 20rpx;
+				transform: scale(0.8);
 			}
 		}
+	}
 
-
-	.diet-list {
+	.diet-list, .water-section {
 		background-color: rgb(240, 241, 241);
 		border-radius: 50rpx;
 		padding: 30rpx;
 		margin-bottom: 30rpx;
-		
-		
+	}
+	
+	.diet-list {
 		.food-item {
 			display: flex;
 			align-items: center;
@@ -470,70 +506,51 @@ page {
 	}
 	
 	.water-section {
-		background-color: rgb(240, 241, 241);
-		border-radius: 50rpx;
-		padding: 30rpx;
-		
-		.water-header {
+		 background-color: rgb(25, 184, 136); 
+		.water-cups {
 			display: flex;
 			justify-content: space-between;
-			align-items: center;
-			margin: 30rpx 0 40rpx;
+			margin: 40rpx;
 			
-			.title {
-				font-size: 32rpx;
-				font-weight: bold;
-				color: #333;
-				margin-left: 20rpx;
-			}
-			
-			.u-icon {
-				margin-right: 20rpx;
+			.cup {
+				width: 60rpx;
+				height: 80rpx;
+				background: rgb(117, 212, 184);// 修改未满杯子的背景色
+				border-radius: 20rpx;
+				
+				&.active {
+					background: rgb(255, 255, 255);  // 修改已满杯子的背景色
+				}
+				
 			}
 		}
 		
-		.water-meter {
-			.water-cups {
-				display: flex;
-				justify-content: space-between;
-				margin-bottom: 20rpx;
+		.water-stats {
+			text-align: center;
+			font-size: 28rpx;
+			color: #ffffff;
+			font-weight: bold;
+			.amount, .total {
 				
-				.cup {
-					width: 60rpx;
-					height: 80rpx;
-					background: #eee;
-					border-radius: 20rpx;
-					
-					&.active {
-						background: #42d392;
-					}
-					
-					&.add {
-						background: #fff;
-						border: 2rpx dashed #42d392;
-					}
-				}
+			
 			}
 			
-			.water-stats {
-				text-align: center;
-				font-size: 28rpx;
-				color: #666;
-				
-				.amount, .total {
-					font-weight: bold;
-					color: #333;
-				}
-				
-				.separator {
-					margin: 0 10rpx;
-				}
-				
-				.percentage {
-					margin-left: 20rpx;
-					color: #42d392;
-				}
+			.separator {
+				margin: 0 10rpx;
 			}
+			
+			.percentage {
+				margin-left: 20rpx;
+				
+			}
+		}
+	}
+}
+
+.food-stats {
+	.calories {
+		&.negative {
+			color: #ff9500;  // 运动消耗卡路里显示为橙色
 		}
 	}
 }
