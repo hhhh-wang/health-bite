@@ -8,12 +8,11 @@
 			<view class="date-display">
 				<text class="date-text">2025-02-01</text>
 			</view>
-			<view class="date-picker" @click="handleSkip">
+			<view class="date-picker" @click="showDatePicker">
 				<u-icon 
 					name="calendar" 
 					size="40" 
 					color="#ffffff"
-					customStyle="background-color: #42d392; padding: 20rpx; border-radius: 50%;"
 				></u-icon>
 			</view>
 
@@ -162,9 +161,16 @@
 			</view>
 		</view>
 
+		<!-- 添加日期选择器组件 -->
+		<u-calendar
+			:show="showCalendar"
+			@confirm="confirmDate"
+			@close="closeCalendar"
+			mode="single"
+			:max-date="maxDate"
+			color="#42d392"
+		></u-calendar>
 
-
-		
 	</view>
 </template>
 
@@ -176,14 +182,37 @@ export default {
 	data() {
 		return {
 			percentage: 60, // 进度百分比
+			showCalendar: false,
+			selectedDate: '2025-02-01',
+			maxDate: new Date().getTime() // 最大日期为今天
 		}
 	},
 	mounted() {
 		this.drawProgress()
 	},
 	methods: {
-		handleSkip() {
-			// 处理日期选择
+		// 显示日期选择器
+		showDatePicker() {
+			this.showCalendar = true
+		},
+		
+		// 确认选择日期
+		confirmDate(e) {
+			this.selectedDate = e.result
+			this.showCalendar = false
+			// 这里可以添加获取所选日期的数据
+			this.fetchDayData(this.selectedDate)
+		},
+		
+		// 关闭日期选择器
+		closeCalendar() {
+			this.showCalendar = false
+		},
+		
+		// 获取选中日期的数据
+		fetchDayData(date) {
+			// 这里添加获取数据的逻辑
+			console.log('获取日期数据:', date)
 		},
 		drawProgress() {
 			const ctx = uni.createCanvasContext('progressCanvas', this)
