@@ -60,7 +60,7 @@
     <!-- 选择饮食按钮 -->
     <view class="select-meal" @click="goToSelectMeal">
       <text>选择饮食</text>
-      <u-icon name="arrow-right" color="#666"></u-icon>
+      <u-icon name="arrow-right" color="#42d392"></u-icon>
     </view>
 
     <!-- 取消按钮 -->
@@ -246,20 +246,23 @@ export default {
 .meal-section {
   margin-bottom: 50rpx;
   
+  // 标题样式
+  .section-header, .section-title {
+    margin-bottom: 50rpx;
+    font-weight: bold;
+  }
+  
   .section-header {
     display: flex;
     align-items: center;
-    margin-bottom: 50rpx;
     
     .section-title {
       font-size: 32rpx;
-      font-weight: bold;
       color: #333;
-      
+      margin-bottom: 0;
     }
     
     .count-badge {
-      
       margin-left: 20rpx;
       padding: 4rpx 16rpx;
       background: #42d392;
@@ -269,63 +272,38 @@ export default {
     }
   }
   
+  .section-title {
+    font-size: 32rpx;
+    color: #333;
+  }
+  
+  // 列表通用样式
   .meal-list {
-    // 全部饮食列表样式
-    
-    background: rgb(246, 247, 247);
     border-radius: 50rpx;
     padding: 20rpx;
     font-weight: bold;
+   
     
+    // 已选食物列表特殊样式
     &.selected {
       background: rgb(235, 246, 214);
-
-      padding: 20rpx;
-      
-      // 已选食物项的样式
-      .meal-item {
-        
-        background: rgb(235, 246, 214);
-        .meal-info {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          
-          .meal-name {
-            font-size: 35rpx;
-            color: #333;
-            margin-bottom: 15rpx;
-          }
-          
-          .meal-cal {
-            font-size: 30rpx;
-            color: #999;
-          }
-        }
-        
-        .meal-count {
-          font-size: 30rpx;
-          color: #666;
-          margin: 0 20rpx;
-        }
-        
-        .delete-btn {
-          color: #ff0000;
-          font-size: 32rpx;
-        }
-      }
     }
     
+    // 全部饮食列表特殊样式（默认样式）
+    background: rgb(246, 247, 247);
 
-    
+    // 食物项通用样式
     .meal-item {
       display: flex;
       align-items: center;
       padding: 40rpx 30rpx;
-      background: rgb(246, 247, 247);
-
       margin-bottom: 20rpx;
       
+      // 根据父容器设置背景色
+      .selected & {
+        background: rgb(235, 246, 214);
+      }
+
       &:last-child {
         margin-bottom: 0;
       }
@@ -353,9 +331,16 @@ export default {
         margin: 0 20rpx;
       }
       
+      .delete-btn, .add-btn {
+        font-size: 32rpx;
+      }
+      
+      .delete-btn {
+        color: #ff0000;
+      }
+      
       .add-btn {
         color: #42d392;
-        font-size: 32rpx;
       }
     }
   }
@@ -371,8 +356,13 @@ export default {
   margin-bottom: 30rpx;
   
   text {
-    font-size: 28rpx;
+    font-size: 30rpx;
     color: #333;
+    font-weight: bold;
+  }
+  
+  .u-icon {
+    color: #42d392 !important;
   }
 }
 
