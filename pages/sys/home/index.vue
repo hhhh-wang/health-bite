@@ -506,22 +506,38 @@ page {
 	}
 	
 	.water-section {
-		 background-color: rgb(25, 184, 136); 
+		background-color: rgb(25, 184, 136);
+		
 		.water-cups {
 			display: flex;
 			justify-content: space-between;
 			margin: 40rpx;
 			
 			.cup {
-				width: 60rpx;
-				height: 80rpx;
-				background: rgb(117, 212, 184);// 修改未满杯子的背景色
-				border-radius: 20rpx;
+				position: relative;
+				width: 45rpx;
+				height: 65rpx;
+				background: rgb(177, 212, 184);  // 未满杯子的背景色
+				clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);  // 创建梯形形状
 				
-				&.active {
-					background: rgb(255, 255, 255);  // 修改已满杯子的背景色
+				// 杯口边缘
+				&::after {
+					content: '';
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 4rpx;
+					background: rgba(255, 255, 255, 0.3);
 				}
 				
+				&.active {
+					background: rgb(255, 255, 255);  // 已满杯子的背景色
+					
+					&::after {
+						background: rgba(255, 255, 255, 0.8);
+					}
+				}
 			}
 		}
 		
