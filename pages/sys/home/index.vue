@@ -77,7 +77,7 @@
 				<!-- 早餐 -->
 				<view class="food-item">
 
-					<image src="/static/common/img/egg-outline.svg" class="meal-icon"></image>
+					<image src="/static/common/img/breakfast.png" class="meal-icon"></image>
 					<view class="food-info">
 						<text class="meal-type">早餐</text>
 						<view class="food-stats">
@@ -90,7 +90,7 @@
 
 				<!-- 午餐 -->
 				<view class="food-item">
-					<image src="/static/common/img/Hamburger.svg" class="meal-icon"></image>
+					<image src="/static/common/img/lunch.png" class="meal-icon"></image>
 					<view class="food-info">
 						<text class="meal-type">午餐</text>
 						<view class="food-stats">
@@ -103,7 +103,7 @@
 
 				<!-- 晚餐 -->
 				<view class="food-item">
-					<image src="/static/common/img/rice.svg" class="meal-icon"></image>
+					<image src="/static/common/img/dinner.png" class="meal-icon"></image>
 					<view class="food-info">
 						<text class="meal-type">晚餐</text>
 						<view class="food-stats">
@@ -477,7 +477,6 @@ page {
 			.meal-icon {
 				width: 80rpx;
 				height: 80rpx;
-				border-radius: 50%;
 			}
 			
 			.food-info {
