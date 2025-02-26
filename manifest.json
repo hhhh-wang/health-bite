@@ -3,11 +3,11 @@
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
 {
-    "name" : "JeeSite",
-    "appid" : "__UNI__841DCAE",
-    "description" : "JeeSite快速开发平台",
-    "versionName" : "4.3.8",
-    "versionCode" : 101,
+    "name" : "health-bite",
+    "appid" : "__UNI__GFA080B2",
+    "description" : "健康饮食",
+    "versionName" : "1.0.0",
+    "versionCode" : 1,
     "transformPx" : false,
     "app-plus" : {
         // APP-VUE分包，可提APP升启动速度，2.7.12开始支持，兼容微信小程序分包方案，默认关闭
@@ -150,7 +150,7 @@
                 "enable" : false
             }
         },
-        "title" : "JeeSite",
+        "title" : "health-bite",
         "domain" : "/app"
     },
     "vueVersion" : "2",
