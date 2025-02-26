@@ -24,7 +24,7 @@
 				<input class="u-input" type="text" v-model="validCode" maxlength="4" placeholder="验证码" />
 				<u-image class="img-valid-code" width="300rpx" height="90rpx" :src="imgValidCodeSrc" @click="refreshImgValidCode()"></u-image>
 			</view>
-			<view class="list-call base-url">
+			<view class="list-call base-url" v-if="showServerSelect">
 				<u-icon class="u-icon" size="40" name="setting" style="padding-right:15rpx;"></u-icon>
 				<js-select v-model="baseUrlValue" :items="baseUrlList" placeholder="快速切换服务器地址" @confirm="updateBaseUrl"></js-select>
 			</view>
@@ -69,7 +69,8 @@ export default {
 			baseUrlValue: '',
 			counter: 60,
 			counting: false,
-			loading: false
+			loading: false,
+			showServerSelect: false
 		};
 	},
 	onLoad() {
@@ -189,17 +190,6 @@ export default {
 		toPhoneLogin() {
 			uni.navigateTo({
 				url: '/pages/sys/login/phone'
-			});
-		},
-		updateBaseUrl() {
-			this.baseUrlList.forEach(item => {
-				if (item.value == this.baseUrlValue){
-					this.$u.vuex('vuex_baseUrl', item.baseUrl);
-					this.$u.http.setConfig({ baseUrl: item.baseUrl });
-					this.$u.toast('切换成功！');
-					this.initAccount();
-					return;
-				}
 			});
 		}
 	}

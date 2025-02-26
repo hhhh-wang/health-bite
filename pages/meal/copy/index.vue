@@ -24,48 +24,67 @@
       </scroll-view>
     </view>
 
-    <!-- 已选食物列表 -->
-    <view class="meal-section">
-      <view class="section-header">
-        <text class="section-title">已选食物</text>
-        <view class="count-badge">1</view>
-      </view>
-      <view class="meal-list selected">
-        <view class="meal-item">
-          <view class="meal-info">
-            <text class="meal-name">炸鸡</text>
-            <text class="meal-cal">164kcal</text>
+    <!-- 有食物记录时显示的内容 -->
+    <template v-if="hasMeal">
+      <!-- 已选食物列表 -->
+      <view class="meal-section">
+        <view class="section-header">
+          <text class="section-title">已选食物</text>
+          <view class="count-badge">1</view>
+        </view>
+        
+        <view class="meal-list selected">
+          <view class="meal-item">
+            <view class="meal-info">
+              <text class="meal-name">炸鸡</text>
+              <text class="meal-cal">164kcal</text>
+            </view>
+            <view class="meal-count">1份食物</view>
+            <view class="delete-btn" @click="removeMeal(0)">×</view>
           </view>
-          <view class="meal-count">1份食物</view>
-          <view class="delete-btn" @click="removeMeal(0)">×</view>
         </view>
       </view>
-    </view>
 
-    <!-- 全部饮食列表 -->
-    <view class="meal-section">
-      <view class="section-title">全部饮食</view>
-      <view class="meal-list">
-        <view class="meal-item">
-          <view class="meal-info">
-            <text class="meal-name">三文鱼</text>
-            <text class="meal-cal">166kcal</text>
+      <!-- 全部饮食列表 -->
+      <view class="meal-section">
+        <view class="section-title">全部饮食</view>
+        <view class="meal-list">
+          <view class="meal-item">
+            <view class="meal-info">
+              <text class="meal-name">三文鱼</text>
+              <text class="meal-cal">166kcal</text>
+            </view>
+            <view class="meal-count">2份食物</view>
+            <view class="add-btn" @click="addMeal(0)">+</view>
           </view>
-          <view class="meal-count">2份食物</view>
-          <view class="add-btn" @click="addMeal(0)">+</view>
         </view>
       </view>
+
+ 
+
+    </template>
+    
+    <!-- 无食物记录时显示的提示 -->
+    <view v-else class="no-food-tip">
+      <image src="/static/common/img/nofood.png" mode="aspectFit" class="no-food-icon"></image>
+      <text class="no-food-text">这一天没有晚餐</text>
     </view>
 
-    <!-- 选择饮食按钮 -->
-    <view class="select-meal" @click="goToSelectMeal">
-      <text>选择饮食</text>
-      <u-icon name="arrow-right" color="#42d392"></u-icon>
-    </view>
-
-    <!-- 取消按钮 -->
-    <view class="cancel-btn" @click="cancel">
-      <text>现在取消</text>
+    <!-- 添加空白区域，防止内容被固定按钮遮挡 -->
+    <view class="bottom-space"></view>
+    
+    <!-- 固定在底部的按钮区域 -->
+    <view class="fixed-bottom-btns">
+      <!-- 有食物记录时显示选择饮食按钮 -->
+      <view v-if="hasMeal" class="select-meal" @click="goToSelectMeal">
+        <text>选择饮食</text>
+        <u-icon name="arrow-right" color="#42d392"></u-icon>
+      </view>
+      <!-- 取消按钮 - 始终显示 -->
+      <view class="cancel-btn" :class="{'full-width': !hasMeal}" @click="cancel">
+        <text>现在取消</text>
+        <u-icon name="close" color="#ff0000"></u-icon>
+      </view>
     </view>
   </view>
 </template>
@@ -78,7 +97,8 @@ export default {
       dates: [],
       scrollLeft: 0,
       itemWidth: 140,
-      selectedDate: ''
+      selectedDate: '',
+      hasMeal: false  // 添加控制是否有食物记录的变量
     }
   },
   created() {
@@ -130,6 +150,10 @@ export default {
       // 更新选中的日期
       if (this.dates.length > 0 && index < this.dates.length) {
         this.selectedDate = this.dates[index].fullDate
+        
+        // 这里可以根据日期检查是否有食物记录
+        // 模拟数据，实际应该从服务器获取或本地存储中读取
+        this.checkMealData(this.selectedDate)
       }
       
       // 直接调用居中方法，不使用scrollIntoView
@@ -185,6 +209,14 @@ export default {
     removeMeal(index) {
       // 移除食物逻辑
       console.log('移除食物:', index)
+    },
+
+    // 添加检查食物记录方法
+    checkMealData(date) {
+      // 这里应该是实际检查数据的逻辑
+      // 示例：偶数日期有食物，奇数日期没有食物
+      const day = parseInt(date.split('-')[2])
+      this.hasMeal = day % 2 === 0
     }
   }
 }
@@ -193,7 +225,9 @@ export default {
 <style lang="scss">
 .container {
   padding: 30rpx;
+  padding-bottom: 150rpx; /* 为固定按钮留出空间 */
   font-family: "Microsoft YaHei", sans-serif;
+  min-height: 100vh; /* 确保容器至少占满整个视口高度 */
 }
 
 .date-selector {
@@ -346,7 +380,7 @@ export default {
   }
 }
 
-.select-meal {
+.select-meal, .cancel-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -357,8 +391,13 @@ export default {
   
   text {
     font-size: 30rpx;
-    color: #333;
     font-weight: bold;
+  }
+}
+
+.select-meal {
+  text {
+    color: #333;
   }
   
   .u-icon {
@@ -367,12 +406,54 @@ export default {
 }
 
 .cancel-btn {
-  text-align: center;
-  padding: 30rpx;
-  
   text {
     color: #ff0000;
-    font-size: 28rpx;
+  }
+}
+
+.no-food-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+  margin: 100rpx 0;
+  
+  .no-food-icon {
+    width: 160rpx;
+    height: 160rpx;
+    margin-bottom: 40rpx;
+  }
+  
+  .no-food-text {
+    font-size: 34rpx;
+    color: #666;
+  }
+}
+
+.bottom-space {
+  height: 120rpx; /* 额外空白区域，防止内容被固定按钮遮挡 */
+}
+
+.fixed-bottom-btns {
+  position: fixed;
+  bottom: 30rpx;
+  left: 30rpx;
+  right: 30rpx;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx;
+  
+  .select-meal, .cancel-btn {
+    flex: 1;
+    box-shadow: 0 0 20rpx rgba(0,0,0,0.1);
+    margin-bottom: 0;
+    border-radius: 20rpx;
+  }
+  
+  .full-width {
+    width: 100%;
   }
 }
 </style> 
