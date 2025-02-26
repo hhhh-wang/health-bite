@@ -66,7 +66,7 @@
 							<text class="calories">51 kcal</text>
 						</view>
 					</view>
-					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+					<u-icon name="plus" size="30" color="#42d392"></u-icon>
 				</view>
 
 				<!-- 午餐后水果 -->
@@ -78,7 +78,7 @@
 							<text class="calories">92 kcal</text>
 						</view>
 					</view>
-					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+					<u-icon name="plus" size="30" color="#42d392"></u-icon>
 				</view>
 
 				<!-- 运动前补给 -->
@@ -90,7 +90,7 @@
 							<text class="calories">46 kcal</text>
 						</view>
 					</view>
-					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+					<u-icon name="plus" size="30" color="#42d392"></u-icon>
 				</view>
 
 				<!-- 运动后补给 -->
@@ -102,7 +102,7 @@
 							<text class="calories">46 kcal</text>
 						</view>
 					</view>
-					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+					<u-icon name="plus" size="30" color="#42d392"></u-icon>
 				</view>
 
 				<!-- 睡前小吃 -->
@@ -114,7 +114,7 @@
 							<text class="calories">46 kcal</text>
 						</view>
 					</view>
-					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+					<u-icon name="plus" size="30" color="#42d392"></u-icon>
 				</view>
 
 				<!-- 放纵餐 -->
@@ -126,7 +126,7 @@
 							<text class="calories">1000kcal</text>
 						</view>
 					</view>
-					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+					<u-icon name="plus" size="30" color="#42d392"></u-icon>
 				</view>
 			</view>
 		</view>
