@@ -326,7 +326,7 @@ export default {
 		// 跳转到设置页面
 		goToSettings() {
 			uni.navigateTo({
-				url: '/pages/meal/settings'
+				url: '/pages/meal/settings/index'
 			})
 		}
 	}

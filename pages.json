@@ -161,7 +161,13 @@
 				"navigationBarTitleText": "复制饮食",
 				"navigationBarBackgroundColor": "#ffffff"
 			}
-		}
+		},
+		{
+			"path": "pages/meal/settings/index",
+			"style": {
+			  "navigationStyle": "custom"
+			}
+		  }
 	],
 	"subPackages": [
 		
