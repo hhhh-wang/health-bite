@@ -60,44 +60,42 @@
 		<view class="stats-container">
 			<view class="stat-item increase">
 				<text class="value">1739kcal</text>
-				<text class="label">增长卡卡</text>
+				<text class="label">增长千卡</text>
 				<text class="percentage">59%</text>
 			</view>
 			<view class="stat-item decrease">
 				<text class="value">-545kcal</text>
-				<text class="label">消耗卡卡</text>
+				<text class="label">消耗千卡</text>
 				<text class="percentage">32%</text>
 			</view>
 		</view>
 
 		<!-- 已完成运动列表 -->
-		<view class="exercise-list">
-            <view class="exercise-title">运动数据</view>
+		<view class="exercise-title">运动数据</view>
+		
+		<view class="exercise-list">       
 			<view class="exercise-item">
-				<view class="exercise-icon">
-					<image src="/static/common/img/pingpong.png"></image>
-				</view>
+				<image src="/static/common/img/breakfast.png"></image>
 				<view class="exercise-info">
 					<text class="exercise-name">乒乓球</text>
-					<text class="exercise-duration">30 分钟</text>
-				</view>
-				<view class="exercise-calories">
-					<text>-155 卡路里</text>
+                    <view class="exercise-calories">
+                        <text class="exercise-duration">30 分钟</text>
+                        <text>155 消耗</text>
+                    </view>
 				</view>
 				<view class="delete-btn" @click="deleteExercise(1)">
 					<u-icon name="close" color="#999" size="20"></u-icon>
 				</view>
 			</view>
 			<view class="exercise-item">
-				<view class="exercise-icon">
-					<image src="/static/common/img/basketball.png"></image>
-				</view>
+				<image src="/static/common/img/breakfast.png"></image>
 				<view class="exercise-info">
 					<text class="exercise-name">篮球</text>
-					<text class="exercise-duration">50 分钟</text>
-				</view>
-				<view class="exercise-calories">
-					<text>-390 卡路里</text>
+	
+                    <view class="exercise-calories">
+                        <text class="exercise-duration">30 分钟</text>
+                        <text>155 消耗</text>
+                    </view>
 				</view>
 				<view class="delete-btn" @click="deleteExercise(2)">
 					<u-icon name="close" color="#999" size="20"></u-icon>
@@ -243,7 +241,11 @@ export default {
 			})
 		},
 		goBack() {
-			uni.navigateBack()
+			uni.navigateBack({
+				delta: 1,
+				animationType: 'pop-out',
+				animationDuration: 300
+			})
 		}
 	}
 }
@@ -368,15 +370,15 @@ export default {
 			flex: 1;
 			margin: 0 10rpx;
 			padding: 30rpx;
-			background-color: #ffffff;
-			border-radius: 16rpx;
+			background-color: rgb(240, 241, 241);
+			border-radius: 50rpx;
 			box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
 			
 			.value {
 				font-size: 36rpx;
 				font-weight: bold;
 				display: block;
-				margin-bottom: 10rpx;
+				margin-bottom: 20rpx;
 			}
 			
 			.label {
@@ -398,27 +400,31 @@ export default {
 			color: #FF6B6B;
 		}
 	}
-
+	.exercise-title {
+            font-size: 32rpx;
+			font-weight: bold;
+			color: #333;
+			margin-left: 20rpx;
+            margin: 20rpx;
+        }
 	.exercise-list {
-		margin: 20rpx;
-		
+        border-radius: 50rpx;
+        padding: 30rpx;
 		.exercise-item {
 			display: flex;
 			align-items: center;
 			padding: 30rpx;
-			background-color: rgba(24, 181, 102, 0.1);
-			border-radius: 16rpx;
-			margin-bottom: 20rpx;
+			border-radius: 50rpx;
+			margin-bottom: 40rpx;
 			position: relative;
-			
-			.exercise-icon {
+			box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+			background-color: rgb(235, 246, 214);
+			image {
 				width: 80rpx;
 				height: 80rpx;
-				
-				image {
-					width: 100%;
-					height: 100%;
-				}
+				border-radius: 20rpx;
+				background-color: rgba(24, 181, 102, 0.1);
+				padding: 15rpx;
 			}
 			
 			.exercise-info {
@@ -429,26 +435,39 @@ export default {
 					font-size: 32rpx;
 					color: #333;
 					font-weight: bold;
+					margin-bottom: 8rpx;
 				}
 				
-				.exercise-duration {
-					font-size: 24rpx;
-					color: #666;
-					margin-top: 8rpx;
+				.exercise-calories {
+					display: flex;
+					align-items: center;
+					gap: 30rpx;
+					
+					.exercise-duration {
+						font-size: 24rpx;
+						color: #666;
+						background-color: #f5f5f5;
+						padding: 4rpx 16rpx;
+						border-radius: 20rpx;
+					}
+					
+					text:last-child {
+						font-size: 24rpx;
+						color: #ff6b6b;
+						font-weight: bold;
+					}
 				}
-			}
-			
-			.exercise-calories {
-				font-size: 28rpx;
-				color: #ff6b6b;
-				font-weight: bold;
 			}
 			
 			.delete-btn {
-				position: absolute;
-				top: 20rpx;
-				right: 20rpx;
-				padding: 10rpx;
+				width: 44rpx;
+				height: 44rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background-color: #f5f5f5;
+				border-radius: 50%;
+				margin-left: 20rpx;
 			}
 		}
 	}
@@ -466,7 +485,7 @@ export default {
 		
 		.exercise-options {
 			background-color: #fff;
-			border-radius: 16rpx;
+			border-radius: 50rpx;
 			padding: 20rpx;
 			
 			.option-item {
