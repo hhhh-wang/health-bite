@@ -84,7 +84,7 @@
                     </view>
 				</view>
 				<view class="delete-btn" @click="deleteExercise(1)">
-					<u-icon name="close" color="#999" size="20"></u-icon>
+					<u-icon name="close" size="20"></u-icon>
 				</view>
 			</view>
 			<view class="exercise-item">
@@ -98,7 +98,7 @@
                     </view>
 				</view>
 				<view class="delete-btn" @click="deleteExercise(2)">
-					<u-icon name="close" color="#999" size="20"></u-icon>
+					<u-icon name="close" size="20"></u-icon>
 				</view>
 			</view>
 		</view>
@@ -422,11 +422,8 @@ export default {
 			image {
 				width: 80rpx;
 				height: 80rpx;
-				border-radius: 20rpx;
-				background-color: rgba(24, 181, 102, 0.1);
 				padding: 15rpx;
 			}
-			
 			.exercise-info {
 				flex: 1;
 				margin-left: 20rpx;
@@ -465,9 +462,13 @@ export default {
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				background-color: #f5f5f5;
+			
 				border-radius: 50%;
 				margin-left: 20rpx;
+				
+				.u-icon {
+					color: #ff4c4c 
+				}
 			}
 		}
 	}
