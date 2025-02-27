@@ -165,7 +165,31 @@ export default {
 	},
 	methods: {
 		goBack() {
-			uni.navigateBack();
+			// 获取当前页面栈
+			const pages = getCurrentPages()
+			if (pages.length > 1) {
+				// 如果有上一页，则正常返回
+				uni.navigateBack({
+					delta: 1,
+					animationType: 'pop-out',
+					animationDuration: 300,
+					success: () => {
+						console.log('返回成功')
+					},
+					fail: (err) => {
+						console.error('返回失败:', err)
+						// 如果返回失败，则重定向到运动详情页
+						uni.redirectTo({
+							url: '/pages/sys/exercise/detail'
+						})
+					}
+				})
+			} else {
+				// 如果没有上一页，则重定向到运动详情页
+				uni.redirectTo({
+					url: '/pages/sys/exercise/detail'
+				})
+			}
 		},
 		handleTypeChange(e) {
 			console.log('选择的运动类型:', e);
@@ -255,12 +279,12 @@ export default {
 		
 		.form-item {
 			background-color: rgb(240, 241, 241);
-			border-radius: 30rpx;
+			border-radius: 50rpx;
 			padding: 30rpx;
 			margin-bottom: 30rpx;
 			
 			.label {
-				font-size: 28rpx;
+				font-size: 30rpx;
 				color: #333;
 				font-weight: bold;
 				margin-bottom: 20rpx;

@@ -200,11 +200,31 @@ export default {
 			})
 		},
 		goBack() {
-			uni.navigateBack({
-				delta: 1,
-				animationType: 'pop-out',
-				animationDuration: 300
-			})
+			// 获取当前页面栈
+			const pages = getCurrentPages()
+			if (pages.length > 1) {
+				// 如果有上一页，则正常返回
+				uni.navigateBack({
+					delta: 1,
+					animationType: 'pop-out',
+					animationDuration: 300,
+					success: () => {
+						console.log('返回成功')
+					},
+					fail: (err) => {
+						console.error('返回失败:', err)
+						// 如果返回失败，则重定向到首页
+						uni.switchTab({
+							url: '/pages/sys/home/index'
+						})
+					}
+				})
+			} else {
+				// 如果没有上一页，则重定向到首页
+				uni.switchTab({
+					url: '/pages/sys/home/index'
+				})
+			}
 		}
 	}
 }
