@@ -75,7 +75,7 @@
 		
 		<view class="exercise-list">       
 			<view class="exercise-item">
-				<image src="/static/common/img/breakfast.png"></image>
+				<image src="/static/common/img/sports/table-tennis.png"></image>
 				<view class="exercise-info">
 					<text class="exercise-name">乒乓球</text>
                     <view class="exercise-calories">
@@ -88,7 +88,7 @@
 				</view>
 			</view>
 			<view class="exercise-item">
-				<image src="/static/common/img/breakfast.png"></image>
+				<image src="/static/common/img/sports/basketball.png"></image>
 				<view class="exercise-info">
 					<text class="exercise-name">篮球</text>
 	
@@ -103,45 +103,47 @@
 			</view>
 		</view>
 
-		<!-- 今日运动 -->
-		<view class="today-exercise">
-			<view class="section-title">今日运动</view>
-			<view class="exercise-options">
-				<view class="option-item" @click="addExercise('健身')">
-					<view class="option-icon">
-						<image src="/static/common/img/fitness.png"></image>
-					</view>
-					<view class="option-info">
-						<text class="option-name">杠铃</text>
-						<text class="option-stats">-- 分钟  --卡路里</text>
-					</view>
-					<view class="add-btn">
-						<u-icon name="plus" color="#42d392" size="24"></u-icon>
+		<view class="exercise-title">今日运动</view>
+		<view class="exercise-list">
+			<view class="exercise-item" @click="addExercise('健身')">
+				<image src="/static/common/img/sports/dumbbel.png"></image>
+				<view class="exercise-info">
+					<text class="exercise-name">杠铃</text>
+					<view class="exercise-calories">
+						<text class="exercise-duration">-- 分钟</text>
+						<text>-- 消耗</text>
 					</view>
 				</view>
-				<view class="option-item" @click="addExercise('跑步')">
-					<view class="option-icon">
-						<image src="/static/common/img/running.png"></image>
-					</view>
-					<view class="option-info">
-						<text class="option-name">跑步</text>
-						<text class="option-stats">-- 分钟  --卡路里</text>
-					</view>
-					<view class="add-btn">
-						<u-icon name="plus" color="#42d392" size="24"></u-icon>
+				<view class="add-btn">
+					<u-icon name="plus" color="#42d392" size="24"></u-icon>
+				</view>
+			</view>
+
+			<view class="exercise-item" @click="addExercise('跑步')">
+				<image src="/static/common/img/sports/run.png"></image>
+				<view class="exercise-info">
+					<text class="exercise-name">跑步</text>
+					<view class="exercise-calories">
+						<text class="exercise-duration">-- 分钟</text>
+						<text>-- 消耗</text>
 					</view>
 				</view>
-				<view class="option-item" @click="addExercise('台球')">
-					<view class="option-icon">
-						<image src="/static/common/img/billiards.png"></image>
+				<view class="add-btn">
+					<u-icon name="plus" color="#42d392" size="24"></u-icon>
+				</view>
+			</view>
+
+			<view class="exercise-item" @click="addExercise('游泳')">
+				<image src="/static/common/img/sports/swim.png"></image>
+				<view class="exercise-info">
+					<text class="exercise-name">游泳</text>
+					<view class="exercise-calories">
+						<text class="exercise-duration">-- 分钟</text>
+						<text>-- 消耗</text>
 					</view>
-					<view class="option-info">
-						<text class="option-name">台球</text>
-						<text class="option-stats">-- 分钟  --卡路里</text>
-					</view>
-					<view class="add-btn">
-						<u-icon name="plus" color="#42d392" size="24"></u-icon>
-					</view>
+				</view>
+				<view class="add-btn">
+					<u-icon name="plus" color="#42d392" size="24"></u-icon>
 				</view>
 			</view>
 		</view>
@@ -424,7 +426,8 @@ export default {
 				height: 80rpx;
 				padding: 15rpx;
 			}
-			.exercise-info {
+			
+			/deep/ .exercise-info {
 				flex: 1;
 				margin-left: 20rpx;
 				
@@ -432,13 +435,14 @@ export default {
 					font-size: 32rpx;
 					color: #333;
 					font-weight: bold;
-					margin-bottom: 8rpx;
+					margin-bottom: 20rpx !important;
 				}
 				
 				.exercise-calories {
 					display: flex;
 					align-items: center;
 					gap: 30rpx;
+					margin-top: 15rpx;
 					
 					.exercise-duration {
 						font-size: 24rpx;
@@ -473,63 +477,12 @@ export default {
 		}
 	}
 
-	.today-exercise {
-		margin: 20rpx;
-		
-		.section-title {
+	.section-title {
 			font-size: 32rpx;
 			font-weight: bold;
 			color: #333;
 			margin-bottom: 20rpx;
 			padding: 0 20rpx;
 		}
-		
-		.exercise-options {
-			background-color: #fff;
-			border-radius: 50rpx;
-			padding: 20rpx;
-			
-			.option-item {
-				display: flex;
-				align-items: center;
-				padding: 20rpx;
-				border-bottom: 2rpx solid #f5f5f5;
-				
-				&:last-child {
-					border-bottom: none;
-				}
-				
-				.option-icon {
-					width: 60rpx;
-					height: 60rpx;
-					
-					image {
-						width: 100%;
-						height: 100%;
-					}
-				}
-				
-				.option-info {
-					flex: 1;
-					margin-left: 20rpx;
-					
-					.option-name {
-						font-size: 28rpx;
-						color: #333;
-					}
-					
-					.option-stats {
-						font-size: 24rpx;
-						color: #999;
-						margin-top: 4rpx;
-					}
-				}
-				
-				.add-btn {
-					padding: 10rpx;
-				}
-			}
-		}
-	}
 }
 </style> 
