@@ -1,15 +1,21 @@
 <template>
 	<view class="container">
 		<!-- 顶部导航栏 -->
-		<u-navbar
-			title="运动详情"
-			:is-back="true"
-			:background="{ background: '#ffffff' }"
-		>
-			<view class="right" slot="right">
-				<u-icon name="plus" size="28" color="#18B566" @click="handleAdd"></u-icon>
+		<view class="custom-navbar">
+			<view class="left" @click="goBack">
+				<view class="back-button">
+					<u-icon name="arrow-left" color="#333" size="20"></u-icon>
+				</view>
 			</view>
-		</u-navbar>
+			<view class="center">
+				<text class="title">运动详情</text>
+			</view>
+			<view class="right" @click="handleAdd">
+				<view class="add-button">
+					<u-icon name="plus" color="#ffffff" size="20"></u-icon>
+				</view>
+			</view>
+		</view>
 		
 		<!-- 搜索框 -->
 		<view class="search-box">
@@ -18,13 +24,17 @@
 				:show-action="false"
 				placeholder="输入关键字搜索"
 				shape="round"
+				height="120"
 				:clearabled="true"
+				searchIconPosition="right"
+				searchIconColor="#18B566"
+				:searchIconSize="60"
 				@change="handleSearch"
 			></u-search>
 		</view>
 		
 		<!-- 卡路里统计卡片 -->
-		<view class="calorie-card">
+		<view class="calorie-card" style="background-color: #fff5f5;">
 			<view class="calorie-total">
 				<text class="number">1194</text>
 				<text class="unit">kcal</text>
@@ -37,9 +47,11 @@
 			<!-- 图表区域 -->
 			<view class="chart-container">
 				<qiun-data-charts 
-					type="line"
+					type="area"
 					:opts="chartOpts"
 					:chartData="chartData"
+					canvasId="exerciseChart"
+					background="none"
 				/>
 			</view>
 		</view>
@@ -144,39 +156,53 @@ export default {
 		return {
 			searchKeyword: '',
 			chartData: {
-				categories: ['', '', '', '', '', ''],
+				categories: ['20', '26', '32', '38', '44', '50'],
 				series: [{
 					name: '增长',
 					data: [35, 45, 47, 43, 40, 47],
-					color: '#18B566'
+					color: '#42d392'
 				}, {
 					name: '消耗',
 					data: [20, 25, 28, 26, 27, 32],
-					color: '#FF6B6B'
+					color: '#ff6b6b'
 				}]
 			},
 			chartOpts: {
-				color: ["#18B566","#FF6B6B"],
-				padding: [15, 15, 15, 15],
+				padding: [30, 10, 10, 40],
+				background: '#fff5f5',
+				enableScroll: false,
 				legend: {
-					show: true,
-					position: 'bottom',
-					itemGap: 20,
+					show: false
 				},
 				xAxis: {
-					show: true,
-					type: 'category'
+					show: false,
+					type: 'category',
+					boundaryGap: false
 				},
 				yAxis: {
 					show: true,
-					type: 'value'
+					gridType: 'dash',
+					gridColor: '#E3E3E3',
+					splitNumber: 5,
+					format: 'number',
+					min: 20,
+					max: 50,
+					fontSize: 11,
+					color: '#999999',
+					axisLine: false
 				},
 				extra: {
-					line: {
+					area: {
 						type: 'curve',
-						width: 2
+						opacity: 0.15,
+						addLine: true,
+						width: 2,
+						gradient: true,
+						activeType: 'none'
 					}
-				}
+				},
+				width: 650,
+				height: 300
 			}
 		}
 	},
@@ -212,6 +238,9 @@ export default {
 			uni.navigateTo({
 				url: `/pages/sys/exercise/add?type=${type}`
 			})
+		},
+		goBack() {
+			uni.navigateBack()
 		}
 	}
 }
@@ -220,7 +249,61 @@ export default {
 <style lang="scss" scoped>
 .container {
 	min-height: 100vh;
-	background-color: #f5f5f5;
+	background-color: #ffffff;
+	padding: 0 25rpx;
+	
+	.custom-navbar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10rpx 20rpx;
+		background-color: #ffffff;
+		position: relative;
+		height: 120px;
+		
+		.left {
+			.back-button {
+				width: 120rpx;
+				height: 120rpx;
+				background-color: rgb(246, 247, 247);
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+		
+		.center {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			
+			.title {
+				font-size: 45rpx;
+				font-weight: bold;
+				color: #333;
+			}
+		}
+		
+		.right {
+			width: 120rpx;
+			height: 120rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			
+			.add-button {
+				width: 120rpx;
+				height: 120rpx;
+				background-color: #18B566;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+	}
 	
 	.search-box {
 		padding: 20rpx;
@@ -261,8 +344,15 @@ export default {
 		}
 		
 		.chart-container {
-			height: 400rpx;
+			height: 300rpx;
 			width: 100%;
+			margin: 20rpx 0;
+			position: relative;
+			
+			/deep/ .qiun-charts {
+				width: 100%;
+				height: 100%;
+			}
 		}
 	}
 	

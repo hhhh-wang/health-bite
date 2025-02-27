@@ -201,7 +201,6 @@ export default {
 .logo {
 	width: 200rpx;
 	height: 200rpx;
-	background: #ffffff;
 	box-shadow: 0rpx 5rpx 20rpx 5rpx rgba(66, 211, 146, 0.2);
 	border-radius: 50%;
 	margin: 70rpx auto 10rpx auto;
