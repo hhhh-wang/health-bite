@@ -17,29 +17,33 @@
 				<!-- 运动类型选择 -->
 				<view class="form-item">
 					<view class="label">运动类型</view>
+					<view class="type-selector" @click="showTypeSelect = true">
+						<text v-if="selectedTypeName" class="selected-type">{{ selectedTypeName }}</text>
+						<text v-else class="placeholder">请选择运动类型</text>
+						<u-icon name="arrow-right" size="20" color="#666"></u-icon>
+					</view>
 					<u-select
-						v-model="form.type"
+						v-model="showTypeSelect"
 						:list="exerciseTypes"
-						@change="handleTypeChange"
-						placeholder="请选择运动类型"
+						@confirm="handleTypeChange"
+						@cancel="showTypeSelect = false"
 					></u-select>
 				</view>
 				
 				<!-- 运动时长 -->
 				<view class="form-item">
 					<view class="label">运动时长</view>
-					<view class="duration-input">
-						<u-number-box
-							v-model="form.duration"
-							:min="1"
-							:max="300"
-							:step="1"
-							:buttonSize="28"
-							:backgroundColor="'rgb(235, 246, 214)'"
-							:color="'#42d392'"
-						></u-number-box>
-						<text class="unit">分钟</text>
+					<view class="duration-selector" @click="showDurationPicker = true">
+						<text v-if="form.duration" class="selected-duration">{{ formatDuration }}</text>
+						<text v-else class="placeholder">请选择运动时长</text>
+						<u-icon name="arrow-right" size="20" color="#666"></u-icon>
 					</view>
+					<u-select
+						v-model="showDurationPicker"
+						:list="durationList"
+						@confirm="onDurationConfirm"
+						@cancel="showDurationPicker = false"
+					></u-select>
 				</view>
 				
 				<!-- 消耗卡路里 -->
@@ -57,6 +61,7 @@
 					</view>
 				</view>
 				
+
 			
 				<!-- 备注 -->
 				<view class="form-item">
@@ -87,15 +92,6 @@
 				>保存</u-button>
 			</view>
 		</view>
-
-		<!-- 日期选择器 -->
-		<u-calendar
-			:show="showCalendar"
-			@change="handleDateChange"
-			@close="showCalendar = false"
-			mode="single"
-			:defaultDate="form.date"
-		></u-calendar>
 	</view>
 </template>
 
@@ -103,9 +99,32 @@
 export default {
 	data() {
 		return {
+			showDurationPicker: false,
+			durationList: (() => {
+				const list = []
+				// 从5分钟到3小时，每5分钟一个选项
+				for(let i = 5; i <= 180; i += 5) {
+					const hours = Math.floor(i / 60)
+					const minutes = i % 60
+					let label = ''
+					if (hours > 0) {
+						label += `${hours}小时`
+					}
+					if (minutes > 0 || hours === 0) {
+						label += `${minutes}分钟`
+					}
+					list.push({
+						value: i.toString(),
+						label: label
+					})
+				}
+				return list
+			})(),
 			form: {
 				type: '',
-				duration: 30,
+				duration: '',
+				hours: 0,
+				minutes: 30,
 				calories: '',
 				date: '',
 				remark: ''
@@ -125,11 +144,6 @@ export default {
 					required: true,
 					message: '请输入消耗卡路里',
 					trigger: ['change', 'blur']
-				}],
-				date: [{
-					required: true,
-					message: '请选择运动日期',
-					trigger: ['change', 'blur']
 				}]
 			},
 			exerciseTypes: [
@@ -142,19 +156,43 @@ export default {
 				{ value: '7', label: '足球' },
 				{ value: '8', label: '乒乓球' }
 			],
-			showCalendar: false
+			showCalendar: false,
+			showTypeSelect: false,
+			selectedTypeName: ''
+		}
+	},
+	computed: {
+		formatDuration() {
+			const hours = this.form.hours
+			const minutes = this.form.minutes
+			if (hours === 0) {
+				return `${minutes}分钟`
+			}
+			return `${hours}小时${minutes}分钟`
 		}
 	},
 	methods: {
 		goBack() {
 			uni.navigateBack()
 		},
-		handleTypeChange(value) {
+		handleTypeChange(e) {
+			console.log('选择的运动类型:', e)
+			const value = e[0].value
+			const label = e[0].label
 			this.form.type = value
+			this.selectedTypeName = label
+			this.showTypeSelect = false
 		},
 		handleDateChange(e) {
 			this.form.date = `${e.year}-${e.month}-${e.day}`
 			this.showCalendar = false
+		},
+		onDurationConfirm(e) {
+			const totalMinutes = parseInt(e[0].value)
+			this.form.hours = Math.floor(totalMinutes / 60)
+			this.form.minutes = totalMinutes % 60
+			this.form.duration = totalMinutes
+			this.showDurationPicker = false
 		},
 		handleSubmit() {
 			this.$refs.uForm.validate(valid => {
@@ -225,7 +263,24 @@ export default {
 				margin-bottom: 20rpx;
 			}
 			
-			.duration-input, .calorie-input {
+			.duration-selector {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 20rpx 0;
+				
+				.selected-duration {
+					font-size: 28rpx;
+					color: #333;
+				}
+				
+				.placeholder {
+					font-size: 28rpx;
+					color: #999;
+				}
+			}
+			
+			.calorie-input {
 				display: flex;
 				align-items: center;
 				gap: 20rpx;
@@ -245,6 +300,23 @@ export default {
 				.placeholder {
 					color: #999;
 					font-size: 28rpx;
+				}
+			}
+			
+			.type-selector {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 20rpx 0;
+				
+				.selected-type {
+					font-size: 28rpx;
+					color: #333;
+				}
+				
+				.placeholder {
+					font-size: 28rpx;
+					color: #999;
 				}
 			}
 			
