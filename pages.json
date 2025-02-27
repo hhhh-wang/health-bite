@@ -15,7 +15,6 @@
 				"navigationStyle": "custom"
 			}
 		},
-		/* 登录 */
 		{
 			"path": "pages/sys/login/index",
 			"style": {
@@ -40,16 +39,12 @@
 				"navigationBarTitleText": "微信登录"
 			}
 		},
-		
-		/* 主页 */
 		{
 			"path": "pages/sys/home/index",
 			"style": {
 				"navigationBarTitleText": ""
 			}
 		},
-		
-		/* 用户 */
 		{
 			"path": "pages/sys/user/index",
 			"style": {
@@ -101,8 +96,6 @@
 				"navigationBarTitleText": "关于我们"
 			}
 		},
-		
-		/* 消息 */
 		{
 			"path": "pages/sys/msg/index",
 			"style": {
@@ -115,8 +108,6 @@
 				"navigationBarTitleText": "查看详情"
 			}
 		},
-		
-		/* 增删改查例子 */
 		{
 			"path": "pages/testData/form",
 			"style": {
@@ -135,8 +126,6 @@
 				"navigationBarTitleText": "新增编辑"
 			}
 		},
-		
-		/* Common */
 		{
 			"path": "pages/common/webview",
 			"style": {
@@ -165,16 +154,24 @@
 		{
 			"path": "pages/meal/settings/index",
 			"style": {
-			  "navigationStyle": "custom"
+				"navigationStyle": "custom"
 			}
-		  }
+		},
+		{
+			"path": "pages/sys/exercise/detail",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/sys/exercise/add",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		}
 	],
-	"subPackages": [
-		
-	],
-	"preloadRule": {
-		
-	},
+	"subPackages": [],
+	"preloadRule": {},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "JeeSite",
@@ -198,7 +195,6 @@
 				"selectedIconPath": "static/jeesite/tabbar/msg_2.png",
 				"text": "消息"
 			},
-
 			{
 				"pagePath": "pages/sys/user/index",
 				"iconPath": "static/jeesite/tabbar/my_1.png",

@@ -147,7 +147,7 @@
 				</view>
 			</view>
 			<view class="diet-list">
-				<view class="food-item">
+				<view class="food-item" @click="goToExercise">
 					<image src="/static/common/img/sports.png" class="meal-icon"></image>
 					<view class="food-info">
 						<text class="meal-type">运动</text>
@@ -327,6 +327,11 @@ export default {
 		goToSettings() {
 			uni.navigateTo({
 				url: '/pages/meal/settings/index'
+			})
+		},
+		goToExercise() {
+			uni.navigateTo({
+				url: '/pages/sys/exercise/detail'
 			})
 		}
 	}
