@@ -34,7 +34,7 @@
 		</view>
 		
 		<!-- 卡路里统计卡片 -->
-		<view class="calorie-card" style="background-color: #fff5f5;">
+		<view class="calorie-card" style="background-color: rgb(255, 232, 215);">
 			<view class="calorie-total">
 				<text class="number">1194</text>
 				<text class="unit">kcal</text>
@@ -169,7 +169,7 @@ export default {
 			},
 			chartOpts: {
 				padding: [30, 10, 10, 40],
-				background: '#fff5f5',
+				background: 'rgb(255, 232, 215)',
 				enableScroll: false,
 				legend: {
 					show: false
@@ -177,7 +177,8 @@ export default {
 				xAxis: {
 					show: false,
 					type: 'category',
-					boundaryGap: false
+					boundaryGap: false,
+					disabled: true
 				},
 				yAxis: {
 					show: true,
@@ -189,7 +190,9 @@ export default {
 					max: 50,
 					fontSize: 11,
 					color: '#999999',
-					axisLine: false
+					axisLine: false,
+					disabled: true,
+					disableGrid: false
 				},
 				extra: {
 					area: {
@@ -313,7 +316,7 @@ export default {
 		margin: 20rpx;
 		padding: 30rpx;
 		background-color: #ffffff;
-		border-radius: 16rpx;
+		border-radius: 50rpx;
 		box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
 		
 		.calorie-total {
