@@ -19,7 +19,7 @@
 		</view>
 		<view class="text-content">
 			<view class="hello">
-				您好, KOTO
+				您好, 变量人生
 			</view>
 			<view class="weight-tip">
 				你昨天增加了2kg, 继续保持!

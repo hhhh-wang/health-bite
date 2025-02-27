@@ -17,22 +17,7 @@
 			</view>
 		</view>
 		
-		<!-- 搜索框 -->
-		<view class="search-box">
-			<u-search
-				v-model="searchKeyword"
-				:show-action="false"
-				placeholder="输入关键字搜索"
-				shape="round"
-				height="120"
-				:clearabled="true"
-				searchIconPosition="right"
-				searchIconColor="#18B566"
-				:searchIconSize="60"
-				@change="handleSearch"
-			></u-search>
-		</view>
-		
+
 		<!-- 卡路里统计卡片 -->
 		<view class="calorie-card" style="background-color: rgb(255, 232, 215);">
 			<view class="calorie-total">
@@ -105,38 +90,10 @@
 
 		<view class="exercise-title">今日运动</view>
 		<view class="exercise-list">
-			<view class="exercise-item" @click="addExercise('健身')">
-				<image src="/static/common/img/sports/dumbbel.png"></image>
-				<view class="exercise-info">
-					<text class="exercise-name">杠铃</text>
-					<view class="exercise-calories">
-						<text class="exercise-duration">-- 分钟</text>
-						<text>-- 消耗</text>
-					</view>
-				</view>
-				<view class="add-btn">
-					<u-icon name="plus" color="#42d392" size="24"></u-icon>
-				</view>
-			</view>
-
 			<view class="exercise-item" @click="addExercise('跑步')">
 				<image src="/static/common/img/sports/run.png"></image>
 				<view class="exercise-info">
-					<text class="exercise-name">跑步</text>
-					<view class="exercise-calories">
-						<text class="exercise-duration">-- 分钟</text>
-						<text>-- 消耗</text>
-					</view>
-				</view>
-				<view class="add-btn">
-					<u-icon name="plus" color="#42d392" size="24"></u-icon>
-				</view>
-			</view>
-
-			<view class="exercise-item" @click="addExercise('游泳')">
-				<image src="/static/common/img/sports/swim.png"></image>
-				<view class="exercise-info">
-					<text class="exercise-name">游泳</text>
+					<text class="exercise-name">添加运动记录</text>
 					<view class="exercise-calories">
 						<text class="exercise-duration">-- 分钟</text>
 						<text>-- 消耗</text>
@@ -312,9 +269,7 @@ export default {
 		}
 	}
 	
-	.search-box {
-		padding: 20rpx;
-	}
+
 	
 	.calorie-card {
 		margin: 20rpx;
@@ -325,7 +280,7 @@ export default {
 		
 		.calorie-total {
 			text-align: center;
-			margin-bottom: 20rpx;
+			margin-bottom: 15rpx;
 			
 			.number {
 				font-size: 48rpx;
@@ -347,13 +302,13 @@ export default {
 			gap: 20rpx;
 			color: #666;
 			font-size: 28rpx;
-			margin-bottom: 30rpx;
+			margin-bottom: 20rpx;
 		}
 		
 		.chart-container {
 			height: 300rpx;
 			width: 100%;
-			margin: 20rpx 0;
+			margin: 30rpx 0;
 			position: relative;
 			
 			/deep/ .qiun-charts {
