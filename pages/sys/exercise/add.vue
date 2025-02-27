@@ -30,20 +30,22 @@
 					></u-select>
 				</view>
 				
-				<!-- 运动时长 -->
+				<!-- 运动时长 - 使用原生picker组件 -->
 				<view class="form-item">
 					<view class="label">运动时长</view>
-					<view class="duration-selector" @click="showDurationPicker = true">
-						<text v-if="form.duration" class="selected-duration">{{ formatDuration }}</text>
-						<text v-else class="placeholder">请选择运动时长</text>
-						<u-icon name="arrow-right" size="20" color="#666"></u-icon>
-					</view>
-					<u-select
-						v-model="showDurationPicker"
-						:list="durationList"
-						@confirm="onDurationConfirm"
-						@cancel="showDurationPicker = false"
-					></u-select>
+					<picker 
+						mode="multiSelector" 
+						:value="pickerValue" 
+						:range="pickerRange" 
+						@change="onPickerChange" 
+						@cancel="pickerCancel"
+					>
+						<view class="duration-selector">
+							<text v-if="form.duration" class="selected-duration">{{ formatDuration }}</text>
+							<text v-else class="placeholder">请选择运动时长</text>
+							<u-icon name="arrow-right" size="20" color="#666"></u-icon>
+						</view>
+					</picker>
 				</view>
 				
 				<!-- 消耗卡路里 -->
@@ -61,8 +63,6 @@
 					</view>
 				</view>
 				
-
-			
 				<!-- 备注 -->
 				<view class="form-item">
 					<view class="label">备注</view>
@@ -99,27 +99,15 @@
 export default {
 	data() {
 		return {
+			// 原生picker的配置
+			pickerValue: [0, 0, 30, 0], // 默认值索引：[小时索引, "小时"索引, 分钟索引, "分钟"索引]
+			pickerRange: [
+				Array.from({length: 25}, (_, i) => i), // 小时数
+				['小时'], // 小时文本
+				Array.from({length: 60}, (_, i) => i), // 分钟数
+				['分钟'] // 分钟文本
+			],
 			showDurationPicker: false,
-			durationList: (() => {
-				const list = []
-				// 从5分钟到3小时，每5分钟一个选项
-				for(let i = 5; i <= 180; i += 5) {
-					const hours = Math.floor(i / 60)
-					const minutes = i % 60
-					let label = ''
-					if (hours > 0) {
-						label += `${hours}小时`
-					}
-					if (minutes > 0 || hours === 0) {
-						label += `${minutes}分钟`
-					}
-					list.push({
-						value: i.toString(),
-						label: label
-					})
-				}
-				return list
-			})(),
 			form: {
 				type: '',
 				duration: '',
@@ -161,38 +149,53 @@ export default {
 			selectedTypeName: ''
 		}
 	},
+	created() {
+		// 初始化时设置默认值
+		this.updateDuration();
+	},
 	computed: {
 		formatDuration() {
-			const hours = this.form.hours
-			const minutes = this.form.minutes
+			const hours = this.form.hours;
+			const minutes = this.form.minutes;
 			if (hours === 0) {
-				return `${minutes}分钟`
+				return `${minutes}分钟`;
 			}
-			return `${hours}小时${minutes}分钟`
+			return `${hours}小时${minutes}分钟`;
 		}
 	},
 	methods: {
 		goBack() {
-			uni.navigateBack()
+			uni.navigateBack();
 		},
 		handleTypeChange(e) {
-			console.log('选择的运动类型:', e)
-			const value = e[0].value
-			const label = e[0].label
-			this.form.type = value
-			this.selectedTypeName = label
-			this.showTypeSelect = false
+			console.log('选择的运动类型:', e);
+			const value = e[0].value;
+			const label = e[0].label;
+			this.form.type = value;
+			this.selectedTypeName = label;
+			this.showTypeSelect = false;
 		},
 		handleDateChange(e) {
-			this.form.date = `${e.year}-${e.month}-${e.day}`
-			this.showCalendar = false
+			this.form.date = `${e.year}-${e.month}-${e.day}`;
+			this.showCalendar = false;
 		},
-		onDurationConfirm(e) {
-			const totalMinutes = parseInt(e[0].value)
-			this.form.hours = Math.floor(totalMinutes / 60)
-			this.form.minutes = totalMinutes % 60
-			this.form.duration = totalMinutes
-			this.showDurationPicker = false
+		// 更新时长计算
+		updateDuration() {
+			const hours = this.pickerRange[0][this.pickerValue[0]];
+			const minutes = this.pickerRange[2][this.pickerValue[2]];
+			
+			this.form.hours = hours;
+			this.form.minutes = minutes;
+			this.form.duration = hours * 60 + minutes;
+		},
+		// 选择器变化事件
+		onPickerChange(e) {
+			this.pickerValue = e.detail.value;
+			this.updateDuration();
+		},
+		// 选择器取消事件
+		pickerCancel() {
+			console.log('选择器取消');
 		},
 		handleSubmit() {
 			this.$refs.uForm.validate(valid => {
@@ -200,12 +203,12 @@ export default {
 					uni.showToast({
 						title: '保存成功',
 						icon: 'success'
-					})
+					});
 					setTimeout(() => {
-						uni.navigateBack()
-					}, 1500)
+						uni.navigateBack();
+					}, 1500);
 				}
-			})
+			});
 		}
 	}
 }
