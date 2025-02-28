@@ -169,6 +169,12 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/meal/detail/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"subPackages": [],
@@ -188,13 +194,19 @@
 				"pagePath": "pages/sys/home/index",
 				"iconPath": "static/jeesite/tabbar/home_1.png",
 				"selectedIconPath": "static/jeesite/tabbar/home_2.png",
-				"text": "工作台"
+				"text": "首页"
 			},
 			{
-				"pagePath": "pages/sys/msg/index",
+				"pagePath": "pages/meal/detail/index",
 				"iconPath": "static/jeesite/tabbar/msg_1.png",
 				"selectedIconPath": "static/jeesite/tabbar/msg_2.png",
-				"text": "消息"
+				"text": "饮食详情"
+			},
+			{
+				"pagePath": "pages/sys/user/index",
+				"iconPath": "static/jeesite/tabbar/my_1.png",
+				"selectedIconPath": "static/jeesite/tabbar/my_2.png",
+				"text": "数据"
 			},
 			{
 				"pagePath": "pages/sys/user/index",
