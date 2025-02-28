@@ -68,51 +68,30 @@
 		</view>
 
 		<!-- 已完成运动列表 -->
-		<view class="exercise-title">运动数据</view>
-		
-		<view class="exercise-list">       
-			<view class="exercise-item">
-				<image src="/static/common/img/sports/table-tennis.png"></image>
-				<view class="exercise-info">
-					<text class="exercise-name">乒乓球</text>
-                    <view class="exercise-calories">
-                        <text class="exercise-duration">30 分钟</text>
-                        <text>155 消耗</text>
-                    </view>
-				</view>
-				<view class="delete-btn" @click="deleteExercise(1)">
-					<u-icon name="close" size="20"></u-icon>
-				</view>
-			</view>
-			<view class="exercise-item">
-				<image src="/static/common/img/sports/basketball.png"></image>
-				<view class="exercise-info">
-					<text class="exercise-name">篮球</text>
-	
-                    <view class="exercise-calories">
-                        <text class="exercise-duration">30 分钟</text>
-                        <text>155 消耗</text>
-                    </view>
-				</view>
-				<view class="delete-btn" @click="deleteExercise(2)">
-					<u-icon name="close" size="20"></u-icon>
-				</view>
-			</view>
-		</view>
-
-		<view class="exercise-title">今日运动</view>
-		<view class="exercise-list">
-			<view class="exercise-item" @click="addExercise('跑步')">
-				<image src="/static/common/img/sports/run.png"></image>
-				<view class="exercise-info">
-					<text class="exercise-name">添加运动记录</text>
-					<view class="exercise-calories">
-						<text class="exercise-duration">-- 分钟</text>
-						<text>-- 消耗</text>
+		<view class="exercise-title">饮食数据</view>
+		<view class="food-list">       
+			<view class="food-item">
+				<view class="food-basic-info">
+					<image src="/static/common/img/food/hotdog.png" class="food-icon"></image>
+					<view class="food-main-info">
+						<text class="food-name">热狗</text>
+						<text class="food-portion">1份</text>
 					</view>
 				</view>
-				<view class="add-btn">
-					<u-icon name="plus" color="#42d392" size="24"></u-icon>
+				<view class="food-nutrition">
+					<text class="nutrition-item calories">152 kcal</text>
+					<text class="nutrition-item carbs">0 g</text>
+					<text class="nutrition-item fat">8 g</text>
+					<text class="nutrition-item protein">13 g</text>
+				</view>
+				<view class="action-buttons">
+                    <view class="delete-btn">
+						<u-icon name="close" color="#ff4c4c" size="16"></u-icon>
+					</view>
+					<view class="edit-btn">
+						<u-icon name="edit-pen" color="#42d392" size="16"></u-icon>
+					</view>
+
 				</view>
 			</view>
 		</view>
@@ -406,69 +385,102 @@ export default {
 			margin-left: 20rpx;
             margin: 20rpx;
         }
-	.exercise-list {
-        border-radius: 50rpx;
-        padding: 30rpx;
-		.exercise-item {
+	.food-list {
+		padding: 0 20rpx;
+		
+		.food-item {
 			display: flex;
 			align-items: center;
+			justify-content: space-between;
 			padding: 30rpx;
-			border-radius: 50rpx;
-			margin-bottom: 40rpx;
-			position: relative;
-			box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
 			background-color: rgb(235, 246, 214);
-			image {
-				width: 80rpx;
-				height: 80rpx;
-				padding: 15rpx;
-			}
+			border-radius: 30rpx;
+			margin-bottom: 20rpx;
 			
-			/deep/ .exercise-info {
-				flex: 1;
-				margin-left: 20rpx;
-				
-				.exercise-name {
-					font-size: 32rpx;
-					color: #333;
-					font-weight: bold;
-					margin-bottom: 20rpx !important;
-				}
-				
-				.exercise-calories {
-					display: flex;
-					align-items: center;
-					gap: 30rpx;
-					margin-top: 15rpx;
-					
-					.exercise-duration {
-						font-size: 24rpx;
-						color: #666;
-						background-color: #f5f5f5;
-						padding: 4rpx 16rpx;
-						border-radius: 20rpx;
-					}
-					
-					text:last-child {
-						font-size: 24rpx;
-						color: #ff6b6b;
-						font-weight: bold;
-					}
-				}
-			}
-			
-			.delete-btn {
-				width: 44rpx;
-				height: 44rpx;
+			.food-basic-info {
 				display: flex;
 				align-items: center;
-				justify-content: center;
-			
-				border-radius: 50%;
-				margin-left: 20rpx;
+				flex: 1;
 				
-				.u-icon {
-					color: #ff4c4c 
+				.food-icon {
+					width: 80rpx;
+					height: 80rpx;
+					margin-right: 20rpx;
+				}
+				
+				.food-main-info {
+					display: flex;
+					flex-direction: column;
+					
+					.food-name {
+						font-size: 32rpx;
+						color: #333;
+						font-weight: bold;
+						margin-bottom: 20rpx;
+					}
+					
+					.food-portion {
+						font-size: 24rpx;
+						color: #666;
+					}
+				}
+			}
+			
+			.food-nutrition {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end;
+				margin-right: 70rpx;
+				font-weight: bold;
+				min-width: 120rpx;
+				
+				.nutrition-item {
+					font-size: 26rpx;
+					margin-bottom: 8rpx;
+					
+					&.calories {
+						color: #42d392;
+					}
+					
+					&.carbs {
+						color: #ff6b6b;
+					}
+					
+					&.fat {
+						color: #ffa500;
+					}
+					
+					&.protein {
+						color: #8a2be2;
+					}
+				}
+			}
+			
+			.action-buttons {
+				display: flex;
+				flex-direction: column;
+				gap: 25rpx;
+				margin-left: 10rpx;
+
+				.edit-btn, .delete-btn {
+					width: 80rpx;
+					height: 80rpx;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border-radius: 50%;
+					background-color: rgba(255, 255, 255, 0.9);
+					transition: all 0.3s ease;
+					
+					/deep/ .u-icon {
+						transform: scale(1.8);
+						font-weight: bold;
+					}
+					
+					&:active {
+						transform: scale(0.95);
+						opacity: 0.8;
+					}
 				}
 			}
 		}
