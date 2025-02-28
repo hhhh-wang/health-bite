@@ -7,12 +7,15 @@
 					<u-icon name="arrow-left" color="#333" size="20"></u-icon>
 				</view>
 			</view>
+			<view class="center">
+				<text class="title">当前的饮食</text>
+			</view>
 		</view>
 		<!-- 在原有代码后添加新的内容区 -->
 		<view class="content-area">
 			<!-- 当前饮食区域 -->
 			<view class="today-header">
-				<text class="title">当前的饮食</text>
+				<text class="title">饮食区域</text>
 
 			</view>
 			<view class="diet-list-current">
@@ -321,28 +324,49 @@ page {
 	.custom-navbar {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		padding: 10rpx 20rpx;
+		padding: 20rpx 30rpx;
+		background-color: #f8f8f8;
 		position: relative;
+		height: 120rpx;
+		
 		.left {
+			position: relative;
+			z-index: 1;
+			
 			.back-button {
-				width: 120rpx;
-				height: 120rpx;
+				width: 100rpx;
+				height: 100rpx;
 				background-color: rgb(240, 241, 241);
 				border-radius: 50%;
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				transition: all 0.3s ease;
+				
+				&:active {
+					transform: scale(0.95);
+					background-color: rgb(235, 236, 236);
+				}
+			}
+		}
+		
+		.center {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			text-align: center;
+			pointer-events: none;
+			
+			.title {
+				font-size: 36rpx;
+				font-weight: bold;
+				color: #333;
 			}
 		}
 	}
-
-
-
 }
-
-
-
 
 .content {
 	background: transparent;
