@@ -31,15 +31,12 @@
 			</view>
 			
 			<!-- 图表区域 -->
-			<view class="chart-container">
-				<qiun-data-charts 
-					type="line"
-					:opts="chartOpts"
-					:chartData="chartData"
-					canvasId="exerciseChart"
-					background="none"
-				/>
-			</view>
+			<nutrition-chart
+				:meals="meals"
+				:nutritionData="nutritionData"
+				:yAxis="yAxisConfig"
+				canvasId="mealChart"
+			/>
 		</view>
 		
 		<!-- 底部统计数据 -->
@@ -99,82 +96,24 @@
 
 <script>
 export default {
+	components: {
+		'nutrition-chart': () => import('@/components/nutrition-chart/index.vue'),
+		'u-icon': () => import('@/uview-ui/components/u-icon/u-icon.vue')
+	},
 	data() {
 		return {
 			searchKeyword: '',
-			chartData: {
-				categories: ['早餐', '午餐', '晚餐'],
-				series: [{
-					name: '总热量',
-					linearColor: [
-						[0, '#42d392'],
-						[0.25, '#50d89d'],
-						[0.5, '#5edca8'],
-						[0.75, '#6ce0b3'],
-						[1, '#7ae4be']
-					],
-					data: [35, 45, 47]
-				}, {
-					name: '碳水化合物',
-					linearColor: [
-						[0, '#ff6b6b'],
-						[0.25, '#ff7a7a'],
-						[0.5, '#ff8989'],
-						[0.75, '#ff9898'],
-						[1, '#ffa7a7']
-					],
-					data: [20, 25, 28]
-				}, {
-					name: '脂肪',
-					linearColor: [
-						[0, '#ffa500'],
-						[0.33, '#ffb733'],
-						[0.66, '#ffc966'],
-						[1, '#ffdb99']
-					],
-					data: [15, 18, 22]
-				}, {
-					name: '蛋白质',
-					linearColor: [
-						[0, '#8a2be2'],
-						[0.33, '#9f55e7'],
-						[0.66, '#b47fec'],
-						[1, '#c9a9f1']
-					],
-					data: [10, 15, 18]
-				}]
-			},
-			chartOpts: {
-				padding: [15, 10, 0, 15],
-				background: 'rgb(255, 232, 215)',
-				enableScroll: false,
-				dataLabel: false,
-				dataPointShape: false,
-				legend: {
-					show: false
-				},
-				xAxis: {
-					disableGrid: true,
-					type: 'category'
-				},
-				yAxis: {
-					gridType: "dash",
-					dashLength: 2,
-					data: [{
-						min: 0,
-						max: 150
-					}]
-				},
-				extra: {
-					line: {
-						type: "curve",
-						width: 2,
-						activeType: "hollow",
-						linearType: "custom"
-					}
-				},
-				width: 750,
-				height: 300
+			// 营养数据
+			meals: ['午餐', '晚餐'],
+			nutritionData: [
+				[ 135, 140],  // 总热量
+				[90, 95],    // 碳水化合物
+				[ 50, 55],    // 脂肪
+				[25, 30]     // 蛋白质
+			],
+			yAxisConfig: {
+				min: 0,
+				max: 150
 			}
 		}
 	},
