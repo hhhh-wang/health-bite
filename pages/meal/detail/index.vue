@@ -91,7 +91,6 @@
 					<view class="edit-btn">
 						<u-icon name="edit-pen" color="#42d392" size="16"></u-icon>
 					</view>
-
 				</view>
 			</view>
 		</view>
@@ -368,14 +367,32 @@ export default {
 				font-size: 24rpx;
 				margin-left: 10rpx;
 			}
+
+			// 总热量 - 绿色
+			&:nth-child(1) .value {
+				color: #42d392;
+			}
+
+			// 碳水化合物 - 红色
+			&:nth-child(2) .value {
+				color: #ff6b6b;
+			}
+
+			// 脂肪 - 橙色
+			&:nth-child(3) .value {
+				color: #ffa500;
+			}
+
+			// 蛋白质 - 紫色
+			&:nth-child(4) .value {
+				color: #8a2be2;
+			}
 		}
 		
-		.increase .value {
-			color: #18B566;
-		}
-		
+		// 移除原有的颜色类
+		.increase .value,
 		.decrease .value {
-			color: #FF6B6B;
+			color: inherit;
 		}
 	}
 	.exercise-title {
@@ -394,7 +411,7 @@ export default {
 			justify-content: space-between;
 			padding: 30rpx;
 			background-color: rgb(235, 246, 214);
-			border-radius: 30rpx;
+			border-radius: 50rpx;
 			margin-bottom: 20rpx;
 			
 			.food-basic-info {
@@ -470,16 +487,33 @@ export default {
 					justify-content: center;
 					border-radius: 50%;
 					background-color: rgba(255, 255, 255, 0.9);
-					transition: all 0.3s ease;
+					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+					box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
+					position: relative;
+					overflow: hidden;
 					
+				
 					/deep/ .u-icon {
 						transform: scale(1.8);
 						font-weight: bold;
+						transition: all 0.2s ease;
 					}
 					
 					&:active {
-						transform: scale(0.95);
-						opacity: 0.8;
+						transform: scale(0.92);
+						box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.2);
+					}
+				}
+				
+				.edit-btn {
+					&:active {
+						background-color: rgba(66, 211, 146, 0.1);
+					}
+				}
+				
+				.delete-btn {
+					&:active {
+						background-color: rgba(255, 76, 76, 0.1);
 					}
 				}
 			}
