@@ -91,6 +91,11 @@
 				</view>
 			</view>
 		</view>
+
+		<view class="scan-button">
+			<u-icon name="scan" color="#ffffff" size="50"></u-icon>
+			<text class="scan-text">扫描添加饮食</text>
+		</view>
 	</view>
 </template>
 
@@ -186,6 +191,8 @@ export default {
 	min-height: 100vh;
 	background-color: #ffffff;
 	padding: 0 25rpx;
+	padding-bottom: 40rpx;
+	position: relative;
 	
 	.custom-navbar {
 		display: flex;
@@ -357,6 +364,7 @@ export default {
         }
 	.food-list {
 		padding: 0 20rpx;
+		margin-bottom: 40rpx;
 		
 		.food-item {
 			display: flex;
@@ -480,5 +488,30 @@ export default {
 			margin-bottom: 20rpx;
 			padding: 0 20rpx;
 		}
+
+	.scan-button {
+		width: 200rpx;
+		height: 200rpx;
+		background: linear-gradient(135deg, #42d392 0%, #18B566 100%);
+		border-radius: 50%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		box-shadow: 0 4rpx 16rpx rgba(66, 211, 146, 0.4);
+		margin-left: auto;
+		margin-right:100rpx;
+		
+		.scan-text {
+			font-size: 25rpx;
+			color: #ffffff;
+			margin-top: 6rpx;
+		}
+		
+		&:active {
+			transform: scale(0.95);
+			box-shadow: 0 2rpx 8rpx rgba(66, 211, 146, 0.3);
+		}
+	}
 }
 </style> 
