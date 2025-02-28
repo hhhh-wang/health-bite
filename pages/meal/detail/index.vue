@@ -33,7 +33,7 @@
 			<!-- 图表区域 -->
 			<view class="chart-container">
 				<qiun-data-charts 
-					type="area"
+					type="line"
 					:opts="chartOpts"
 					:chartData="chartData"
 					canvasId="exerciseChart"
@@ -103,63 +103,77 @@ export default {
 		return {
 			searchKeyword: '',
 			chartData: {
-				categories: ['6:00', '9:00', '12:00', '15:00', '18:00', '21:00'],
+				categories: ['早餐', '午餐', '晚餐'],
 				series: [{
 					name: '总热量',
-					data: [35, 45, 47, 43, 48, 52],
-					color: '#42d392'
+					linearColor: [
+						[0, '#42d392'],
+						[0.25, '#50d89d'],
+						[0.5, '#5edca8'],
+						[0.75, '#6ce0b3'],
+						[1, '#7ae4be']
+					],
+					data: [35, 45, 47]
 				}, {
 					name: '碳水化合物',
-					data: [20, 25, 28, 32, 35, 38],
-					color: '#ff6b6b'
+					linearColor: [
+						[0, '#ff6b6b'],
+						[0.25, '#ff7a7a'],
+						[0.5, '#ff8989'],
+						[0.75, '#ff9898'],
+						[1, '#ffa7a7']
+					],
+					data: [20, 25, 28]
 				}, {
 					name: '脂肪',
-					data: [15, 18, 22, 25, 28, 30],
-					color: '#ffa500'
+					linearColor: [
+						[0, '#ffa500'],
+						[0.33, '#ffb733'],
+						[0.66, '#ffc966'],
+						[1, '#ffdb99']
+					],
+					data: [15, 18, 22]
 				}, {
 					name: '蛋白质',
-					data: [10, 15, 18, 20, 22, 25],
-					color: '#8a2be2'
+					linearColor: [
+						[0, '#8a2be2'],
+						[0.33, '#9f55e7'],
+						[0.66, '#b47fec'],
+						[1, '#c9a9f1']
+					],
+					data: [10, 15, 18]
 				}]
 			},
 			chartOpts: {
-				padding: [30, 10, 10, 40],
+				padding: [15, 10, 0, 15],
 				background: 'rgb(255, 232, 215)',
 				enableScroll: false,
+				dataLabel: false,
+				dataPointShape: false,
 				legend: {
 					show: false
 				},
 				xAxis: {
-					show: false,
-					type: 'category',
-					boundaryGap: false,
-					disabled: true
+					disableGrid: true,
+					type: 'category'
 				},
 				yAxis: {
-					show: false,
-					gridType: 'dash',
-					gridColor: '#E3E3E3',
-					splitNumber: 5,
-					format: 'number',
-					min: 20,
-					max: 50,
-					fontSize: 11,
-					color: '#999999',
-					axisLine: false,
-					disabled: true,
-					disableGrid: true
+					gridType: "dash",
+					dashLength: 2,
+					data: [{
+						min: 0,
+						max: 150
+					}]
 				},
 				extra: {
-					area: {
-						type: 'curve',
-						opacity: 0.15,
-						addLine: true,
+					line: {
+						type: "curve",
 						width: 2,
-						gradient: true,
-						activeType: 'none'
+						activeType: "hollow",
+						linearType: "custom"
 					}
 				},
-				width: 650,
+				width: 750,
 				height: 300
 			}
 		}
