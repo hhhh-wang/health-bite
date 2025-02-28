@@ -1,8 +1,13 @@
 <template>
 	<view class="container">
 		<!-- 顶部区域 -->
-
-
+		<view class="custom-navbar">
+			<view class="left" @click="goBack">
+				<view class="back-button">
+					<u-icon name="arrow-left" color="#333" size="20"></u-icon>
+				</view>
+			</view>
+		</view>
 		<!-- 在原有代码后添加新的内容区 -->
 		<view class="content-area">
 			<!-- 当前饮食区域 -->
@@ -270,6 +275,33 @@ export default {
 			uni.navigateTo({
 				url: '/pages/meal/settings/index'
 			})
+		},
+		goBack() {
+			// 获取当前页面栈
+			const pages = getCurrentPages()
+			if (pages.length > 1) {
+				// 如果有上一页，则正常返回
+				uni.navigateBack({
+					delta: 1,
+					animationType: 'pop-out',
+					animationDuration: 300,
+					success: () => {
+						console.log('返回成功')
+					},
+					fail: (err) => {
+						console.error('返回失败:', err)
+						// 如果返回失败，则重定向到首页
+						uni.switchTab({
+							url: '/pages/sys/home/index'
+						})
+					}
+				})
+			} else {
+				// 如果没有上一页，则重定向到首页
+				uni.switchTab({
+					url: '/pages/sys/home/index'
+				})
+			}
 		}
 	}
 };
@@ -285,6 +317,28 @@ page {
 .container {
 	padding: 40rpx;
 	background-color: #f8f8f8;
+	
+	.custom-navbar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10rpx 20rpx;
+		position: relative;
+		.left {
+			.back-button {
+				width: 120rpx;
+				height: 120rpx;
+				background-color: rgb(240, 241, 241);
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+	}
+
+
+
 }
 
 
