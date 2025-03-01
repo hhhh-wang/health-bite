@@ -10,11 +10,7 @@
 			<view class="center">
 				<text class="title">饮食详情</text>
 			</view>
-			<view class="right" @click="handleAdd">
-				<view class="add-button">
-					<u-icon name="plus" color="#ffffff" size="20"></u-icon>
-				</view>
-			</view>
+
 		</view>
 		
 
@@ -228,23 +224,7 @@ export default {
 			}
 		}
 		
-		.right {
-			width: 120rpx;
-			height: 120rpx;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			
-			.add-button {
-				width: 120rpx;
-				height: 120rpx;
-				background-color: #18B566;
-				border-radius: 50%;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-		}
+		
 	}
 	
 
