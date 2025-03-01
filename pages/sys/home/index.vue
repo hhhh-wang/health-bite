@@ -354,18 +354,22 @@ page {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: 40rpx;
-	padding: 20rpx;
+	margin-bottom: calc(4vh);
+	padding: calc(2vh) calc(2vw);
 	
 	.avatar {
-		width: 120rpx;
-		height: 120rpx;
+		width: calc(20vw);
+		height: calc(20vw);
+		min-width: 80rpx;
+		min-height: 80rpx;
+		max-width: 120rpx;
+		max-height: 120rpx;
 		border-radius: 50%;
 		overflow: hidden;
 		
 		image {
-			width: 120rpx;
-			height: 120rpx;
+			width: 100%;
+			height: 100%;
 			border-radius: 50%;
 		}
 	}
@@ -377,15 +381,19 @@ page {
 		align-items: center;
 		
 		.date-text {
-			font-size: 32rpx;
+			font-size: clamp(40rpx, 3.2vw, 32rpx);
 			font-weight: bold;
 			color: #333;
 		}
 	}
 	
 	.date-picker {
-		width: 120rpx;
-		height: 120rpx;
+		width: calc(20vw);
+		height: calc(20vw);
+		min-width: 80rpx;
+		min-height: 80rpx;
+		max-width: 120rpx;
+		max-height: 120rpx;
 		border-radius: 50%;
 		background: #42d392;
 		display: flex;
