@@ -387,7 +387,7 @@ export default {
 		}
 	}
 	.scan-buttons{
-		
+
 		.scan-btn {
 			position: fixed;
 			bottom: calc(15vh);
@@ -441,75 +441,114 @@ export default {
 		z-index: 20;
 		
 		.food-item {
-			background-color: #ffffff;
-			border-radius: 50rpx;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 			padding: 30rpx;
-			margin-bottom: 40rpx;
-			position: relative;
-			box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+			background-color: rgb(235, 246, 214);
+			border-radius: 50rpx;
+			margin-bottom: 20rpx;
 			
 			.food-basic-info {
 				display: flex;
 				align-items: center;
+				flex: 1;
 				
 				.food-icon {
 					width: 80rpx;
 					height: 80rpx;
-					padding: 15rpx;
+					margin-right: 20rpx;
 				}
 				
 				.food-main-info {
-					flex: 1;
-					margin-left: 20rpx;
+					display: flex;
+					flex-direction: column;
 					
 					.food-name {
 						font-size: 32rpx;
 						color: #333;
 						font-weight: bold;
-						margin-bottom: 20rpx !important;
+						margin-bottom: 20rpx;
 					}
 					
 					.food-portion {
 						font-size: 24rpx;
 						color: #666;
-						background-color: #f5f5f5;
-						padding: 4rpx 16rpx;
-						border-radius: 20rpx;
 					}
 				}
 			}
 			
 			.food-nutrition {
 				display: flex;
-				align-items: center;
-				gap: 30rpx;
-				margin-top: 15rpx;
+				flex-direction: column;
+				align-items: flex-end;
+				margin-right: 70rpx;
+				font-weight: bold;
+				min-width: 120rpx;
 				
 				.nutrition-item {
-					font-size: 24rpx;
-					color: #666;
+					font-size: 26rpx;
+					margin-bottom: 8rpx;
 					
 					&.calories {
+						color: #42d392;
+					}
+					
+					&.carbs {
 						color: #ff6b6b;
-						font-weight: bold;
+					}
+					
+					&.fat {
+						color: #ffa500;
+					}
+					
+					&.protein {
+						color: #8a2be2;
 					}
 				}
 			}
 			
 			.action-buttons {
-				position: absolute;
-				right: 30rpx;
-				top: 50%;
-				transform: translateY(-50%);
-				
-				.add-btn {
-					width: 44rpx;
-					height: 44rpx;
+				display: flex;
+				flex-direction: column;
+				gap: 25rpx;
+				margin-left: 10rpx;
+
+				.edit-btn, .delete-btn {
+					width: 80rpx;
+					height: 80rpx;
 					display: flex;
 					align-items: center;
 					justify-content: center;
 					border-radius: 50%;
-					margin-left: 20rpx;
+					background-color: rgba(255, 255, 255, 0.9);
+					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+					box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
+					position: relative;
+					overflow: hidden;
+					
+					/deep/ .u-icon {
+						transform: scale(1.8);
+						font-weight: bold;
+						transition: all 0.2s ease;
+					}
+					
+					&:active {
+						transform: scale(0.92);
+						box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.2);
+					}
+				}
+				
+				.edit-btn {
+					&:active {
+						background-color: rgba(66, 211, 146, 0.1);
+					}
+				}
+				
+				.delete-btn {
+					&:active {
+						background-color: rgba(255, 76, 76, 0.1);
+					}
 				}
 			}
 		}
