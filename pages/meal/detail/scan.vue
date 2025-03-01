@@ -2,7 +2,7 @@
 	<view class="container">
 		<!-- 顶部导航栏 -->
 		<view class="custom-navbar">
-			<view class="left" @click="goBack">
+			<view class="left" @click="handleBack">
 				<view class="back-button">
 					<u-icon name="arrow-left" color="#fffff" size="40"></u-icon>
 				</view>
@@ -34,15 +34,39 @@
 			</camera>
 		</view>
 		
-		<!-- 扫描按钮 -->
-		<view class="scan-btn" @click="handleScan">
-			<u-icon name="camera" color="#ffffff" size="40"></u-icon>
+		<!-- 扫描按钮组 -->
+		<view class="scan-buttons">
+			<view class="scan-btn" @click="handleScan">
+				<u-icon name="camera" color="#ffffff" size="40"></u-icon>
+			</view>
+			<view class="album-btn" @click="handleAlbum">
+				<u-icon name="photo" color="#ffffff" size="40"></u-icon>
+			</view>
 		</view>
-		
-		<view class="album-btn" @click="handleAlbum">
-			<u-icon name="photo" color="#ffffff" size="60"></u-icon>
+
+		<!-- 扫描结果卡片 -->
+		<view class="scan-result" v-if="showScanResult">
+			<view class="food-item">
+				<view class="food-basic-info">
+					<image src="/static/common/img/food/hotdog.png" class="food-icon"></image>
+					<view class="food-main-info">
+						<text class="food-name">热狗</text>
+						<text class="food-portion">1份</text>
+					</view>
+				</view>
+				<view class="food-nutrition">
+					<text class="nutrition-item calories">152 kcal</text>
+					<text class="nutrition-item carbs">0 g</text>
+					<text class="nutrition-item fat">8 g</text>
+					<text class="nutrition-item protein">13 g</text>
+				</view>
+				<view class="action-buttons">
+					<view class="add-btn" @click="handleAdd">
+						<u-icon name="plus" color="#42d392" size="40"></u-icon>
+					</view>
+				</view>
+			</view>
 		</view>
-	
 	</view>
 </template>
 
@@ -53,7 +77,9 @@ export default {
 	data() {
 		return {
 			isFlashOn: false,
-			flashMode: 'off' // 闪光灯模式：off-关闭，torch-常亮
+			flashMode: 'off',
+			showScanResult: true, // 控制扫描结果的显示
+			scanResult: null // 存储扫描结果数据
 		}
 	},
 	methods: {
@@ -110,13 +136,13 @@ export default {
 				duration: 1500
 			});
 			
-			// TODO: 在这里添加扫描识别的逻辑
 			const camera = uni.createCameraContext();
 			camera.takePhoto({
 				quality: 'high',
 				success: (res) => {
 					console.log('拍照成功：', res.tempImagePath);
-					// TODO: 处理拍摄的图片
+					// 显示扫描结果
+					this.showScanResult = true;
 					uni.showToast({
 						title: '扫描成功',
 						icon: 'success'
@@ -130,6 +156,20 @@ export default {
 					});
 				}
 			});
+		},
+		
+		// 添加到饮食记录
+		handleAdd() {
+			// TODO: 处理添加逻辑
+			uni.showToast({
+				title: '已添加到饮食记录',
+				icon: 'success'
+			});
+			
+			// 添加成功后返回上一页
+			setTimeout(() => {
+				this.handleBack();
+			}, 1500);
 		}
 	},
 	onLoad() {
@@ -346,47 +386,133 @@ export default {
 			}
 		}
 	}
-	
-	.scan-btn {
-		position: fixed;
-		bottom: calc(15vh);
-		left: 50%;
-		transform: translateX(-50%);
-		width: calc(12vw);
-		height: calc(12vw);
-		min-width: 120rpx;
-		min-height: 120rpx;
-		max-width: 180rpx;
-		max-height: 180rpx;
-		background-color: #42d392;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		z-index: 10;
-		box-shadow: 0 4rpx 16rpx rgba(66, 211, 146, 0.4);
-		transition: all 0.3s ease;
+	.scan-buttons{
 		
-		&:active {
-			transform: translateX(-50%) scale(0.95);
-			background-color: #3bc185;
+		.scan-btn {
+			position: fixed;
+			bottom: calc(15vh);
+			left: 50%;
+			transform: translateX(-50%);
+			width: calc(12vw);
+			height: calc(12vw);
+			min-width: 120rpx;
+			min-height: 120rpx;
+			max-width: 180rpx;
+			max-height: 180rpx;
+			background-color: #42d392;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 10;
+			box-shadow: 0 4rpx 16rpx rgba(66, 211, 146, 0.4);
+			transition: all 0.3s ease;
+			
+			&:active {
+				transform: translateX(-50%) scale(0.95);
+				background-color: #3bc185;
+			}
+	}
+		
+		.album-btn {
+			position: fixed;
+			bottom: calc(15vh);
+			right: calc(8vw);
+			z-index: 10;
+			width: calc(8vw);
+			height: calc(8vw);
+			min-width: 80rpx;
+			min-height: 80rpx;
+			max-width: 120rpx;
+			max-height: 120rpx;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 		}
 	}
-	
-	.album-btn {
+
+
+	.scan-result {
 		position: fixed;
-		bottom: calc(15vh);
-		right: calc(8vw);
-		z-index: 10;
-		width: calc(8vw);
-		height: calc(8vw);
-		min-width: 80rpx;
-		min-height: 80rpx;
-		max-width: 120rpx;
-		max-height: 120rpx;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 90%;
+		z-index: 20;
+		
+		.food-item {
+			background-color: #ffffff;
+			border-radius: 50rpx;
+			padding: 30rpx;
+			margin-bottom: 40rpx;
+			position: relative;
+			box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+			
+			.food-basic-info {
+				display: flex;
+				align-items: center;
+				
+				.food-icon {
+					width: 80rpx;
+					height: 80rpx;
+					padding: 15rpx;
+				}
+				
+				.food-main-info {
+					flex: 1;
+					margin-left: 20rpx;
+					
+					.food-name {
+						font-size: 32rpx;
+						color: #333;
+						font-weight: bold;
+						margin-bottom: 20rpx !important;
+					}
+					
+					.food-portion {
+						font-size: 24rpx;
+						color: #666;
+						background-color: #f5f5f5;
+						padding: 4rpx 16rpx;
+						border-radius: 20rpx;
+					}
+				}
+			}
+			
+			.food-nutrition {
+				display: flex;
+				align-items: center;
+				gap: 30rpx;
+				margin-top: 15rpx;
+				
+				.nutrition-item {
+					font-size: 24rpx;
+					color: #666;
+					
+					&.calories {
+						color: #ff6b6b;
+						font-weight: bold;
+					}
+				}
+			}
+			
+			.action-buttons {
+				position: absolute;
+				right: 30rpx;
+				top: 50%;
+				transform: translateY(-50%);
+				
+				.add-btn {
+					width: 44rpx;
+					height: 44rpx;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border-radius: 50%;
+					margin-left: 20rpx;
+				}
+			}
+		}
 	}
 }
 
