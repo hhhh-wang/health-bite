@@ -410,19 +410,22 @@ page {
 }
 
 .text-content {
-	margin-bottom: 40rpx;
+	margin: 40rpx 20rpx;  // 改用上下左右margin确保边距自适应
 	text-align: center;
-	display: block;
+	display: flex;          // 改用flex布局
+	flex-direction: column; // 垂直方向排列
+	justify-content: center;// 居中对齐
+	width: auto;           // 自适应宽度
 	
 	.hello {
-		font-size: 50rpx;
+		font-size: calc(40rpx + 2vw); // 使用calc和vw使字体大小自适应
 		font-weight: bold;
 		color: #333;
-		margin-bottom: 30rpx;
+		margin-bottom: 4vh;  // 使用vh单位使间距自适应
 	}
 	
 	.weight-tip {
-		font-size: 28rpx;
+		font-size: calc(24rpx + 1vw); // 使用calc和vw使字体大小自适应
 		font-weight: bold;
 		color: #666;
 	}
