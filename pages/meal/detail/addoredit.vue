@@ -1,0 +1,304 @@
+<template>
+	<view class="container">
+		<!-- 顶部导航栏 -->
+		<view class="custom-navbar">
+			<view class="left" @click="handleBack">
+				<view class="back-button">
+					<u-icon name="arrow-left" color="#333" size="20"></u-icon>
+				</view>
+			</view>
+			<view class="center">
+				<text class="title">{{ isEdit ? '编辑饮食' : '添加饮食' }}</text>
+			</view>
+		</view>
+		
+		<view class="form-container">
+			<u-form :model="form" ref="uForm" :rules="rules">
+				<!-- 食物名称 -->
+				<view class="form-item">
+					<view class="label">食物名称</view>
+					<u-input
+						v-model="form.name"
+						type="text"
+						placeholder="请输入食物名称"
+						:border="false"
+					></u-input>
+				</view>
+				
+				<!-- 重量和份数 -->
+				<view class="form-group">
+					<view class="form-item half">
+						<view class="label">重量(g)</view>
+						<u-input
+							v-model="form.weight"
+							type="number"
+							placeholder="请输入重量"
+							:border="false"
+						></u-input>
+					</view>
+					<view class="form-item half">
+						<view class="label">份数</view>
+						<u-input
+							v-model="form.portions"
+							type="number"
+							placeholder="请输入份数"
+							:border="false"
+						></u-input>
+					</view>
+				</view>
+				
+				<!-- 卡路里 -->
+				<view class="form-item">
+					<view class="label">卡路里</view>
+					<u-input
+						v-model="form.calories"
+						type="number"
+						placeholder="请输入卡路里"
+						:border="false"
+					>
+						<text slot="suffix" class="unit">kcal</text>
+					</u-input>
+				</view>
+				
+				<!-- 营养成分 -->
+				<view class="nutrition-title">营养成分</view>
+				<view class="nutrition-form">
+					<view class="form-item">
+						<view class="label">总热量</view>
+						<u-input
+							v-model="form.totalCalories"
+							type="number"
+							placeholder="请输入总热量"
+							:border="false"
+						>
+							<text slot="suffix" class="unit">kcal</text>
+						</u-input>
+					</view>
+					
+					<view class="form-item">
+						<view class="label">碳水化合物</view>
+						<u-input
+							v-model="form.carbs"
+							type="number"
+							placeholder="请输入碳水化合物含量"
+							:border="false"
+						>
+							<text slot="suffix" class="unit">g</text>
+						</u-input>
+					</view>
+					
+					<view class="form-item">
+						<view class="label">脂肪</view>
+						<u-input
+							v-model="form.fat"
+							type="number"
+							placeholder="请输入脂肪含量"
+							:border="false"
+						>
+							<text slot="suffix" class="unit">g</text>
+						</u-input>
+					</view>
+					
+					<view class="form-item">
+						<view class="label">蛋白质</view>
+						<u-input
+							v-model="form.protein"
+							type="number"
+							placeholder="请输入蛋白质含量"
+							:border="false"
+						>
+							<text slot="suffix" class="unit">g</text>
+						</u-input>
+					</view>
+				</view>
+			</u-form>
+			
+			<!-- 保存按钮 -->
+			<view class="submit-btn">
+				<u-button 
+					type="primary" 
+					@click="handleSubmit"
+					:customStyle="{
+						background: '#42d392',
+						color: '#ffffff',
+						borderRadius: '50rpx',
+						height: '90rpx',
+						fontSize: '32rpx'
+					}"
+				>保存</u-button>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+import { navigateBack } from '@/common/utils/navigate';
+
+export default {
+	components: {
+		'u-icon': () => import('@/uview-ui/components/u-icon/u-icon.vue')
+	},
+	data() {
+		return {
+			isEdit: false, // 是否是编辑模式
+			id: '', // 编辑时的记录ID
+			form: {
+				name: '',
+				weight: '',
+				portions: '1',
+				calories: '',
+				totalCalories: '',
+				carbs: '',
+				fat: '',
+				protein: ''
+			},
+			rules: {
+				name: [{
+					required: true,
+					message: '请输入食物名称',
+					trigger: ['change', 'blur']
+				}],
+				weight: [{
+					required: true,
+					message: '请输入重量',
+					trigger: ['change', 'blur']
+				}],
+				calories: [{
+					required: true,
+					message: '请输入卡路里',
+					trigger: ['change', 'blur']
+				}]
+			}
+		}
+	},
+	onLoad(options) {
+		if (options.id) {
+			this.isEdit = true;
+			this.id = options.id;
+			this.loadFoodData();
+		}
+	},
+	methods: {
+		handleBack() {
+			navigateBack({
+				redirectUrl: '/pages/meal/detail/index',
+				isTab: true
+			});
+		},
+		loadFoodData() {
+			// TODO: 根据ID加载食物数据
+			if (this.id) {
+				// 这里添加获取数据的逻辑
+			}
+		},
+		handleSubmit() {
+			this.$refs.uForm.validate(valid => {
+				if (valid) {
+					// TODO: 提交表单数据
+					uni.showToast({
+						title: this.isEdit ? '修改成功' : '添加成功',
+						icon: 'success'
+					});
+					setTimeout(() => {
+						uni.navigateBack();
+					}, 1500);
+				}
+			});
+		}
+	}
+}
+</script>
+
+<style lang="scss" scoped>
+.container {
+	min-height: 100vh;
+	background-color: #ffffff;
+	padding: 0 25rpx;
+	
+	.custom-navbar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10rpx 20rpx;
+		background-color: #ffffff;
+		position: relative;
+		height: 120px;
+		
+		.left {
+			.back-button {
+				width: 120rpx;
+				height: 120rpx;
+				background-color: rgb(246, 247, 247);
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+		
+		.center {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			
+			.title {
+				font-size: 45rpx;
+				font-weight: bold;
+				color: #333;
+			}
+		}
+	}
+	
+	.form-container {
+		padding: 40rpx;
+		
+		.form-item {
+			background-color: rgb(240, 241, 241);
+			border-radius: 50rpx;
+			padding: 30rpx;
+			margin-bottom: 30rpx;
+			
+			.label {
+				font-size: 30rpx;
+				color: #333;
+				font-weight: bold;
+				margin-bottom: 20rpx;
+			}
+			
+			.unit {
+				font-size: 28rpx;
+				color: #666;
+				margin-left: 10rpx;
+			}
+		}
+		
+		.form-group {
+			display: flex;
+			gap: 20rpx;
+			
+			.form-item.half {
+				flex: 1;
+			}
+		}
+		
+		.nutrition-title {
+			font-size: 32rpx;
+			font-weight: bold;
+			color: #333;
+			margin: 40rpx 0 20rpx;
+			padding-left: 30rpx;
+		}
+		
+		.nutrition-form {
+			.form-item {
+				background-color: rgb(235, 246, 214);
+			}
+		}
+		
+		.submit-btn {
+			margin-top: 60rpx;
+		}
+	}
+}
+</style> 

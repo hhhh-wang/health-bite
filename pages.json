@@ -175,6 +175,12 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/meal/detail/addoredit",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"subPackages": [],

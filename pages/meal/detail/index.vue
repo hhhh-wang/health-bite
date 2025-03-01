@@ -103,7 +103,9 @@
 </template>
 
 <script>
+import { navigateBack } from '@/common/utils/navigate';
 export default {
+	
 	components: {
 		'nutrition-chart': () => import('@/components/nutrition-chart/index.vue'),
 		'u-icon': () => import('@/uview-ui/components/u-icon/u-icon.vue')
@@ -159,31 +161,10 @@ export default {
 			})
 		},
 		goBack() {
-			// 获取当前页面栈
-			const pages = getCurrentPages()
-			if (pages.length > 1) {
-				// 如果有上一页，则正常返回
-				uni.navigateBack({
-					delta: 1,
-					animationType: 'pop-out',
-					animationDuration: 300,
-					success: () => {
-						console.log('返回成功')
-					},
-					fail: (err) => {
-						console.error('返回失败:', err)
-						// 如果返回失败，则重定向到首页
-						uni.switchTab({
-							url: '/pages/sys/home/index'
-						})
-					}
-				})
-			} else {
-				// 如果没有上一页，则重定向到首页
-				uni.switchTab({
-					url: '/pages/sys/home/index'
-				})
-			}
+			navigateBack({
+				redirectUrl: '/pages/sys/home/index',
+				isTab: true
+			});
 		},
 		handleScan() {
 			uni.scanCode({
@@ -205,7 +186,12 @@ export default {
 		},
 		handleManualAdd() {
 			uni.navigateTo({
-				url: '/pages/meal/add/index'
+				url: '/pages/meal/detail/addoredit'
+			});
+		},
+		handleEdit(id) {
+			uni.navigateTo({
+				url: `/pages/meal/detail/addoredit?id=${id}`
 			});
 		}
 	}
