@@ -439,15 +439,16 @@ page {
 		position: relative;
 		display: flex;
 		justify-content: center;
-		margin: 60rpx 0;
+		margin: 4vh 0;  // 改用vh单位
 		background-color: rgb(235, 246, 214);
 		border-radius: 50rpx;
-		padding: 40rpx;
+		padding: calc(20rpx + 1.5vh);  // 自适应内边距
 		overflow: hidden;
 		
 		.progress-canvas {
-			width: 610rpx;
-			height: 400rpx;
+			width: 90vw;  // 改用vw使宽度自适应
+			max-width: 700rpx; // 设置最大宽度
+			height: calc(200rpx + 15vh);  // 高度自适应
 			display: block;
 		}
 		
@@ -457,11 +458,11 @@ page {
 			left: 50%;
 			transform: translate(-50%, -50%);
 			text-align: center;
+			width: 90%;  // 确保内容区域自适应
 			
 			.fire-icon {
-				font-size: 40rpx;
-				color: #ff9500;
-				margin-bottom: 20rpx;
+				font-size: calc(32rpx + 1vw);  // 图标大小自适应
+				margin-bottom: 2vh;  // 间距自适应
 				display: block;
 			}
 			
@@ -469,25 +470,22 @@ page {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-				gap: 8rpx;
+				gap: 1vh;  // 使用vh单位
 				
 				.unit {
-					font-size: 39rpx;
-					color: #666;
-					line-height: 1;
+					font-size: calc(32rpx + 0.8vw);
+					line-height: 1.2;
 				}
 				
 				.value {
-					font-size: 60rpx;
-					color: #333;
+					font-size: calc(48rpx + 1.5vw);
 					font-weight: 700;
 					line-height: 1.2;
 				}
 				
 				.total {
-					font-size: 39rpx;
-					color: #999;
-					line-height: 1;
+					font-size: calc(32rpx + 0.8vw);
+					line-height: 1.2;
 				}
 			}
 		}
