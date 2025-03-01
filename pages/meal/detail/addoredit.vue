@@ -25,26 +25,29 @@
 					></u-input>
 				</view>
 				
-				<!-- 重量和份数 -->
-				<view class="form-group">
-					<view class="form-item half">
-						<view class="label">重量(g)</view>
-						<u-input
-							v-model="form.weight"
-							type="number"
-							placeholder="请输入重量"
-							:border="false"
-						></u-input>
+				<!-- 重量/毫升选择 -->
+				<view class="form-item">
+					<view class="label-container">
+						<text class="label">数量单位</text>
+						<view class="unit-switch">
+							<text 
+								:class="['unit-option', form.unit === 'g' ? 'active' : '']"
+								@click="switchUnit('g')"
+							>重量(g)</text>
+							<text 
+								:class="['unit-option', form.unit === 'ml' ? 'active' : '']"
+								@click="switchUnit('ml')"
+							>毫升(ml)</text>
+						</view>
 					</view>
-					<view class="form-item half">
-						<view class="label">份数</view>
-						<u-input
-							v-model="form.portions"
-							type="number"
-							placeholder="请输入份数"
-							:border="false"
-						></u-input>
-					</view>
+					<u-input
+						v-model="form.amount"
+						type="number"
+						:placeholder="form.unit === 'g' ? '请输入重量' : '请输入毫升数'"
+						:border="false"
+					>
+						<text slot="suffix" class="unit">{{form.unit}}</text>
+					</u-input>
 				</view>
 				
 				<!-- 卡路里 -->
@@ -64,7 +67,7 @@
 				<view class="nutrition-title">营养成分</view>
 				<view class="nutrition-form">
 					<view class="form-item">
-						<view class="label">总热量</view>
+						<view class="label">总热量 (kcal)</view>
 						<u-input
 							v-model="form.totalCalories"
 							type="number"
@@ -76,7 +79,7 @@
 					</view>
 					
 					<view class="form-item">
-						<view class="label">碳水化合物</view>
+						<view class="label">碳水化合物 (g)</view>
 						<u-input
 							v-model="form.carbs"
 							type="number"
@@ -88,7 +91,7 @@
 					</view>
 					
 					<view class="form-item">
-						<view class="label">脂肪</view>
+						<view class="label">脂肪 (g)</view>
 						<u-input
 							v-model="form.fat"
 							type="number"
@@ -100,7 +103,7 @@
 					</view>
 					
 					<view class="form-item">
-						<view class="label">蛋白质</view>
+						<view class="label">蛋白质 (g)</view>
 						<u-input
 							v-model="form.protein"
 							type="number"
@@ -144,8 +147,8 @@ export default {
 			id: '', // 编辑时的记录ID
 			form: {
 				name: '',
-				weight: '',
-				portions: '1',
+				unit: 'g', // 默认使用克重单位
+				amount: '', // 数量（克重或毫升）
 				calories: '',
 				totalCalories: '',
 				carbs: '',
@@ -158,9 +161,9 @@ export default {
 					message: '请输入食物名称',
 					trigger: ['change', 'blur']
 				}],
-				weight: [{
+				amount: [{
 					required: true,
-					message: '请输入重量',
+					message: '请输入数量',
 					trigger: ['change', 'blur']
 				}],
 				calories: [{
@@ -204,6 +207,12 @@ export default {
 					}, 1500);
 				}
 			});
+		},
+		switchUnit(unit) {
+			if (this.form.unit !== unit) {
+				this.form.unit = unit;
+				this.form.amount = ''; // 切换单位时清空数量
+			}
 		}
 	}
 }
@@ -259,26 +268,47 @@ export default {
 			padding: 30rpx;
 			margin-bottom: 30rpx;
 			
-			.label {
-				font-size: 30rpx;
-				color: #333;
-				font-weight: bold;
+			.label-container {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
 				margin-bottom: 20rpx;
+				
+				.label {
+					font-size: 30rpx;
+					color: #333;
+					font-weight: bold;
+				}
+				
+				.unit-switch {
+					display: flex;
+					background-color: #ffffff;
+					border-radius: 30rpx;
+					overflow: hidden;
+					
+					.unit-option {
+						padding: 10rpx 20rpx;
+						font-size: 24rpx;
+						color: #666;
+						background-color: #ffffff;
+						transition: all 0.3s ease;
+						
+						&.active {
+							color: #ffffff;
+							background-color: #42d392;
+						}
+						
+						&:active {
+							opacity: 0.8;
+						}
+					}
+				}
 			}
 			
 			.unit {
 				font-size: 28rpx;
 				color: #666;
 				margin-left: 10rpx;
-			}
-		}
-		
-		.form-group {
-			display: flex;
-			gap: 20rpx;
-			
-			.form-item.half {
-				flex: 1;
 			}
 		}
 		
