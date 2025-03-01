@@ -88,9 +88,16 @@
 			</view>
 		</view>
 
-		<view class="scan-button">
-			<u-icon name="scan" color="#ffffff" size="50"></u-icon>
-			<text class="scan-text">扫描添加饮食</text>
+		<view class="action-buttons-container">
+			<view class="manual-btn" @click="handleManualAdd">
+				<text>手动添加</text>
+				<u-icon name="plus" color="#42d392" size="30"></u-icon>
+			</view>
+			<view class="scan-btn" @click="handleScan">
+				<text>扫描添加</text>
+				<u-icon name="scan" color="#42d392" size="30"></u-icon>
+			</view>
+			
 		</view>
 	</view>
 </template>
@@ -177,6 +184,29 @@ export default {
 					url: '/pages/sys/home/index'
 				})
 			}
+		},
+		handleScan() {
+			uni.scanCode({
+				success: (res) => {
+					console.log('扫码结果：', res);
+					uni.showToast({
+						title: '扫描成功',
+						icon: 'success'
+					});
+				},
+				fail: (err) => {
+					console.error('扫码失败：', err);
+					uni.showToast({
+						title: '扫描失败',
+						icon: 'error'
+					});
+				}
+			});
+		},
+		handleManualAdd() {
+			uni.navigateTo({
+				url: '/pages/meal/add/index'
+			});
 		}
 	}
 }
@@ -440,28 +470,38 @@ export default {
 		}
 	}
 
-	.scan-button {
-		width: 200rpx;
-		height: 200rpx;
-		background: linear-gradient(135deg, #42d392 0%, #18B566 100%);
-		border-radius: 50%;
+	.action-buttons-container {
 		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		box-shadow: 0 4rpx 16rpx rgba(66, 211, 146, 0.4);
-		margin-left: auto;
-		margin-right:100rpx;
-		
-		.scan-text {
-			font-size: 25rpx;
-			color: #ffffff;
-			margin-top: 6rpx;
+		flex-direction: row;
+		justify-content: space-between;
+		gap: 20rpx;
+		padding: 30rpx;
+		margin-top: 20rpx;
+
+		.scan-btn, .manual-btn {
+			flex: 1;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 30rpx 40rpx;
+			background-color: rgb(240, 241, 241);
+			border-radius: 50rpx;
+			transition: all 0.2s ease;
+
+			text {
+				font-size: 32rpx;
+				font-weight: bold;
+				color: #333;
+			}
+
+			&:active {
+				transform: scale(0.98);
+				background-color: rgb(235, 236, 236);
+			}
 		}
-		
-		&:active {
-			transform: scale(0.95);
-			box-shadow: 0 2rpx 8rpx rgba(66, 211, 146, 0.3);
+
+		.scan-btn {
+			background: rgb(235, 246, 214);
 		}
 	}
 }
