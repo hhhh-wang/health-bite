@@ -168,20 +168,25 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 10rpx 20rpx;
+		padding: calc(2vh) calc(2vw);
 		position: relative;
-		height: 120px;
+		height: calc(12vh);
 		z-index: 10;
 		
 		.left {
 			.back-button {
-				width: 120rpx;
-				height: 120rpx;
+				width: calc(8vw);
+				height: calc(8vw);
+				min-width: 80rpx;
+				min-height: 80rpx;
+				max-width: 120rpx;
+				max-height: 120rpx;
 				border-radius: 50%;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				color:#ffffff;
+				
 				&:active {
 					background-color: rgba(255, 255, 255, 0.7);
 				}
@@ -195,7 +200,9 @@ export default {
 			transform: translate(-50%, -50%);
 			
 			.title {
-				font-size: 45rpx;
+				font-size: calc(4vw);
+				min-font-size: 32rpx;
+				max-font-size: 45rpx;
 				font-weight: bold;
 				color: #ffffff;
 				text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.3);
@@ -203,20 +210,19 @@ export default {
 		}
 		
 		.right {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			
 			.flash-nav-button {
-				width: 120rpx;
-				height: 120rpx;
+				width: calc(8vw);
+				height: calc(8vw);
+				min-width: 80rpx;
+				min-height: 80rpx;
+				max-width: 120rpx;
+				max-height: 120rpx;
 				border-radius: 50%;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				transition: all 0.3s ease;
 				position: relative;
-
 				
 				&:active {
 					background-color: rgba(255, 255, 255, 0.7);
@@ -265,7 +271,7 @@ export default {
 
 	.scan-area {
 		width: 100%;
-		height: 100vh;
+		height: calc(100vh - 12vh); // 减去导航栏高度
 		position: relative;
 		z-index: 2;
 		
@@ -279,8 +285,9 @@ export default {
 			left: 50%;
 			top: 35%;
 			transform: translate(-50%, -50%);
-			width: 66.67vw; // 屏幕宽度的2/3
-			height: 50vh; // 屏幕高度的3/4
+			width: 66.67vw;
+			height: 50vh;
+			aspect-ratio: 3/4;
 			border: 2rpx solid rgba(255, 255, 255, 0.8);
 			box-shadow: 0 0 0 3000rpx rgba(0, 0, 0, 0.5);
 			border-radius: 50rpx;
@@ -288,8 +295,12 @@ export default {
 			
 			.corner {
 				position: absolute;
-				width: 40rpx;
-				height: 40rpx;
+				width: calc(2vw);
+				height: calc(2vw);
+				min-width: 20rpx;
+				min-height: 20rpx;
+				max-width: 40rpx;
+				max-height: 40rpx;
 				border-color: #42d392;
 				border-style: solid;
 				border-width: 6rpx;
@@ -338,11 +349,15 @@ export default {
 	
 	.scan-btn {
 		position: fixed;
-		bottom: 10%;
+		bottom: calc(15vh);
 		left: 50%;
 		transform: translateX(-50%);
-		width: 180rpx;
-		height: 180rpx;
+		width: calc(12vw);
+		height: calc(12vw);
+		min-width: 120rpx;
+		min-height: 120rpx;
+		max-width: 180rpx;
+		max-height: 180rpx;
 		background-color: #42d392;
 		border-radius: 50%;
 		display: flex;
@@ -360,13 +375,18 @@ export default {
 	
 	.album-btn {
 		position: fixed;
-		bottom: 12%;
-		right: 15%;
+		bottom: calc(15vh);
+		right: calc(8vw);
 		z-index: 10;
+		width: calc(8vw);
+		height: calc(8vw);
+		min-width: 80rpx;
+		min-height: 80rpx;
+		max-width: 120rpx;
+		max-height: 120rpx;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		
 	}
 }
 
