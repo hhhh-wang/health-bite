@@ -181,6 +181,13 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/meal/detail/scan",
+			"style": {
+				"navigationStyle": "custom",
+				"backgroundColor": "#000000"
+			}
 		}
 	],
 	"subPackages": [],
@@ -208,12 +215,7 @@
 				"selectedIconPath": "static/jeesite/tabbar/msg_2.png",
 				"text": "饮食详情"
 			},
-			{
-				"pagePath": "pages/sys/user/index",
-				"iconPath": "static/jeesite/tabbar/my_1.png",
-				"selectedIconPath": "static/jeesite/tabbar/my_2.png",
-				"text": "数据"
-			},
+			
 			{
 				"pagePath": "pages/sys/user/index",
 				"iconPath": "static/jeesite/tabbar/my_1.png",

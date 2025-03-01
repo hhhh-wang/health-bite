@@ -177,18 +177,15 @@ export default {
 			});
 		},
 		handleScan() {
-			uni.scanCode({
-				success: (res) => {
-					console.log('扫码结果：', res);
-					uni.showToast({
-						title: '扫描成功',
-						icon: 'success'
-					});
+			uni.navigateTo({
+				url: '/pages/meal/detail/scan',
+				success: () => {
+					console.log('跳转到扫描页面成功');
 				},
 				fail: (err) => {
-					console.error('扫码失败：', err);
+					console.error('跳转到扫描页面失败：', err);
 					uni.showToast({
-						title: '扫描失败',
+						title: '跳转失败',
 						icon: 'error'
 					});
 				}
