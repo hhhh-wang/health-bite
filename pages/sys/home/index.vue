@@ -27,16 +27,23 @@
 		</view>
 		<!-- 主要内容区 -->
 		<view class="content">
-			
-			<view class="progress-circle">
-				<canvas canvas-id="progressCanvas" class="progress-canvas"></canvas>
-				<view class="circle-content">
+			<!-- 简约卡片卡路里展示 -->
+			<view class="simple-card">
+				<view class="card-header">
 					<text class="fire-icon">🔥</text>
-					<view class="calorie-info">
-						<text class="unit">大卡</text>
-						<text class="value">1739 kcal</text>
-						<text class="total">2925 kcal</text>
+					<text class="card-title">大卡</text>
+				</view>
+				<view class="card-content">
+					<text class="current-value">{{currentCalories}}</text>
+					<text class="unit">kcal</text>
+				</view>
+				<view class="progress-container">
+					<view class="progress-bar">
+						<view class="progress-fill" :style="{width: caloriePercentage + '%'}"></view>
 					</view>
+				</view>
+				<view class="card-footer">
+					<text>目标: {{targetCalories}} kcal (已完成{{caloriePercentage}}%)</text>
 				</view>
 			</view>
 		</view>
@@ -198,7 +205,6 @@
 export default {
 	data() {
 		return {
-			percentage: 60, // 进度百分比
 			showCalendar: false,
 			selectedDate: this.getFormatDate(),
 			currentDate: this.getFormatDate(),
@@ -217,11 +223,17 @@ export default {
 					text: '设置',
 					icon: 'setting'
 				}
-			]
+			],
+			currentCalories: 1739,
+			targetCalories: 2925
+		}
+	},
+	computed: {
+		caloriePercentage() {
+			return Math.min(Math.round((this.currentCalories / this.targetCalories) * 100), 100);
 		}
 	},
 	mounted() {
-		this.drawProgress()
 	},
 	methods: {
 		// 格式化日期
@@ -265,36 +277,6 @@ export default {
 		fetchDayData(date) {
 			// 这里添加获取数据的逻辑
 			console.log('获取日期数据:', date)
-		},
-		drawProgress() {
-			const ctx = uni.createCanvasContext('progressCanvas', this)
-			const width = 150 // 半径
-			const lineWidth = 15 // 圆环宽度
-			const centerX = width
-			const centerY = width
-			
-			// 绘制底色圆环
-			ctx.beginPath()
-			ctx.arc(centerX, centerY, width - lineWidth, Math.PI, 0)
-			ctx.setLineWidth(lineWidth)
-			ctx.setStrokeStyle('rgb(212, 235, 164)') // 底色
-			ctx.setLineCap('round')
-			ctx.stroke()
-			
-			// 绘制进度圆环
-			ctx.beginPath()
-			ctx.arc(
-				centerX,
-				centerY,
-				width - lineWidth,
-				Math.PI,
-				Math.PI + (Math.PI * this.percentage) / 100
-			)
-			ctx.setLineWidth(lineWidth)
-			ctx.setStrokeStyle('rgb(157, 208, 48)') // 进度条颜色
-			ctx.setLineCap('round')
-			ctx.stroke()
-			ctx.draw()
 		},
 		// 显示操作菜单
 		showActionSheet() {
@@ -433,122 +415,145 @@ page {
 
 .content {
 	background: transparent;
-	border-radius: 50rpx;
+	border-radius: 20rpx;
+	padding: 0 20rpx;
+}
 
-	.progress-circle {
-		position: relative;
+.simple-card {
+	background-color: rgb(235, 246, 214);
+	border-radius: 30rpx;
+	padding: 40rpx 30rpx;
+	margin-bottom: 40rpx;
+	box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+	text-align: center;
+	
+	.card-header {
 		display: flex;
+		align-items: center;
 		justify-content: center;
-		margin: 4vh 0;  // 改用vh单位
-		background-color: rgb(235, 246, 214);
-		border-radius: 50rpx;
-		padding: calc(20rpx + 1.5vh);  // 自适应内边距
-		overflow: hidden;
+		margin-bottom: 30rpx;
 		
-		.progress-canvas {
-			width: 90vw;  // 改用vw使宽度自适应
-			max-width: 700rpx; // 设置最大宽度
-			height: calc(200rpx + 15vh);  // 高度自适应
-			display: block;
+		.fire-icon {
+			font-size: 40rpx;
+			margin-right: 10rpx;
 		}
 		
-		.circle-content {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			text-align: center;
-			width: 90%;  // 确保内容区域自适应
+		.card-title {
+			font-size: 34rpx;
+			color: #333;
+			font-weight: 500;
+		}
+	}
+	
+	.card-content {
+		margin: 30rpx 0;
+		
+		.current-value {
+			font-size: 80rpx;
+			color: #333;
+			font-weight: 700;
+			line-height: 1.2;
+		}
+		
+		.unit {
+			font-size: 32rpx;
+			color: #666;
+			margin-left: 10rpx;
+		}
+	}
+	
+	.progress-container {
+		margin: 20rpx 0;
+		padding: 0 20rpx;
+		
+		.progress-bar {
+			height: 16rpx;
+			background-color: rgba(255, 255, 255, 0.6);
+			border-radius: 8rpx;
+			overflow: hidden;
 			
-			.fire-icon {
-				font-size: calc(32rpx + 1vw);  // 图标大小自适应
-				margin-bottom: 2vh;  // 间距自适应
-				display: block;
+			.progress-fill {
+				height: 100%;
+				background-color: #42d392;
+				border-radius: 8rpx;
+				transition: width 0.3s ease-in-out;
 			}
-			
-			.calorie-info {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				gap: 1vh;  // 使用vh单位
-				
-				.unit {
-					font-size: calc(32rpx + 0.8vw);
-					line-height: 1.2;
-				}
-				
-				.value {
-					font-size: calc(48rpx + 1.5vw);
-					font-weight: 700;
-					line-height: 1.2;
-				}
-				
-				.total {
-					font-size: calc(32rpx + 0.8vw);
-					line-height: 1.2;
-				}
-			}
+		}
+	}
+	
+	.card-footer {
+		font-size: 28rpx;
+		color: #666;
+		margin-top: 20rpx;
+		display: flex;
+		justify-content: center;
+		
+		text {
+			background-color: rgba(255, 255, 255, 0.6);
+			padding: 8rpx 16rpx;
+			border-radius: 20rpx;
 		}
 	}
 }
-	.nutrition-stats {
-		display: flex;
-		justify-content: space-between;
-		margin-top: 40rpx;
-		background-color: rgb(240, 241, 241);
-		padding: 30rpx;
-		border-radius: 50rpx;
+
+.nutrition-stats {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 40rpx;
+	background-color: rgb(240, 241, 241);
+	padding: 30rpx;
+	border-radius: 50rpx;
+	
+	.stat-item {
+		flex: 1;
+		padding: 0 20rpx;
 		
-		.stat-item {
-			flex: 1;
-			padding: 0 20rpx;
+		.number {
+			font-size: 50rpx;
+			font-weight: bold;
+			color: #333;
+			margin-bottom: 20rpx;
 			
-			.number {
-				font-size: 50rpx;
-				font-weight: bold;
-				color: #333;
-				margin-bottom: 20rpx;
-				
-				.unit {
-					font-size: 30rpx;
-					margin-left: 4rpx;
-				}
-			}
-			
-			.label {
-				display: flex;
-				justify-content: space-between;
+			.unit {
 				font-size: 30rpx;
-				color: #666;
-				margin-bottom: 30rpx;
-				
-				.percentage {
-					color: #42d392;
-				}
-			}
-			
-			.progress-bar {
-				height: 6rpx;
-				background: #eee;
-				border-radius: 50rpx;
-				margin-bottom: 30rpx;
-				
-				.progress {
-					height: 100%;
-					background: #42d392;
-					border-radius: 50rpx;
-				}
-			}
-			
-			&.left .progress {
-				background: #ff9500;
-			}
-			
-			&.right .progress {
-				background: #ff9500;
+				margin-left: 4rpx;
 			}
 		}
+		
+		.label {
+			display: flex;
+			justify-content: space-between;
+			font-size: 30rpx;
+			color: #666;
+			margin-bottom: 30rpx;
+			
+			.percentage {
+				color: #42d392;
+			}
+		}
+		
+		.progress-bar {
+			height: 6rpx;
+			background: #eee;
+			border-radius: 50rpx;
+			margin-bottom: 30rpx;
+			
+			.progress {
+				height: 100%;
+				background: #42d392;
+				border-radius: 50rpx;
+			}
+		}
+		
+		&.left .progress {
+			background: #ff9500;
+		}
+		
+		&.right .progress {
+			background: #ff9500;
+		}
 	}
+}
 
 .content-area {
 	margin-top: 40rpx;
