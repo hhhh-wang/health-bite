@@ -223,11 +223,7 @@ export default {
 				color: #333;
 			}
 		}
-		
-		
 	}
-	
-
 	
 	.calorie-card {
 		margin: 20rpx;
@@ -261,18 +257,6 @@ export default {
 			color: #666;
 			font-size: 28rpx;
 			margin-bottom: 20rpx;
-		}
-		
-		.chart-container {
-			height: 300rpx;
-			width: 100%;
-			margin: 30rpx 0;
-			position: relative;
-			
-			/deep/ .qiun-charts {
-				width: 100%;
-				height: 100%;
-			}
 		}
 	}
 	
@@ -328,20 +312,16 @@ export default {
 				color: #8a2be2;
 			}
 		}
-		
-		// 移除原有的颜色类
-		.increase .value,
-		.decrease .value {
-			color: inherit;
-		}
 	}
+
 	.exercise-title {
-            font-size: 32rpx;
-			font-weight: bold;
-			color: #333;
-			margin-left: 20rpx;
-            margin: 20rpx;
-        }
+		font-size: 32rpx;
+		font-weight: bold;
+		color: #333;
+		margin-left: 20rpx;
+		margin: 20rpx;
+	}
+
 	.food-list {
 		padding: 0 20rpx;
 		margin-bottom: 40rpx;
@@ -433,7 +413,6 @@ export default {
 					position: relative;
 					overflow: hidden;
 					
-				
 					/deep/ .u-icon {
 						transform: scale(1.8);
 						font-weight: bold;
@@ -460,14 +439,6 @@ export default {
 			}
 		}
 	}
-
-	.section-title {
-			font-size: 32rpx;
-			font-weight: bold;
-			color: #333;
-			margin-bottom: 20rpx;
-			padding: 0 20rpx;
-		}
 
 	.scan-button {
 		width: 200rpx;
