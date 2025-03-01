@@ -8,7 +8,7 @@
 				</view>
 			</view>
 			<view class="center">
-				<text class="title">扫一扫</text>
+				<text class="title">扫一扫食物</text>
 			</view>
 			<view class="right" @click="toggleFlash">
 				<view class="flash-nav-button" :class="{ 'active': isFlashOn }">
@@ -33,10 +33,17 @@
 				</cover-view>
 			</camera>
 		</view>
-		<!-- 提示文本 -->
-		<view class="tip-text">
-			<text>扫一扫食物</text>
+		
+		<!-- 扫描按钮 -->
+		<view class="scan-btn" @click="handleScan">
+			<u-icon name="camera" color="#ffffff" size="40"></u-icon>
 		</view>
+		
+		<view class="album-btn" @click="handleAlbum">
+			<u-icon name="photo" color="#ffffff" size="40"></u-icon>
+			<text>相册</text>
+		</view>
+	
 	</view>
 </template>
 
@@ -74,6 +81,56 @@ export default {
 				icon: 'none',
 				duration: 1500
 			});
+		},
+		handleAlbum() {
+			uni.chooseImage({
+				count: 1,
+				sourceType: ['album'],
+				success: (res) => {
+					console.log('选择图片成功：', res);
+					// TODO: 处理选中的图片
+					uni.showToast({
+						title: '已选择图片',
+						icon: 'success'
+					});
+				},
+				fail: (err) => {
+					console.error('选择图片失败：', err);
+					uni.showToast({
+						title: '选择失败',
+						icon: 'error'
+					});
+				}
+			});
+		},
+		handleScan() {
+			// 扫描处理
+			uni.showToast({
+				title: '开始扫描',
+				icon: 'none',
+				duration: 1500
+			});
+			
+			// TODO: 在这里添加扫描识别的逻辑
+			const camera = uni.createCameraContext();
+			camera.takePhoto({
+				quality: 'high',
+				success: (res) => {
+					console.log('拍照成功：', res.tempImagePath);
+					// TODO: 处理拍摄的图片
+					uni.showToast({
+						title: '扫描成功',
+						icon: 'success'
+					});
+				},
+				fail: (err) => {
+					console.error('拍照失败：', err);
+					uni.showToast({
+						title: '扫描失败',
+						icon: 'error'
+					});
+				}
+			});
 		}
 	},
 	onLoad() {
@@ -104,27 +161,32 @@ export default {
 <style lang="scss" scoped>
 .container {
 	min-height: 100vh;
-	background-color: #000000;
+	background-color: transparent;
 	position: relative;
+	z-index: 1;
 	
 	.custom-navbar {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		padding: 10rpx 20rpx;
-		background-color: #ffffff;
 		position: relative;
 		height: 120px;
+		z-index: 10;
 		
 		.left {
 			.back-button {
 				width: 120rpx;
 				height: 120rpx;
-				background-color: rgb(246, 247, 247);
+				background-color: rgba(255, 255, 255, 0.9);
 				border-radius: 50%;
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				
+				&:active {
+					background-color: rgba(255, 255, 255, 0.7);
+				}
 			}
 		}
 		
@@ -137,7 +199,8 @@ export default {
 			.title {
 				font-size: 45rpx;
 				font-weight: bold;
-				color: #333;
+				color: #ffffff;
+				text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.3);
 			}
 		}
 		
@@ -151,13 +214,18 @@ export default {
 			.flash-nav-button {
 				width: 120rpx;
 				height: 120rpx;
-				background-color: #666666;
+				background-color: rgba(255, 255, 255, 0.9);
 				border-radius: 50%;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				transition: all 0.3s ease;
 				position: relative;
+
+				
+				&:active {
+					background-color: rgba(255, 255, 255, 0.7);
+				}
 				
 				.flash-icon {
 					position: absolute;
@@ -180,8 +248,8 @@ export default {
 						bottom: 0;
 						width: 20rpx;
 						height: 20rpx;
-						border-left: 4rpx solid #ffffff;
-						border-bottom: 4rpx solid #ffffff;
+						border-left: 4rpx solid #666666;
+						border-bottom: 4rpx solid #666666;
 						transform: translateX(-50%) rotate(-45deg);
 					}
 				}
@@ -204,6 +272,7 @@ export default {
 		width: 100%;
 		height: 100vh;
 		position: relative;
+		z-index: 2;
 		
 		.camera {
 			width: 100%;
@@ -213,11 +282,14 @@ export default {
 		.scan-box {
 			position: absolute;
 			left: 50%;
-			top: 50%;
+			top: 35%;
 			transform: translate(-50%, -50%);
-			width: 500rpx;
-			height: 300rpx;
-			border: 2rpx solid rgba(255, 255, 255, 0.5);
+			width: 66.67vw; // 屏幕宽度的2/3
+			height: 50vh; // 屏幕高度的3/4
+			border: 2rpx solid rgba(255, 255, 255, 0.8);
+			box-shadow: 0 0 0 3000rpx rgba(0, 0, 0, 0.5);
+			border-radius: 50rpx;
+			z-index: 3;
 			
 			.corner {
 				position: absolute;
@@ -261,22 +333,50 @@ export default {
 				left: 0;
 				top: 0;
 				width: 100%;
-				height: 2rpx;
-				background-color: #42d392;
+				height: 4rpx; // 增加扫描线的粗细
+				background: linear-gradient(to right, transparent, #42d392, transparent); // 添加渐变效果
+				box-shadow: 0 0 8rpx rgba(66, 211, 146, 0.8); // 添加发光效果
 				animation: scan 2s linear infinite;
 			}
 		}
 	}
 	
-	.tip-text {
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: 200rpx;
-		text-align: center;
-		color: #ffffff;
-		font-size: 28rpx;
-		padding: 20rpx;
+	.scan-btn {
+		position: fixed;
+		bottom: 120rpx;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 120rpx;
+		height: 120rpx;
+		background-color: #42d392;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 10;
+		box-shadow: 0 4rpx 16rpx rgba(66, 211, 146, 0.4);
+		transition: all 0.3s ease;
+		
+		&:active {
+			transform: translateX(-50%) scale(0.95);
+			background-color: #3bc185;
+		}
+	}
+	
+	.album-btn {
+		position: fixed;
+		bottom: 120rpx;
+		right: 40rpx;
+		z-index: 10;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		
+		text {
+			color: #ffffff;
+			font-size: 24rpx;
+			margin-top: 10rpx;
+		}
 	}
 }
 
