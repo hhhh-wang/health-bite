@@ -4,7 +4,7 @@
 		<view class="custom-navbar">
 			<view class="left" @click="goBack">
 				<view class="back-button">
-					<u-icon name="arrow-left" color="#333" size="20"></u-icon>
+					<u-icon name="arrow-left" color="#fffff" size="40"></u-icon>
 				</view>
 			</view>
 			<view class="center">
@@ -12,7 +12,7 @@
 			</view>
 			<view class="right" @click="toggleFlash">
 				<view class="flash-nav-button" :class="{ 'active': isFlashOn }">
-					<u-icon name="lightning" color="#ffffff" size="24"></u-icon>
+					<u-icon name="lightning" color="#ffffff" size="40"></u-icon>
 					<view class="flash-icon">
 						<text class="flash-line"></text>
 						<text class="flash-arrow"></text>
@@ -177,12 +177,11 @@ export default {
 			.back-button {
 				width: 120rpx;
 				height: 120rpx;
-				background-color: rgba(255, 255, 255, 0.9);
 				border-radius: 50%;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				
+				color:#ffffff;
 				&:active {
 					background-color: rgba(255, 255, 255, 0.7);
 				}
@@ -204,8 +203,6 @@ export default {
 		}
 		
 		.right {
-			width: 120rpx;
-			height: 120rpx;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -213,7 +210,6 @@ export default {
 			.flash-nav-button {
 				width: 120rpx;
 				height: 120rpx;
-				background-color: rgba(255, 255, 255, 0.9);
 				border-radius: 50%;
 				display: flex;
 				align-items: center;
@@ -247,8 +243,8 @@ export default {
 						bottom: 0;
 						width: 20rpx;
 						height: 20rpx;
-						border-left: 4rpx solid #666666;
-						border-bottom: 4rpx solid #666666;
+						border-left: 4rpx solid #ffffff;
+						border-bottom: 4rpx solid #ffffff;
 						transform: translateX(-50%) rotate(-45deg);
 					}
 				}
@@ -364,7 +360,7 @@ export default {
 	
 	.album-btn {
 		position: fixed;
-		bottom: 120rpx;
+		bottom: 12%;
 		right: 15%;
 		z-index: 10;
 		display: flex;
