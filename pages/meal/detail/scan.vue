@@ -40,8 +40,7 @@
 		</view>
 		
 		<view class="album-btn" @click="handleAlbum">
-			<u-icon name="photo" color="#ffffff" size="40"></u-icon>
-			<text>相册</text>
+			<u-icon name="photo" color="#ffffff" size="60"></u-icon>
 		</view>
 	
 	</view>
@@ -343,11 +342,11 @@ export default {
 	
 	.scan-btn {
 		position: fixed;
-		bottom: 120rpx;
+		bottom: 10%;
 		left: 50%;
 		transform: translateX(-50%);
-		width: 120rpx;
-		height: 120rpx;
+		width: 180rpx;
+		height: 180rpx;
 		background-color: #42d392;
 		border-radius: 50%;
 		display: flex;
@@ -366,17 +365,12 @@ export default {
 	.album-btn {
 		position: fixed;
 		bottom: 120rpx;
-		right: 40rpx;
+		right: 15%;
 		z-index: 10;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		
-		text {
-			color: #ffffff;
-			font-size: 24rpx;
-			margin-top: 10rpx;
-		}
 	}
 }
 
