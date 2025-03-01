@@ -178,7 +178,17 @@ export default {
 		if (options.id) {
 			this.isEdit = true;
 			this.id = options.id;
-			this.loadFoodData();
+			// 加载编辑数据
+			this.form = {
+				name: options.name || '',
+				unit: options.unit || 'g',
+				amount: options.amount || '',
+				calories: options.calories || '',
+				totalCalories: options.totalCalories || '',
+				carbs: options.carbs || '',
+				fat: options.fat || '',
+				protein: options.protein || ''
+			};
 		}
 	},
 	methods: {
@@ -188,22 +198,28 @@ export default {
 				isTab: true
 			});
 		},
-		loadFoodData() {
-			// TODO: 根据ID加载食物数据
-			if (this.id) {
-				// 这里添加获取数据的逻辑
-			}
-		},
 		handleSubmit() {
 			this.$refs.uForm.validate(valid => {
 				if (valid) {
-					// TODO: 提交表单数据
+					// 构建提交的数据
+					const submitData = {
+						...this.form,
+						id: this.id
+					};
+					
+					// TODO: 调用API提交数据
+					console.log('提交的数据：', submitData);
+					
 					uni.showToast({
 						title: this.isEdit ? '修改成功' : '添加成功',
 						icon: 'success'
 					});
+					
 					setTimeout(() => {
-						uni.navigateBack();
+						navigateBack({
+							redirectUrl: '/pages/meal/detail/index',
+							isTab: true
+						});
 					}, 1500);
 				}
 			});

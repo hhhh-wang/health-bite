@@ -81,7 +81,17 @@
                     <view class="delete-btn">
 						<u-icon name="close" color="#ff4c4c" size="16"></u-icon>
 					</view>
-					<view class="edit-btn">
+					<view class="edit-btn" @click="handleEdit({
+						id: '1',
+						name: '热狗',
+						unit: 'g',
+						amount: '100',
+						calories: '152',
+						totalCalories: '152',
+						carbs: '0',
+						fat: '8',
+						protein: '13'
+					})">
 						<u-icon name="edit-pen" color="#42d392" size="16"></u-icon>
 					</view>
 				</view>
@@ -189,9 +199,24 @@ export default {
 				url: '/pages/meal/detail/addoredit'
 			});
 		},
-		handleEdit(id) {
+		handleEdit(foodData) {
 			uni.navigateTo({
-				url: `/pages/meal/detail/addoredit?id=${id}`
+				url: `/pages/meal/detail/addoredit?id=${foodData.id}&name=${foodData.name}&unit=${foodData.unit}&amount=${foodData.amount}&calories=${foodData.calories}&totalCalories=${foodData.totalCalories}&carbs=${foodData.carbs}&fat=${foodData.fat}&protein=${foodData.protein}`,
+				success: (res) => {
+					if (res.errMsg === 'navigateTo:ok') {
+						uni.showToast({
+							title: '编辑成功',
+							icon: 'success'
+						});
+					}
+				},
+				fail: (err) => {
+					console.error('编辑失败：', err);
+					uni.showToast({
+						title: '编辑失败',
+						icon: 'error'
+					});
+				}
 			});
 		}
 	}
