@@ -42,7 +42,11 @@ export default {
         padding: [15, 15, 15, 15],
         enableScroll: false,
         legend: {
-          show: false
+          show: true,
+          position: 'bottom',
+          lineHeight: 25,
+          fontSize: 12,
+          itemGap: 12
         },
         dataLabel: true,
         extra: {
@@ -91,7 +95,25 @@ export default {
       
       return {
         series: [{
-          data: this.mealData
+          data: this.mealData,
+          format: {
+            label: function(item) {
+              return item.name
+            },
+            value: function(item) {
+              return item.value.toFixed(0)
+            },
+            percent: function(item) {
+              if (item.value === 0) {
+                return '0%'
+              }
+              let total = 0
+              for (let subitem of item.series.data) {
+                total += subitem.value
+              }
+              return (item.value / total * 100).toFixed(2) + '%'
+            }
+          }
         }]
       };
     }
