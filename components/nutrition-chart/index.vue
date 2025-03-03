@@ -100,7 +100,6 @@ export default {
 					axisLineColor: '#cccccc'
 				},
 				yAxis: {
-					gridType: "dash",
 					dashLength: 2,
 					data: [{
 						min: this.yAxis.min,
@@ -108,7 +107,7 @@ export default {
 						splitNumber: 5
 					}],
 					showTitle: false,
-					gridColor: '#cccccc'
+					gridColor: 'transparent'
 				},
 				extra: {
 					line: {
