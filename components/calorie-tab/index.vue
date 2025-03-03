@@ -2,9 +2,12 @@
 	<view class="calorie-container">
 		<!-- 顶部卡路里总览卡片 -->
 		<view class="calorie-card top-card">
-			<text class="total-number">{{ totalCalories }} <text class="unit">kcal</text></text>
-			<view class="calorie-divider"></view>
-			<view class="calorie-metrics">
+			<view class="total-wrapper">
+				<text class="total-value">{{ totalCalories }}</text>
+				<text class="total-unit">kcal</text>
+			</view>
+			<view class="divider"></view>
+			<view class="metrics-container">
 				<view class="metric">
 					<text class="metric-value">{{ averageCalories }}</text>
 					<text class="metric-label">平均Cals</text>
@@ -27,47 +30,35 @@
 		<!-- 下方详细数据卡片 -->
 		<view class="meal-details">
 			<view class="meal-row">
-				<view class="meal-card" :style="{ borderColor: mealDetails[0].color }">
-					<view class="meal-info">
-						<text class="meal-value">{{ mealDetails[0].calories }}</text>
-						<text class="meal-name">{{ mealDetails[0].name }}</text>
-					</view>
-					<text class="meal-percentage" :style="{ color: mealDetails[0].color }">
-						{{ mealDetails[0].percentage }}%
-					</text>
-				</view>
+				<meal-card
+					:calories="mealDetails[0].calories"
+					:name="mealDetails[0].name"
+					:percentage="mealDetails[0].percentage"
+					:color="mealDetails[0].color"
+				/>
 				
-				<view class="meal-card" :style="{ borderColor: mealDetails[1].color }">
-					<view class="meal-info">
-						<text class="meal-value">{{ mealDetails[1].calories }}</text>
-						<text class="meal-name">{{ mealDetails[1].name }}</text>
-					</view>
-					<text class="meal-percentage" :style="{ color: mealDetails[1].color }">
-						{{ mealDetails[1].percentage }}%
-					</text>
-				</view>
+				<meal-card
+					:calories="mealDetails[1].calories"
+					:name="mealDetails[1].name"
+					:percentage="mealDetails[1].percentage"
+					:color="mealDetails[1].color"
+				/>
 			</view>
 			
 			<view class="meal-row">
-				<view class="meal-card" :style="{ borderColor: mealDetails[2].color }">
-					<view class="meal-info">
-						<text class="meal-value">{{ mealDetails[2].calories }}</text>
-						<text class="meal-name">{{ mealDetails[2].name }}</text>
-					</view>
-					<text class="meal-percentage" :style="{ color: mealDetails[2].color }">
-						{{ mealDetails[2].percentage }}%
-					</text>
-				</view>
+				<meal-card
+					:calories="mealDetails[2].calories"
+					:name="mealDetails[2].name"
+					:percentage="mealDetails[2].percentage"
+					:color="mealDetails[2].color"
+				/>
 				
-				<view class="meal-card" :style="{ borderColor: mealDetails[3].color }">
-					<view class="meal-info">
-						<text class="meal-value">{{ mealDetails[3].calories }}</text>
-						<text class="meal-name">{{ mealDetails[3].name }}</text>
-					</view>
-					<text class="meal-percentage" :style="{ color: mealDetails[3].color }">
-						{{ mealDetails[3].percentage }}%
-					</text>
-				</view>
+				<meal-card
+					:calories="mealDetails[3].calories"
+					:name="mealDetails[3].name"
+					:percentage="mealDetails[3].percentage"
+					:color="mealDetails[3].color"
+				/>
 			</view>
 		</view>
 	</view>
@@ -75,11 +66,13 @@
 
 <script>
 import CaloriePieChart from '@/components/calorie-pie-chart/index.vue';
+import MealCard from '@/components/meal-card/index.vue';
 
 export default {
 	name: 'CalorieTab',
 	components: {
-		CaloriePieChart
+		CaloriePieChart,
+		MealCard
 	},
 	data() {
 		return {
@@ -195,60 +188,88 @@ export default {
 	// 卡片通用样式
 	.calorie-card {
 		background-color: #ffffff;
-		border-radius: 50rpx;
+		border-radius: 20rpx;
 		box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
 		padding: 30rpx;
 		margin-bottom: 24rpx;
 	}
 	
-	// 顶部卡片样式
+	// 顶部卡片样式 - 已优化
 	.top-card {
+		background-color: #ffffff;
+		border-radius: 28rpx;
+		box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.03);
+		padding: 36rpx 30rpx;
+		margin-bottom: 24rpx;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		
-		.total-number {
-			font-size: 64rpx;
-			font-weight: 700;
-			color: #333;
-			line-height: 1.2;
+		.total-wrapper {
+			display: flex;
+			align-items: baseline;
+			padding-bottom: 12rpx;
 			
-			.unit {
-				font-size: 36rpx;
+			.total-value {
+				font-size: 72rpx;
+				font-weight: 700;
+				color: #2d3436;
+				line-height: 1;
+				letter-spacing: -1rpx;
+			}
+			
+			.total-unit {
+				font-size: 28rpx;
 				font-weight: 500;
-				color: #666;
+				color: #636e72;
+				margin-left: 6rpx;
 			}
 		}
 		
-		.calorie-divider {
-			width: 80rpx;
-			height: 6rpx;
-			background: linear-gradient(to right, #43B3AE, #5B9BD5);
-			border-radius: 50rpx;
-			margin: 20rpx 0;
+		.divider {
+			width: 60rpx;
+			height: 4rpx;
+			background-color: #4299e1; // 健康蓝色
+			border-radius: 2rpx;
+			margin: 16rpx 0 24rpx;
 		}
 		
-		.calorie-metrics {
+		.metrics-container {
 			display: flex;
 			width: 100%;
-			justify-content: space-around;
-			margin-top: 10rpx;
+			justify-content: center;
 			
 			.metric {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
+				padding: 0 50rpx;
+				
+				&:first-child {
+					position: relative;
+					
+					&:after {
+						content: '';
+						position: absolute;
+						right: 0;
+						top: 15%;
+						height: 70%;
+						width: 1rpx;
+						background-color: #e0e6ed;
+					}
+				}
 				
 				.metric-value {
-					font-size: 36rpx;
+					font-size: 40rpx;
 					font-weight: 600;
-					color: #333;
-					margin-bottom: 6rpx;
+					color: #2d3436;
+					margin-bottom: 4rpx;
 				}
 				
 				.metric-label {
 					font-size: 24rpx;
-					color: #888;
+					color: #636e72;
+					letter-spacing: 1rpx;
 				}
 			}
 		}
@@ -260,7 +281,7 @@ export default {
 		height: 550rpx; // 给饼图足够的高度
 	}
 	
-	// 餐食详情区域
+	// 餐食详情区域 - 样式简化，因为卡片已移至组件
 	.meal-details {
 		.meal-row {
 			display: flex;
@@ -269,40 +290,6 @@ export default {
 			
 			&:last-child {
 				margin-bottom: 0;
-			}
-			
-			.meal-card {
-				width: 48%;
-				background-color: #ffffff;
-				border-radius: 50rpx;
-				padding: 24rpx;
-				box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				border-left: 6rpx solid;
-				
-				.meal-info {
-					display: flex;
-					flex-direction: column;
-					
-					.meal-value {
-						font-size: 40rpx;
-						font-weight: 600;
-						color: #333;
-						margin-bottom: 8rpx;
-					}
-					
-					.meal-name {
-						font-size: 28rpx;
-						color: #666;
-					}
-				}
-				
-				.meal-percentage {
-					font-size: 36rpx;
-					font-weight: 600;
-				}
 			}
 		}
 	}
