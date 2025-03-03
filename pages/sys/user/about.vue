@@ -22,8 +22,6 @@
 			</view>
 		</view>
 
-		
-
 		<!-- 个人信息列表 -->
 		<view class="section-title">个人信息</view>
 		<view class="info-list">
@@ -86,8 +84,7 @@ export default {
 				age: '23岁',
 				weight: '65kg',
 				height: '179cm',
-				phone: '138****8888',
-				password: '******'
+				phone: '138****8888'
 			}
 		}
 	},
@@ -96,23 +93,15 @@ export default {
 			uni.navigateBack()
 		},
 		editProfile() {
-			// 编辑头像和用户名
+			// 编辑头像
 			uni.showToast({
-				title: '编辑个人信息',
-				icon: 'none'
-			})
-		},
-		handleFingerprint() {
-			// 处理指纹识别设置
-			uni.showToast({
-				title: '设置指纹识别',
+				title: '编辑头像',
 				icon: 'none'
 			})
 		},
 		editInfo(type) {
 			switch(type) {
 				case 'gender':
-					// 性别选择器
 					uni.showActionSheet({
 						itemList: ['男', '女'],
 						success: (res) => {
@@ -125,19 +114,16 @@ export default {
 					});
 					break;
 				case 'phone':
-					// 修改手机号
 					uni.navigateTo({
-						url: '/pages/sys/user/phone'  // 跳转到修改手机号页面
+						url: '/pages/sys/user/phone'
 					});
 					break;
 				case 'password':
-					// 修改密码 - 更正跳转路径
 					uni.navigateTo({
-						url: '/pages/sys/user/pwd'  // 改为正确的pwd页面路径
+						url: '/pages/sys/user/pwd'
 					});
 					break;
 				default:
-					// 其他信息的编辑
 					uni.showToast({
 						title: '编辑' + type,
 						icon: 'none'
@@ -220,7 +206,7 @@ export default {
 		padding: 30rpx 30rpx 10rpx;
 	}
 
-	.quick-login, .info-list {
+	.info-list {
 		background-color: #ffffff;
 		margin-bottom: 20rpx;
 	}

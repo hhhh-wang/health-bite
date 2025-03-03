@@ -54,12 +54,7 @@
 				"navigationBarBackgroundColor":"#f8f8f8"
 			}
 		},
-		{
-			"path": "pages/sys/user/info",
-			"style": {
-				"navigationBarTitleText": "个人信息"
-			}
-		},
+		
 		{
 			"path": "uview-ui/components/u-avatar-cropper/u-avatar-cropper",
 			"style": {
@@ -188,6 +183,13 @@
 			"path": "pages/data/index",
 			"style": {
 				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/sys/user/phone",
+			"style": {
+				"navigationBarTitleText": "修改手机号",
+				"navigationStyle": "custom"
 			}
 		}
 	],
