@@ -5,8 +5,25 @@
 			<text class="header-title">修改密码</text>
 		</view>
 		<u-form class="form" :model="model" :rules="rules" ref="uForm">
-			<u-form-item label="旧密码" prop="oldPassword" label-width="180">
-				<u-input type="password" v-model="model.oldPassword" placeholder="请输入旧密码"></u-input>
+			<u-form-item label="手机号" prop="phone" label-width="180">
+				<text class="current-phone">{{currentPhone}}</text>
+			</u-form-item>
+			<u-form-item label="验证码" prop="code" label-width="180">
+				<view class="code-input-box">
+					<u-input 
+						v-model="model.code"
+						type="number"
+						maxlength="6"
+						placeholder="请输入验证码">
+					</u-input>
+					<u-button 
+						:disabled="counting"
+						size="mini" 
+						type="primary" 
+						@click="getCode">
+						{{counting ? `${counter}s后重新获取` : '获取验证码'}}
+					</u-button>
+				</view>
 			</u-form-item>
 			<u-form-item label="新密码" prop="newPassword" label-width="180">
 				<u-input type="password" v-model="model.newPassword" placeholder="请输入新密码"></u-input>
@@ -29,57 +46,73 @@ import base64 from '@/common/base64.js';
 export default {
 	data() {
 		return {
+			currentPhone: '138****8888', // 当前手机号
 			model: {
-				oldPassword: '',
+				code: '',
 				newPassword: '',
 				confirmNewPassword: ''
 			},
 			rules: {
-				oldPassword: [
-					{
-						required: true,
-						message: '请输入旧密码',
-						trigger: ['change','blur'],
-					}
-				],
-				newPassword: [
-					{
-						required: true,
-						message: '请输入新密码',
-						trigger: ['change','blur'],
+				code: [{
+					required: true,
+					message: '请输入验证码',
+					trigger: ['change', 'blur']
+				}, {
+					len: 6,
+					message: '请输入6位验证码',
+					trigger: ['change', 'blur']
+				}],
+				newPassword: [{
+					required: true,
+					message: '请输入新密码',
+					trigger: ['change','blur'],
+				}, {
+					pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]+\S{5,12}$/,
+					message: '需同时含有字母和数字，长度在6-12之间',
+					trigger: ['change','blur'],
+				}],
+				confirmNewPassword: [{
+					required: true,
+					message: '请重新输入密码',
+					trigger: ['change','blur'],
+				}, {
+					validator: (rule, value, callback) => {
+						return value === this.model.newPassword;
 					},
-					{
-						pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]+\S{5,12}$/,
-						message: '需同时含有字母和数字，长度在6-12之间',
-						trigger: ['change','blur'],
-					}
-				],
-				confirmNewPassword: [
-					{
-						required: true,
-						message: '请重新输入密码',
-						trigger: ['change','blur'],
-					},
-					{
-						validator: (rule, value, callback) => {
-							return value === this.model.newPassword;
-						},
-						message: '两次输入的密码不相等',
-						trigger: ['change','blur'],
-					}
-				],
-			}
+					message: '两次输入的密码不相等',
+					trigger: ['change','blur'],
+				}]
+			},
+			counting: false,
+			counter: 60
 		};
 	},
 	onReady() {
 		this.$refs.uForm.setRules(this.rules);
 	},
 	methods: {
+		// 获取验证码
+		getCode() {
+			// 开始倒计时
+			this.counting = true;
+			this.counter = 60;
+			const timer = setInterval(() => {
+				if (this.counter > 0) {
+					this.counter--;
+				} else {
+					this.counting = false;
+					clearInterval(timer);
+				}
+			}, 1000);
+			
+			// TODO: 调用发送验证码接口
+			this.$u.toast('验证码已发送');
+		},
 		submit() {
 			this.$refs.uForm.validate(valid => {
 				if (valid) {
 					this.$u.api.user.infoSavePwd({
-						oldPassword: base64.btoa(this.model.oldPassword),
+						code: this.model.code,
 						newPassword: base64.btoa(this.model.newPassword),
 						confirmNewPassword: base64.btoa(this.model.confirmNewPassword)
 					}).then(res => {
@@ -129,6 +162,21 @@ export default {
 		margin-top: 20rpx;
 		padding: 20rpx;
 		background-color: #ffffff;
+		
+		.current-phone {
+			font-size: 28rpx;
+			color: #666;
+		}
+		
+		.code-input-box {
+			display: flex;
+			align-items: center;
+			
+			.u-input {
+				flex: 1;
+				margin-right: 20rpx;
+			}
+		}
 	}
 	
 	.form-footer {
