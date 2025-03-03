@@ -194,7 +194,7 @@ export default {
 	
 	// 顶部卡片样式 - 已优化
 	.top-card {
-		background-color: #ffffff;
+		background-color: #e8f5e9; /* 淡绿色背景，传达健康感 */
 		border-radius: 28rpx;
 		box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.03);
 		padding: 36rpx 30rpx;
@@ -275,8 +275,9 @@ export default {
 	
 	// 饼图卡片
 	.chart-card {
+		background-color: #e3f2fd; /* 淡蓝色背景，增添活力感 */
 		padding: 20rpx;
-		height: 550rpx; // 给饼图足够的高度
+		height: 600rpx; // 给饼图足够的高度
 	}
 	
 	// 餐食详情区域 - 样式简化，因为卡片已移至组件

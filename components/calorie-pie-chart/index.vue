@@ -41,13 +41,6 @@ export default {
       defaultOpts: {
         padding: [15, 15, 15, 15],
         enableScroll: false,
-        legend: {
-          show: true,
-          position: 'bottom',
-          lineHeight: 25,
-          fontSize: 12,
-          itemGap: 12
-        },
         dataLabel: true,
         extra: {
           pie: {
