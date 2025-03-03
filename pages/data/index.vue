@@ -20,21 +20,21 @@
 			<text class="page-title">数据报告</text>
 		</view>
 		
-		<!-- 标签页组件 -->
-		<view class="tabs-container">
-			<u-tabs 
-				:list="tabsList" 
-				:current="current"
-				@change="tabChange"
-				activeStyle="color: #ffffff; background-color: #223039;"
-				inactiveStyle="color: #303133;"
-				itemStyle="height: 80rpx; padding: 0 40rpx; border-radius: 50rpx; margin: 0 10rpx;"
-			></u-tabs>
-			
-			<!-- 懒加载内容 -->
-			<view class="tab-content">
-				<component :is="currentComponent"></component>
+		<!-- 标签页按钮组 -->
+		<view class="tab-buttons">
+			<view 
+				v-for="(item, index) in tabsList" 
+				:key="index"
+				:class="['tab-button', {'tab-button-active': current === index}]"
+				@click="tabChange(index)"
+			>
+				<text :class="['tab-text', {'tab-text-active': current === index}]">{{ item.name }}</text>
 			</view>
+		</view>
+		
+		<!-- 内容区域 -->
+		<view class="tab-content">
+			<component :is="currentComponent"></component>
 		</view>
 		
 		<!-- 日期选择器 -->
@@ -236,12 +236,44 @@ export default {
 		}
 	}
 	
-	.tabs-container {
-		padding: 20rpx 30rpx;
+	.tab-buttons {
+		display: flex;
+		justify-content: center;
+		gap: 20rpx;
+		margin: 30rpx 0;
 		
-		.tab-content {
-			margin-top: 30rpx;
+		.tab-button {
+			min-width: 180rpx;
+			padding: 12rpx 30rpx;
+			border-radius: 50rpx;
+			background-color: transparent;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transition: all 0.3s;
+			
+			border: none;
+			
+			&.tab-button-active {
+				background-color: #23342F;
+			}
+			
+			.tab-text {
+				font-size: 28rpx;
+				color: #23342F;
+				transition: all 0.3s;
+				text-align: center;
+				
+				&.tab-text-active {
+					color: #ffffff;
+				}
+			}
 		}
+	}
+	
+	.tab-content {
+		margin-top: 20rpx;
+		padding: 0 20rpx;
 	}
 }
 </style>
