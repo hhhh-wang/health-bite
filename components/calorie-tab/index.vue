@@ -183,8 +183,6 @@ export default {
 .calorie-container {
 	padding: 30rpx;
 	background-color: #f7f9fc; // 浅蓝灰色背景，看起来清爽健康
-	min-height: 100vh;
-	
 	// 卡片通用样式
 	.calorie-card {
 		background-color: #ffffff;
