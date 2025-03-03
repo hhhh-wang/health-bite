@@ -28,7 +28,7 @@
 				<u-icon name="arrow-right" size="24" color="#C0C4CC" class="arrow-icon"></u-icon>
 			</view>
 			<!-- 帮助中心 -->
-			<view class="menu-item" @click="navTo('/pages/help/index')">
+			<view class="menu-item" @click="navTo('/pages/sys/user/help')">
 				<u-icon name="headphone" size="44" color="#42d392" class="menu-icon"></u-icon>
 				<text class="menu-text">帮助中心</text>
 				<u-icon name="arrow-right" size="24" color="#C0C4CC" class="arrow-icon"></u-icon>
