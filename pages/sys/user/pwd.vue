@@ -1,5 +1,9 @@
 <template>
 	<view class="wrap">
+		<view class="header">
+			<u-icon name="arrow-left" size="44" @click="cancel"></u-icon>
+			<text class="header-title">修改密码</text>
+		</view>
 		<u-form class="form" :model="model" :rules="rules" ref="uForm">
 			<u-form-item label="旧密码" prop="oldPassword" label-width="180">
 				<u-input type="password" v-model="model.oldPassword" placeholder="请输入旧密码"></u-input>
@@ -102,5 +106,37 @@ export default {
 };
 </script>
 <style lang="scss">
-
+.wrap {
+	min-height: 100vh;
+	background-color: #f8f8f8;
+	
+	.header {
+		display: flex;
+		align-items: center;
+		padding: 20rpx 30rpx;
+		background-color: #ffffff;
+		
+		.header-title {
+			flex: 1;
+			text-align: center;
+			font-size: 32rpx;
+			font-weight: 500;
+			margin-right: 44rpx; // 补偿左侧图标的宽度
+		}
+	}
+	
+	.form {
+		margin-top: 20rpx;
+		padding: 20rpx;
+		background-color: #ffffff;
+	}
+	
+	.form-footer {
+		margin: 40rpx 20rpx;
+		
+		.btn {
+			margin-bottom: 20rpx;
+		}
+	}
+}
 </style>

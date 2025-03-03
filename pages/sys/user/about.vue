@@ -131,9 +131,9 @@ export default {
 					});
 					break;
 				case 'password':
-					// 修改密码
+					// 修改密码 - 更正跳转路径
 					uni.navigateTo({
-						url: '/pages/sys/user/password'  // 跳转到修改密码页面
+						url: '/pages/sys/user/pwd'  // 改为正确的pwd页面路径
 					});
 					break;
 				default:
