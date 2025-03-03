@@ -79,12 +79,7 @@
 				"navigationBarTitleText": "修改密码"
 			}
 		},
-		{
-			"path": "pages/sys/user/setting",
-			"style": {
-				"navigationBarTitleText": "系统设置"
-			}
-		},
+
 		{
 			"path": "pages/sys/user/comment",
 			"style": {
