@@ -264,11 +264,6 @@ export default {
 			this.showCalendar = true
 		},
 		
-		// 日期改变
-		dateChange(e) {
-			console.log('日期改变:', e)
-		},
-		
 		// 确认日期
 		confirmDate(e) {
 			console.log('确认日期:', e)

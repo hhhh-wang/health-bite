@@ -4,12 +4,15 @@
 			<view class="avatar">
 				<image src="/static/images/avatar.png"></image>
 			</view>
-			<view class="date-selector">
-				<text>{{currentDate}}</text>
-				<u-icon name="arrow-down" size="28"></u-icon>
+			<view class="date-display">
+				<text class="date-text">{{ date_text }}</text>
 			</view>
-			<view class="settings">
-				<u-icon name="calendar" size="40" color="#ffffff"></u-icon>
+			<view class="date-picker" @click="showDatePicker">
+				<u-icon 
+					name="calendar" 
+					size="40" 
+					color="#ffffff"
+				></u-icon>
 			</view>
 		</view>
 		
@@ -36,6 +39,25 @@
 				<component :is="currentComponent"></component>
 			</view>
 		</view>
+		
+		<!-- 日期选择器 -->
+		<u-picker
+			v-model="showCalendar"
+			mode="time"
+			@confirm="confirmDate"
+			@cancel="closeCalendar"
+		>
+			<u-calendar
+				:show="showCalendar"
+				mode="single"
+				:defaultDate="selectedDate"
+				@change="dateChange"
+				@confirm="confirmDate"
+				@close="closeCalendar"
+				color="#42d392"
+			></u-calendar>
+		</u-picker>
+
 	</view>
 </template>
 
@@ -53,7 +75,15 @@ export default {
 	},
 	data() {
 		return {
-			currentDate: '2023-12-01',
+			date: '',
+			showCalendar: false,
+			mode: 'single',
+			selectedDate: this.getFormatDate(),
+			date_text: this.getFormatDate(),
+			defaultDate: '',
+			minDate: '',
+			maxDate: '',
+
 			current: 0,
 			tabsList: [
 				{name: '干卡'},
@@ -63,6 +93,7 @@ export default {
 		}
 	},
 	computed: {
+		
 		// 根据当前选中的标签返回对应的组件
 		currentComponent() {
 			switch(this.current) {
@@ -77,53 +108,119 @@ export default {
 			}
 		}
 	},
+	onLoad() {
+		// 初始化日期为今天
+		const now = new Date();
+		const year = now.getFullYear();
+		const month = now.getMonth() + 1;
+		const day = now.getDate();
+		this.date = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+		this.defaultDate = this.date;
+		this.minDate = '2020-01-01';
+		this.maxDate = this.date;
+	},
 	methods: {
 		// 标签切换事件
 		tabChange(index) {
 			this.current = index;
-		}
+		},
+		// 显示日期选择器
+		showDatePicker() {
+			console.log('显示日期选择器')
+			this.showCalendar = true
+		},
+		// 日期选择确认
+		confirmDate(e) {
+			console.log('确认日期:', e)
+			// 格式化日期字符串
+			const date = `${e.year}-${e.month}-${e.day}`
+			this.selectedDate = date
+			this.date_text = date
+			this.showCalendar = false
+			// 获取选中日期的数据
+			this.fetchDayData(date)
+		},
+		// 关闭日期选择器
+		calendarClose() {
+			this.showCalendar = false;
+		},
+				// 获取选中日期的数据
+		fetchDayData(date) {
+			// 这里添加获取数据的逻辑
+			console.log('获取日期数据:', date)
+		},
+		getFormatDate() {
+			const date = new Date()
+			const year = date.getFullYear()
+			const month = String(date.getMonth() + 1).padStart(2, '0')
+			const day = String(date.getDate()).padStart(2, '0')
+			return `${year}-${month}-${day}`
+		},
 	}
 }
 </script>
 
 <style lang="scss">
 .container {
-	padding: 0;
-	background-color: #ffffff;
+	padding: 40rpx;
+	background-color: #f8f8f8;
 	
 	.header {
-		padding: 40rpx 30rpx;
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
+		justify-content: space-between;
+		margin-bottom: calc(4vh);
+		padding: calc(2vh) calc(2vw);
 		
 		.avatar {
-			width: 80rpx;
-			height: 80rpx;
+			width: calc(20vw);
+			height: calc(20vw);
+			min-width: 80rpx;
+			min-height: 80rpx;
+			max-width: 120rpx;
+			max-height: 120rpx;
 			border-radius: 50%;
 			overflow: hidden;
 			
 			image {
 				width: 100%;
 				height: 100%;
+				border-radius: 50%;
 			}
 		}
 		
-		.date-selector {
-			display: flex;
-			align-items: center;
-			font-size: 32rpx;
-			color: #333;
-		}
-		
-		.settings {
-			width: 80rpx;
-			height: 80rpx;
+		.date-display {
+			flex: 1;
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			background-color: #42d392;
+			
+			.date-text {
+				font-size: clamp(40rpx, 3.2vw, 32rpx);
+				font-weight: bold;
+				color: #333;
+			}
+		}
+		
+		.date-picker {
+			width: calc(20vw);
+			height: calc(20vw);
+			min-width: 80rpx;
+			min-height: 80rpx;
+			max-width: 120rpx;
+			max-height: 120rpx;
 			border-radius: 50%;
+			background: #42d392;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 4rpx 12rpx rgba(66, 211, 146, 0.3);
+			
+			.u-icon {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
 		}
 	}
 	

@@ -192,8 +192,7 @@
 		{
 			"path": "pages/data/index",
 			"style": {
-				"navigationBarTitleText": "数据统计",
-				"navigationBarBackgroundColor": "#f8f8f8"
+				"navigationBarTitleText": ""
 			}
 		}
 	],
