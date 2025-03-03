@@ -30,7 +30,13 @@
 		
 		<view class="chart-section">
 			<view class="section-title">营养分布</view>
-			<view class="chart-placeholder"></view>
+			<view class="charts-box">
+				<qiun-data-charts 
+					type="radar"
+					:opts="opts"
+					:chartData="chartData"
+				/>
+			</view>
 		</view>
 	</view>
 </template>
@@ -40,7 +46,33 @@ export default {
 	name: 'NutritionTab',
 	data() {
 		return {
-			// 后续可以添加数据
+			chartData: {
+				categories: ["蛋白质", "脂肪", "碳水化合物", "水分"],
+				series: [{
+					name: "营养达成率",
+					data: [80, 60, 75, 85]
+				}]
+			},
+			opts: {
+				color: ["#42d392"],  // 使用与UI一致的主题色
+				padding: [5, 5, 5, 5],
+				dataLabel: false,
+				enableScroll: false,
+				legend: {
+					show: false  // 由于只有一组数据，不需要显示图例
+				},
+				extra: {
+					radar: {
+						gridType: "radar",
+						gridColor: "#CCCCCC",
+						gridCount: 4,
+						opacity: 0.2,
+						max: 100,  // 设置为100以显示百分比
+						labelShow: true,
+						border: true
+					}
+				}
+			}
 		}
 	}
 }
@@ -110,10 +142,13 @@ export default {
 			margin-bottom: 20rpx;
 		}
 		
-		.chart-placeholder {
+		.charts-box {
+			width: 100%;
 			height: 400rpx;
-			background-color: #f5f5f5;
+			background-color: #ffffff;
 			border-radius: 20rpx;
+			padding: 20rpx;
+			box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
 		}
 	}
 }
