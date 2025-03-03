@@ -16,10 +16,6 @@
 			</view>
 		</view>
 		
-		<view class="chart-section">
-			<view class="section-title">营养元素分布</view>
-			<view class="chart-placeholder"></view>
-		</view>
 	</view>
 </template>
 
