@@ -9,11 +9,9 @@
 		</view>
 		
 		<view class="charts-box">
-			<qiun-data-charts 
-				type="pie"
-				:opts="opts"
-				:chartData="chartData"
-				canvasId="calories-pie-chart"
+			<calorie-pie-chart 
+				:mealData="pieChartData" 
+				canvasId="calories-tab-pie"
 			/>
 		</view>
 		
@@ -28,8 +26,13 @@
 </template>
 
 <script>
+import CaloriePieChart from '@/components/calorie-pie-chart/index.vue';
+
 export default {
 	name: 'CalorieTab',
+	components: {
+		CaloriePieChart
+	},
 	data() {
 		return {
 			// 三餐卡路里数据
@@ -43,30 +46,7 @@ export default {
 			// 目标卡路里
 			targetCalories: 2925,
 			
-			// 图表数据 - 使用最简单的数据结构
-			chartData: {
-				series: []
-			},
-			
-			// 图表配置 - 简化配置
-			opts: {
-				color: ["#43B3AE", "#5B9BD5", "#F8BD7F", "#E99497"],
-				padding: [15, 15, 15, 15],
-				enableScroll: false,
-				extra: {
-					pie: {
-						activeOpacity: 0.8,
-						activeRadius: 10,
-						offsetAngle: 0,
-						labelWidth: 15,
-						border: false,
-						borderWidth: 3,
-						borderColor: "#FFFFFF"
-					}
-				}
-			},
-			
-			// 颜色对应 - 使用更健康的颜色
+			// 颜色对应
 			colors: {
 				breakfast: "#43B3AE", // 柔和绿松石色
 				lunch: "#5B9BD5",     // 柔和天蓝色
@@ -87,6 +67,16 @@ export default {
 		// 计算平均卡路里
 		averageCalories() {
 			return Math.round(this.totalCalories / 12);  // 假设12天的平均值
+		},
+		
+		// 饼图数据 - 转换为组件所需格式
+		pieChartData() {
+			return [
+				{ name: "早餐", value: this.mealCalories.breakfast },
+				{ name: "午餐", value: this.mealCalories.lunch },
+				{ name: "晚餐", value: this.mealCalories.dinner },
+				{ name: "其他", value: this.mealCalories.other }
+			];
 		},
 		
 		// 详情数据，包括百分比和颜色
@@ -142,7 +132,6 @@ export default {
 				]
 			};
 			
-			this.chartData = res;
 			console.log('重新设置图表数据');
 		}
 	}
@@ -176,7 +165,6 @@ export default {
 	
 	.charts-box {
 		width: 100%;
-		height: 300px; /* 使用px而非rpx */
 		margin: 20rpx 0 30rpx;
 		background-color: #fff;
 		border-radius: 16rpx;
