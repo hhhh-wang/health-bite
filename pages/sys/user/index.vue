@@ -16,7 +16,7 @@
 		<!-- 功能菜单区域 -->
 		<view class="menu-grid">
 			<!-- 订阅 -->
-			<view class="menu-item" @click="navTo('/pages/subscription/index')">
+			<view class="menu-item" @click="navTo('/pages/sys/user/subscription')">
 				<u-icon name="crown-fill" size="44" color="#FFB900" class="menu-icon"></u-icon>
 				<text class="menu-text">订阅</text>
 				<u-icon name="arrow-right" size="24" color="#C0C4CC" class="arrow-icon"></u-icon>
