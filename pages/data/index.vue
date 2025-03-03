@@ -60,9 +60,9 @@
 
 <script>
 // 引入各个标签页组件
-import CalorieTab from '@/components/calorie-tab/index';
-import NutritionTab from '@/components/nutrition-tab/index';
-import NutritionDistributionTab from '@/components/nutrition-distribution-tab/index';
+const CalorieTab = () => import('@/components/calorie-tab/index');
+const NutritionTab = () => import('@/components/nutrition-tab/index');
+const NutritionDistributionTab = () => import('@/components/nutrition-distribution-tab/index');
 
 export default {
 	components: {
@@ -166,7 +166,7 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		margin-bottom: calc(4vh);
+		margin-bottom: calc(2vh);
 		padding: calc(2vh) calc(2vw);
 		
 		.avatar {
@@ -226,7 +226,7 @@ export default {
 		justify-content: center;
 		align-items: center;
 		padding: calc(1vh) 20rpx;
-		margin: calc(1.5vh) 0;
+		margin: calc(1vh) 0;
 		
 		.page-title {
 			font-size: 40rpx;
