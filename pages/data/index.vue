@@ -18,9 +18,6 @@
 		
 		<view class="title-section">
 			<text class="page-title">数据报告</text>
-			<view class="more-actions">
-				<u-icon name="more-dot-fill" size="40" color="#333"></u-icon>
-			</view>
 		</view>
 		
 		<!-- 标签页组件 -->
@@ -225,21 +222,17 @@ export default {
 	}
 	
 	.title-section {
-		padding: 20rpx 30rpx;
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		align-items: center;
+		padding: calc(1vh) 20rpx;
+		margin: calc(1.5vh) 0;
 		
 		.page-title {
 			font-size: 40rpx;
 			font-weight: bold;
 			color: #333;
-		}
-		
-		.more-actions {
-			background-color: #e9e9e9;
-			padding: 10rpx 20rpx;
-			border-radius: 50rpx;
+			text-align: center;
 		}
 	}
 	
