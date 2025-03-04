@@ -53,20 +53,15 @@
 
     <!-- 底部区域 -->
     <view class="guide-footer">
-      <view class="bottom-controls">
-        <view @click="handleNext">
-          <u-circle-progress 
-            class="progress-btn"
-            :percent="currentProgress" 
-            :width="300"
-            activeColor="#42d392"
-            inactiveColor="rgba(66, 211, 146, 0.2)"
-            :duration="1000"
-          >
-            <text class="arrow-icon">›</text>
-          </u-circle-progress>
-        </view>
-      </view>
+      <progress-button
+        ref="progressBtn"
+        :percent="currentProgress"
+        next-url="/pages/userSetup/gender"
+        :need-validate="true"
+        validate-msg="请选择您的目标"
+        @validate="validateForm"
+        @success="handleSuccess"
+      />
     </view>
   </view>
 </template>
@@ -74,11 +69,13 @@
 <script>
 // 引入 page-header 组件
 import PageHeader from '@/components/page-header/index.vue'
+import ProgressButton from '@/components/progress-button/index.vue'
 
 export default {
   // 注册组件
   components: {
-    PageHeader
+    PageHeader,
+    ProgressButton
   },
   
   data() {
@@ -93,22 +90,17 @@ export default {
     selectTarget(target) {
       this.selectedTarget = target;
     },
-    handleNext() {
+    validateForm() {
       if (!this.selectedTarget) {
         this.$u.toast('请选择您的目标');
         return;
       }
-      
-      uni.navigateTo({
-        url: '/pages/userSetup/gender',
-        success: () => {
-          this.currentProgress = (this.currentPage + 1) * 12.5;
-        },
-        fail: (err) => {
-          console.error('跳转失败：', err);
-          this.$u.toast('页面跳转失败');
-        }
-      });
+      // 验证通过，手动触发组件的跳转方法
+      this.$refs.progressBtn.navigateToNext();
+    },
+    handleSuccess() {
+      // 跳转成功后更新进度
+      this.currentProgress = (this.currentPage + 1) * 12.5;
     }
   }
 }
@@ -184,30 +176,6 @@ export default {
 
   .guide-footer {
     margin-top: auto;
-    padding: 40rpx 0;
-    
-    .bottom-controls {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      
-      .progress-btn {
-        position: relative;
-        background-color: #f8f8f8;
-        border-radius: 50%;
-        
-        .arrow-icon {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          color: #42d392;
-          font-size: 100rpx;
-          line-height: 80rpx;
-          font-weight: bold;
-        }
-      }
-    }
   }
 }
 </style> 

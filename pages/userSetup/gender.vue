@@ -44,31 +44,27 @@
 
     <!-- 底部区域 -->
     <view class="guide-footer">
-      <view class="bottom-controls">
-        <view @click="handleNext">
-          <u-circle-progress 
-            class="progress-btn"
-            :percent="currentProgress" 
-            :width="300"
-            activeColor="#42d392"
-            inactiveColor="rgba(66, 211, 146, 0.2)"
-            :duration="1000"
-          >
-            <text class="arrow-icon">›</text>
-          </u-circle-progress>
-        </view>
-      </view>
+      <progress-button
+        ref="progressBtn"
+        :percent="currentProgress"
+        next-url="/pages/userSetup/birthday"
+        :need-validate="true"
+        validate-msg="请选择您的性别"
+        @validate="validateForm"
+        @success="handleSuccess"
+      />
     </view>
   </view>
 </template>
 
 <script>
 import PageHeader from '@/components/page-header/index.vue'
+import ProgressButton from '@/components/progress-button/index.vue'
 
 export default {
-      // 注册组件
   components: {
-    PageHeader
+    PageHeader,
+    ProgressButton
   },
   data() {
     return {
@@ -80,22 +76,19 @@ export default {
   },
   methods: {
     selectGender(gender) {
-      this.selectedGender = gender;
+      this.selectedGender = gender
     },
-    handleNext() {
+    validateForm() {
       if (!this.selectedGender) {
-        this.$u.toast('请选择您的性别');
-        return;
+        this.$u.toast('请选择您的性别')
+        return
       }
-      
-      if (this.currentPage < this.totalPages) {
-        this.currentProgress = (this.currentPage + 1) * 12.5
-        uni.navigateTo({
-          url: '/pages/userSetup/birthday'
-        });
-      } else {
-        this.handleSkip();
-      }
+      // 验证通过，手动触发组件的跳转方法
+      this.$refs.progressBtn.navigateToNext()
+    },
+    handleSuccess() {
+      // 跳转成功后更新进度
+      this.currentProgress = (this.currentPage + 1) * 12.5
     }
   }
 }
@@ -175,30 +168,6 @@ export default {
 
   .guide-footer {
     margin-top: auto;
-    padding: 40rpx 0;
-    
-    .bottom-controls {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      
-      .progress-btn {
-        position: relative;
-        background-color: #f8f8f8;
-        border-radius: 50%;
-        
-        .arrow-icon {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          color: #42d392;
-          font-size: 100rpx;
-          line-height: 80rpx;
-          font-weight: bold;
-        }
-      }
-    }
   }
 }
 </style> 
