@@ -128,6 +128,7 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
+import { navigateBack } from '@/common/utils/navigate';
 export default {
 	data() {
 		return {
@@ -143,7 +144,10 @@ export default {
 	},
 	methods: {
 		goBack() {
-			uni.navigateBack()
+			navigateBack({
+				redirectUrl: '/pages/sys/user/index',
+				isTab: true
+			});
 		},
 		editProfile() {
 			uni.showToast({
@@ -196,7 +200,6 @@ export default {
 		display: flex;
 		align-items: center;
 		padding: 20rpx 30rpx;
-		background-color: #ffffff;
 		
 		.header-title {
 			flex: 1;
@@ -211,7 +214,7 @@ export default {
 		margin: 20rpx;
 		padding: 30rpx;
 		background: linear-gradient(135deg, #42d392 0%, #34b484 100%);
-		border-radius: 16rpx;
+		border-radius: 50rpx;
 		color: #ffffff;
 
 		.profile-header {
@@ -304,7 +307,7 @@ export default {
 	.info-list {
 		background-color: #ffffff;
 		margin-bottom: 20rpx;
-		border-radius: 12rpx;
+		border-radius: 50rpx;
 		margin: 0 20rpx 20rpx;
 	}
 }
