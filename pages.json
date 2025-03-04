@@ -198,8 +198,23 @@
 			}
 		},
 		{
-			"path": "pages/userSetup/username/index",
+			"path": "pages/userSetup/index",
 			"style": {
+				"navigationBarTitleText": "设置用户信息",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/userSetup/target",
+			"style": {
+				"navigationBarTitleText": "选择目标",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/userSetup/gender",
+			"style": {
+				"navigationBarTitleText": "选择性别",
 				"navigationStyle": "custom"
 			}
 		}

@@ -11,7 +11,7 @@
       />
     <!-- 进度指示器 -->
     <view class="progress-indicator">
-      <text>1 / 8</text>
+      <text>1 / 10</text>
     </view>
     
     <!-- 标题区域 -->
@@ -70,9 +70,9 @@ export default {
   data() {
     return {
       username: '',
-      currentProgress: 33,
+      currentProgress: 12.5,
       currentPage: 1,
-      totalPages: 3
+      totalPages: 8
     }
   },
   methods: {
@@ -91,9 +91,9 @@ export default {
       }
       
       if (this.currentPage < this.totalPages) {
-        this.currentProgress = (this.currentPage + 1) * 33
+        this.currentProgress = (this.currentPage + 1) * 12.5
         uni.navigateTo({
-          url: '/pages/userSetup/nextPage/index'
+          url: '/pages/userSetup/target'
         })
       } else {
         this.handleSkip()
@@ -190,5 +190,4 @@ export default {
     }
   }
 }
-</style> 
 </style> 
