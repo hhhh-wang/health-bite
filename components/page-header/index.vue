@@ -80,7 +80,7 @@ export default {
   padding: 60rpx 0 30rpx;
   
   .left-area {
-    width: 120rpx;  // 保持固定宽度
+    width: 120rpx; // 固定宽度
     
     .back-button {
       width: 120rpx;
@@ -94,7 +94,7 @@ export default {
   }
 
   .right-area {
-    width: 120rpx;  // 保持固定宽度
+    width: 120rpx; // 固定宽度
     
     .skip-btn {
       width: 120rpx;
@@ -113,4 +113,4 @@ export default {
     }
   }
 }
-</style>
+</style> 
