@@ -194,7 +194,7 @@
 		{
 			"path": "pages/sys/user/subscription",
 			"style": {
-				"navigationBarTitleText": "订阅计划"
+				"navigationBarTitleText": ""
 			}
 		}
 	],
