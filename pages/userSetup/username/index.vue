@@ -1,14 +1,14 @@
 <template>
     <view class="container">
-      <!-- 顶部区域 -->
-      <view class="header">
-        <view class="back-button">
-            <u-icon name="arrow-left" color="#333" size="20"></u-icon>
-        </view>
-        <view class="skip-btn" @click="handleSkip">
-          跳过
-        </view>
-      </view>
+      <!-- 使用封装的顶部组件 -->
+      <page-header 
+        :show-back="false"
+        :show-skip="true"
+        back-redirect-url="/pages/sys/login/index"
+        :back-is-tab="true"
+        skip-redirect-url="/pages/sys/home/index"          
+        :skip-is-tab="true"
+      />
     <!-- 进度指示器 -->
     <view class="progress-indicator">
       <text>1 / 8</text>
@@ -59,7 +59,14 @@
 </template>
 
 <script>
+// 引入组件
+import PageHeader from '@/components/page-header/index.vue'
+
 export default {
+  // 注册组件
+  components: {
+    PageHeader
+  },
   data() {
     return {
       username: '',
@@ -69,6 +76,9 @@ export default {
     }
   },
   methods: {
+    handleBack() {
+      uni.navigateBack()
+    },
     handleSkip() {
       uni.reLaunch({
         url: '/pages/sys/login/index'
@@ -103,39 +113,6 @@ export default {
   padding: 0 40rpx;
   box-sizing: border-box;
   
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 60rpx 0 30rpx;
-    
-    .back-button {
-      width: 120rpx;
-      height: 120rpx;
-      border-radius: 50%;
-      background-color: rgb(246, 247, 247);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .skip-btn {
-      width: 150rpx;
-      height: 120rpx;
-      border-radius: 50rpx;
-      background-color: rgb(246, 247, 247);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      
-      text {
-        font-size: 28rpx;
-        font-weight: bold;
-        color: #333;
-      }
-    }
-  }
-
   .progress-indicator {
     margin: 20rpx 0;
     
@@ -213,4 +190,5 @@ export default {
     }
   }
 }
+</style> 
 </style> 
