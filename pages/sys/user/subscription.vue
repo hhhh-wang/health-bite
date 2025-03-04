@@ -1,13 +1,16 @@
 <template>
   <view class="subscription-container">
     <!-- 返回按钮 -->
-    <view class="back-button" @click="goBack">
-      <u-icon name="arrow-left" color="#333" size="34"></u-icon>
-    </view>
+    <view class="custom-navbar">
+			<view class="left" @click="goBack">
+				<view class="back-button">
+					<u-icon name="arrow-left" color="#333" size="20"></u-icon>
+				</view>
+			</view>
+		</view>
     
     <!-- 顶部标题区域 -->
     <view class="header">
-      <image class="header-image" src="/static/images/premium_food.png" mode="aspectFit"></image>
       <view class="title">升级计划</view>
       <view class="subtitle">充分利用健康饮食</view>
       <view class="benefits">
@@ -112,6 +115,7 @@
 </template>
 
 <script>
+import { navigateBack } from '@/common/utils/navigate';
 export default {
   data() {
     return {
@@ -120,7 +124,10 @@ export default {
   },
   methods: {
     goBack() {
-      uni.navigateBack();
+      navigateBack({
+				redirectUrl: '/pages/sys/user/index',
+				isTab: true
+			});
     },
     selectPlan(plan) {
       this.selectedPlan = plan;
@@ -154,31 +161,33 @@ export default {
   position: relative;
 }
 
-.back-button {
-  position: absolute;
-  top: 40rpx;
-  left: 30rpx;
-  z-index: 10;
-  width: 70rpx;
-  height: 70rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 50%;
-}
+.custom-navbar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10rpx 20rpx;
+		background-color: #ffffff;
+		position: relative;
+		.left {
+			.back-button {
+				width: 120rpx;
+				height: 120rpx;
+				background-color: rgb(246, 247, 247);
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+		
+	}
+
+
 
 .header {
   text-align: center;
   margin-bottom: 40rpx;
-  padding-top: 20rpx;
-  
-  .header-image {
-    width: 240rpx;
-    height: 200rpx;
-    margin-bottom: 20rpx;
-  }
-  
+
   .title {
     font-size: 44rpx;
     font-weight: bold;

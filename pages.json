@@ -194,7 +194,7 @@
 		{
 			"path": "pages/sys/user/subscription",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationStyle": "custom"
 			}
 		}
 	],
