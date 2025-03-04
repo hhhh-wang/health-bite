@@ -196,6 +196,12 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/userSetup/username/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"subPackages": [],

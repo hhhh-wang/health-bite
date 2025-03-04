@@ -136,7 +136,7 @@ export default {
 				if (res.result == 'true') {
 					setTimeout(() => {
 						uni.reLaunch({
-							url: '/pages/sys/home/index'
+							url: '/pages/userSetup/username/index'
 						});
 					}, 500);
 				}
