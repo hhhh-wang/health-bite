@@ -217,6 +217,13 @@
 				"navigationBarTitleText": "选择性别",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/userSetup/birthday",
+			"style": {
+				"navigationBarTitleText": "选择生日",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"subPackages": [],

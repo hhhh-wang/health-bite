@@ -99,14 +99,16 @@ export default {
         return;
       }
       
-      if (this.currentPage < this.totalPages) {
-        this.currentProgress = (this.currentPage + 1) * 12.5
-        uni.navigateTo({
-          url: '/pages/userSetup/gender'  // 修改为性别选择页面
-        });
-      } else {
-        this.handleSkip();
-      }
+      uni.navigateTo({
+        url: '/pages/userSetup/gender',
+        success: () => {
+          this.currentProgress = (this.currentPage + 1) * 12.5;
+        },
+        fail: (err) => {
+          console.error('跳转失败：', err);
+          this.$u.toast('页面跳转失败');
+        }
+      });
     }
   }
 }

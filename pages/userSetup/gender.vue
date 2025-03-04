@@ -91,7 +91,7 @@ export default {
       if (this.currentPage < this.totalPages) {
         this.currentProgress = (this.currentPage + 1) * 12.5
         uni.navigateTo({
-          url: '/pages/userSetup/height'
+          url: '/pages/userSetup/birthday'
         });
       } else {
         this.handleSkip();
