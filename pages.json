@@ -252,6 +252,13 @@
 				"navigationStyle": "custom",
 				"navigationBarTitleText": "选择进度"
 			}
+		},
+		{
+			"path": "pages/userSetup/planComplete",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "计划完成"
+			}
 		}
 	],
 	"subPackages": [],

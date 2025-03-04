@@ -139,8 +139,8 @@ export default {
 
     handleSuccess() {
       console.log('选择的进度:', this.selectedProgress)
-      uni.reLaunch({
-        url: '/pages/sys/home/index'
+      uni.navigateTo({
+        url: `/pages/userSetup/planComplete?currentWeight=${this.currentWeight}&targetWeight=${this.targetWeight}&selectedProgress=${this.selectedProgress}`
       })
     }
   },
