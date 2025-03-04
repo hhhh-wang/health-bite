@@ -224,6 +224,13 @@
 				"navigationBarTitleText": "选择生日",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/userSetup/height",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "身高设置"
+			}
 		}
 	],
 	"subPackages": [],

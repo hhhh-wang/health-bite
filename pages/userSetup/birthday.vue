@@ -55,6 +55,7 @@
     <!-- 底部区域 -->
     <view class="guide-footer">
       <progress-button
+        ref="progressBtn"
         :percent="currentProgress"
         next-url="/pages/userSetup/height"
         :need-validate="true"
