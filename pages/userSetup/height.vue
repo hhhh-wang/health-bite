@@ -12,7 +12,7 @@
     
     <!-- 进度指示器 -->
     <view class="progress-indicator">
-      <text>4 / 8</text>
+      <text>5 / 8</text>
     </view>
     
     <!-- 标题区域 -->
@@ -47,7 +47,8 @@
         validate-msg="请选择您的身高"
         @validate="validateForm"
         @success="handleSuccess"
-      />
+      >
+      </progress-button>
     </view>
   </view>
 </template>
@@ -66,7 +67,7 @@ export default {
     return {
       height: 160,
       currentProgress: 50,
-      currentPage: 4,
+      currentPage: 5,
       totalPages: 8,
       minHeight: 140,
       maxHeight: 220
@@ -91,10 +92,14 @@ export default {
         this.$u.toast('请选择有效的身高')
         return false
       }
+      // 验证通过，手动触发组件的跳转方法
+      this.$refs.progressBtn.navigateToNext()
       return true
     },
     
     handleSuccess() {
+      console.log('handleSuccess triggered')
+      // 跳转成功后更新进度
       this.currentProgress = (this.currentPage + 1) * 12.5
     }
   }

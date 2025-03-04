@@ -231,6 +231,13 @@
 				"navigationStyle": "custom",
 				"navigationBarTitleText": "身高设置"
 			}
+		},
+		{
+			"path": "pages/userSetup/weight",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "体重设置"
+			}
 		}
 	],
 	"subPackages": [],
