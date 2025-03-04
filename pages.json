@@ -238,6 +238,20 @@
 				"navigationStyle": "custom",
 				"navigationBarTitleText": "体重设置"
 			}
+		},
+		{
+			"path": "pages/userSetup/targetWeight",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "目标体重"
+			}
+		},
+		{
+			"path": "pages/userSetup/progress",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "选择进度"
+			}
 		}
 	],
 	"subPackages": [],

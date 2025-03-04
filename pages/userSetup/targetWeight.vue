@@ -4,7 +4,7 @@
     <page-header 
       :show-back="true"
       :show-skip="false"
-      back-redirect-url="/pages/userSetup/height"
+      back-redirect-url="/pages/userSetup/weight"
       :back-is-tab="false"
       skip-redirect-url="/pages/sys/home/index"          
       :skip-is-tab="true"
@@ -12,20 +12,29 @@
     
     <!-- 进度指示器 -->
     <view class="progress-indicator">
-      <text>6 / 8</text>
+      <text>7 / 8</text>
     </view>
     
     <!-- 标题区域 -->
     <view class="title-section">
-      <text class="main-title">选择您的<text class="highlight">体重</text></text>
+      <text class="main-title">选择您的<text class="highlight">目标体重</text></text>
       <text class="sub-title">我们将使用这些数据为您提供更好的饮食类型</text>
     </view>
 
-    <!-- 体重显示和选择区域 -->
+    <!-- 当前体重显示 -->
+    <view class="current-weight">
+      <text class="label">当前体重</text>
+      <view class="weight-value">
+        <text class="number">{{ currentWeight }}</text>
+        <text class="unit">kg</text>
+      </view>
+    </view>
+
+    <!-- 目标体重选择器 -->
     <view class="weight-section">
       <!-- 大号数字显示 -->
       <view class="weight-display">
-        <text class="number">{{ weight.toFixed(1) }}</text>
+        <text class="number">{{ targetWeight.toFixed(1) }}</text>
         <text class="unit">kg</text>
       </view>
 
@@ -50,10 +59,10 @@
     <view class="guide-footer">
       <progress-button
         ref="progressBtn"
-        :percent="currentProgress" 
-        next-url="/pages/userSetup/targetWeight"
+        :percent="currentProgress"
+        next-url="/pages/userSetup/progress"
         :need-validate="true"
-        validate-msg="请选择您的体重"
+        validate-msg="请选择您的目标体重"
         @validate="validateForm"
         @success="handleSuccess"
       >
@@ -74,12 +83,13 @@ export default {
   
   data() {
     return {
-      weight: 60,
-      weightIndex: [300], // 默认60kg的索引位置
+      currentWeight: 60, // 从上一页传递过来的当前体重
+      targetWeight: 55, // 默认目标体重
+      weightIndex: [250], // 默认55kg的索引位置
       minWeight: 30,
       maxWeight: 200,
-      currentProgress: 75,
-      currentPage: 6,
+      currentProgress: 87.5,
+      currentPage: 7,
       totalPages: 8,
       // 选中框的样式
       indicatorStyle: 'height: 100rpx; border-top: 1rpx solid #eee; border-bottom: 1rpx solid #eee;',
@@ -102,13 +112,13 @@ export default {
   methods: {
     onWeightChange(e) {
       const index = e.detail.value[0]
-      this.weight = this.weightRange[index]
+      this.targetWeight = this.weightRange[index]
       this.weightIndex = [index]
     },
 
     validateForm() {
-      if (!this.weight || this.weight < this.minWeight || this.weight > this.maxWeight) {
-        this.$u.toast('请选择有效的体重')
+      if (!this.targetWeight || this.targetWeight < this.minWeight || this.targetWeight > this.maxWeight) {
+        this.$u.toast('请选择有效的目标体重')
         return false
       }
       // 验证通过，手动触发组件的跳转方法
@@ -117,20 +127,25 @@ export default {
     },
 
     handleSuccess() {
-      console.log('handleSuccess triggered')
-      // 跳转到目标体重页面，并携带当前体重数据
+      console.log('目标体重数据:', this.targetWeight)
+      // 跳转到进度选择页面，并携带当前体重和目标体重数据
       uni.navigateTo({
-        url: `/pages/userSetup/targetWeight?currentWeight=${this.weight}`
+        url: `/pages/userSetup/progress?currentWeight=${this.currentWeight}&targetWeight=${this.targetWeight}`
       })
       // 更新进度
       this.currentProgress = (this.currentPage + 1) * 12.5
     }
   },
 
-  mounted() {
-    // 初始化选中值的索引
-    const initialIndex = this.weightRange.indexOf(this.weight)
-    this.weightIndex = [initialIndex]
+  onLoad(options) {
+    // 获取从上一页传递过来的当前体重
+    if (options.currentWeight) {
+      this.currentWeight = parseFloat(options.currentWeight)
+      // 设置默认目标体重为当前体重
+      this.targetWeight = this.currentWeight
+      const initialIndex = this.weightRange.indexOf(this.targetWeight)
+      this.weightIndex = [initialIndex]
+    }
   }
 }
 </script>
@@ -168,6 +183,39 @@ export default {
     .sub-title {
       font-size: 32rpx;
       color: #666;
+    }
+  }
+
+  .current-weight {
+    margin: 40rpx 0;
+    padding: 30rpx;
+    background: rgba(66, 211, 146, 0.1);
+    border-radius: 16rpx;
+    
+    .label {
+      font-size: 28rpx;
+      color: #666;
+      margin-bottom: 10rpx;
+      display: block;
+    }
+    
+    .weight-value {
+      display: flex;
+      align-items: flex-end;
+      
+      .number {
+        font-size: 48rpx;
+        font-weight: bold;
+        color: #333;
+        line-height: 1;
+      }
+      
+      .unit {
+        font-size: 24rpx;
+        color: #666;
+        margin-left: 8rpx;
+        margin-bottom: 8rpx;
+      }
     }
   }
 
@@ -223,8 +271,7 @@ export default {
 
   .guide-footer {
     margin-top: auto;
-    padding: 40rpx;
-    background: #fff;
+    padding-bottom: 40rpx;
   }
 }
 </style> 
