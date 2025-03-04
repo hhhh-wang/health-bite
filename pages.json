@@ -49,9 +49,8 @@
 		{
 			"path": "pages/sys/user/index",
 			"style": {
-				"navigationBarTitleText": "用户中心",
-				"backgroundColor": "#f8f8f8",
-				"navigationBarBackgroundColor":"#f8f8f8"
+				"navigationBarTitleText": ""
+				
 			}
 		},
 		

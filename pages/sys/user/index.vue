@@ -1,43 +1,65 @@
 <template>
 	<view class="user-container">
+		<!-- 顶部标题栏 -->
+		<view class="header">
+			<view class="left-placeholder"></view>
+			<text class="title">我的</text>
+			<view class="logout-button" @click="logout">
+				<text>退出</text>
+			</view>
+		</view>
+		
 		<!-- 用户信息区域 -->
 		<view class="user-info">
-			<view class="avatar-box">
+			<view class="avatar-container">
 				<image class="avatar" :src="avatarUrl"></image>
 			</view>
 			<view class="user-name">KOTO</view>
-			<view class="user-details">
-				<text class="detail-item">{{age}}岁</text>
-				<text class="detail-item">{{height}}cm</text>
-				<text class="detail-item">{{weight}}kg</text>
+			<view class="user-stats">
+				<text>{{age}} 岁</text>
+				<text class="stat-divider">|</text>
+				<text>{{height}}cm</text>
+				<text class="stat-divider">|</text>
+				<text>{{weight}}kg</text>
 			</view>
 		</view>
-
-		<!-- 功能菜单区域 -->
+		
+		<!-- 功能菜单 -->
 		<view class="menu-grid">
 			<!-- 订阅 -->
-			<view class="menu-item" @click="navTo('/pages/sys/user/subscription')">
-				<u-icon name="crown-fill" size="44" color="#FFB900" class="menu-icon"></u-icon>
+			<view class="menu-item subscription" @click="navTo('/pages/sys/user/subscription')">
+				<view class="menu-icon-box">
+					<u-icon name="level" size="40" color="#5E8B2E"></u-icon>
+				</view>
 				<text class="menu-text">订阅</text>
-				<u-icon name="arrow-right" size="24" color="#C0C4CC" class="arrow-icon"></u-icon>
+				<u-icon name="arrow-right" size="24" color="#BBBBBB" class="arrow-icon"></u-icon>
 			</view>
+			
 			<!-- 个人主页 -->
-			<view class="menu-item" @click="navTo('/pages/sys/user/about')">
-				<u-icon name="account" size="44" color="#42d392" class="menu-icon"></u-icon>
+			<view class="menu-item profile" @click="navTo('/pages/sys/user/about')">
+				<view class="menu-icon-box">
+					<u-icon name="account" size="40" color="#2D8CF0"></u-icon>
+				</view>
 				<text class="menu-text">个人主页</text>
-				<u-icon name="arrow-right" size="24" color="#C0C4CC" class="arrow-icon"></u-icon>
+				<u-icon name="arrow-right" size="24" color="#BBBBBB" class="arrow-icon"></u-icon>
 			</view>
+			
 			<!-- 帮助中心 -->
-			<view class="menu-item" @click="navTo('/pages/sys/user/help')">
-				<u-icon name="headphone" size="44" color="#42d392" class="menu-icon"></u-icon>
+			<view class="menu-item help" @click="navTo('/pages/sys/user/help')">
+				<view class="menu-icon-box">
+					<u-icon name="headphone" size="40" color="#606266"></u-icon>
+				</view>
 				<text class="menu-text">帮助中心</text>
-				<u-icon name="arrow-right" size="24" color="#C0C4CC" class="arrow-icon"></u-icon>
+				<u-icon name="arrow-right" size="24" color="#BBBBBB" class="arrow-icon"></u-icon>
 			</view>
+			
 			<!-- 设置 -->
-			<view class="menu-item" @click="navTo('/pages/settings/index')">
-				<u-icon name="setting" size="44" color="#42d392" class="menu-icon"></u-icon>
+			<view class="menu-item settings" @click="navTo('/pages/settings/index')">
+				<view class="menu-icon-box">
+					<u-icon name="setting" size="40" color="#19be6b"></u-icon>
+				</view>
 				<text class="menu-text">设置</text>
-				<u-icon name="arrow-right" size="24" color="#C0C4CC" class="arrow-icon"></u-icon>
+				<u-icon name="arrow-right" size="24" color="#BBBBBB" class="arrow-icon"></u-icon>
 			</view>
 		</view>
 	</view>
@@ -78,7 +100,7 @@ export default {
 				});
 			}, 500);
 		},
-		upgrade(){
+		upgrade() {
 			// #ifdef APP-PLUS
 			this.$u.api.upgradeCheck().then(res => {
 				if (res.result == 'true'){
@@ -108,22 +130,56 @@ export default {
 <style lang="scss" scoped>
 .user-container {
 	min-height: 100vh;
-	padding: 30rpx;
-	background-color: #ffffff;
+	background-color: #f5f7fa;
+	padding-bottom: 30rpx;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 40rpx 30rpx 20rpx;
+	
+	.left-placeholder {
+		width: 70rpx; /* 与右侧按钮宽度相同 */
+	}
+	
+	.title {
+		font-size: 36rpx;
+		font-weight: bold;
+		color: #2c3e50;
+		flex: 1;
+		text-align: center;
+	}
+	
+	.logout-button {
+		height: 60rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 10rpx;
+		
+		text {
+			font-size: 28rpx;
+			color: #2c3e50;
+			font-weight: 500;
+		}
+	}
 }
 
 .user-info {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 40rpx 0;
+	padding: 30rpx 0 50rpx;
 	
-	.avatar-box {
+	.avatar-container {
 		width: 160rpx;
 		height: 160rpx;
 		border-radius: 50%;
+		background-color: #ffcc00;
 		overflow: hidden;
-		background-color: #ffd700; // 黄色背景
+		margin-bottom: 20rpx;
 		
 		.avatar {
 			width: 100%;
@@ -133,85 +189,71 @@ export default {
 	}
 	
 	.user-name {
-		font-size: 36rpx;
+		font-size: 40rpx;
 		font-weight: bold;
-		margin-top: 20rpx;
+		color: #2c3e50;
+		margin-bottom: 16rpx;
 	}
 	
-	.user-details {
-		margin-top: 10rpx;
-		color: #666;
+	.user-stats {
+		display: flex;
+		align-items: center;
+		color: #7f8c8d;
 		font-size: 28rpx;
 		
-		.detail-item {
-			margin: 0 15rpx;
+		.stat-divider {
+			margin: 0 20rpx;
+			color: #bdc3c7;
 		}
-	}
-}
-
-.notice-box {
-	margin: 30rpx 0;
-	padding: 30rpx;
-	background-color: #f0fff0;
-	border-radius: 16rpx;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	
-	.notice-content {
-		display: flex;
-		flex-direction: column;
-		
-		.notice-desc {
-			font-size: 24rpx;
-			color: #666;
-			margin-top: 8rpx;
-		}
-	}
-	
-	.notice-icon {
-		font-size: 40rpx;
-		color: #42d392;
 	}
 }
 
 .menu-grid {
+	padding: 0 30rpx;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	gap: 20rpx;
-	margin-top: 30rpx;
 	
 	.menu-item {
 		position: relative;
-		background-color: #f8f8f8;
-		padding: 30rpx;
-		border-radius: 16rpx;
+		background-color: #ffffff;
+		border-radius: 20rpx;
+		padding: 40rpx 30rpx;
 		display: flex;
-		align-items: center;
-		transition: all 0.3s ease;
+		flex-direction: column;
+		align-items: flex-start;
 		
-		&:nth-child(1) {
-			background-color: #FFF5E6;  // 订阅按钮特殊背景色
+		&.subscription {
+			background-color: #FFF6E9;
 		}
 		
-		&:active {
-			transform: scale(0.98);
-			opacity: 0.9;
+		&.profile {
+			background-color: #F0F9FF;
 		}
 		
-		.menu-icon {
-			margin-right: 20rpx;
+		&.help {
+			background-color: #F6F6F6;
+		}
+		
+		&.settings {
+			background-color: #F0FFF0;
+		}
+		
+		.menu-icon-box {
+			margin-bottom: 20rpx;
 		}
 		
 		.menu-text {
-			font-size: 28rpx;
-			color: #333;
-			flex: 1;
+			font-size: 30rpx;
+			color: #333333;
+			font-weight: 500;
 		}
 		
 		.arrow-icon {
 			position: absolute;
-			right: 20rpx;
+			right: 30rpx;
+			top: 50%;
+			transform: translateY(-50%);
 		}
 	}
 }
