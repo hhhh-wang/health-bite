@@ -15,7 +15,8 @@
     <!-- 标题区域 -->
     <view class="title-section">
       <text class="main-title">您的个人计划已准备就绪</text>
-      <text class="sub-title">为了达到您的目标体重我们为您量身定制了此计划</text>
+      <text class="sub-title">为了达到您的目标体重</text>
+      <text class="sub-title">我们为您量身定制了此计划</text>
     </view>
 
     <!-- 计划卡片 -->
@@ -165,24 +166,36 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: linear-gradient(to bottom, #f8fffa, #ffffff);
   padding: 0 40rpx;
   box-sizing: border-box;
-
+  
   .title-section {
-    margin: 60rpx 0;
+    margin: 50rpx 0;
+    text-align: center;  // 标题区域居中
+    display: flex;
+    flex-direction: column;
+    gap: 20rpx;  // 设置段落之间的间距
     
     .main-title {
       font-size: 48rpx;
       font-weight: bold;
-      color: #333;
       display: block;
-      margin-bottom: 20rpx;
+      text-align: center;  // 主标题居中
+      color: #333;
+      margin-bottom: 30rpx;  // 主标题与副标题之间的间距
     }
     
     .sub-title {
       font-size: 32rpx;
       color: #666;
+      text-align: center;  // 副标题居中
+      display: block;  // 确保块级显示以实现居中
+      line-height: 1.5;  // 增加行高，提高可读性
+      
+      &:last-child {
+        margin-top: 10rpx;  // 最后一段副标题增加额外的上边距
+      }
     }
   }
 

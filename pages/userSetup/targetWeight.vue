@@ -156,33 +156,47 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: linear-gradient(to bottom, #f8fffa, #ffffff);
   padding: 0 40rpx;
   box-sizing: border-box;
   
   .progress-indicator {
     margin: 20rpx 0;
+    text-align: center;
+    
     text {
       font-size: 28rpx;
-      color: #999;
+      color: #4cd964;
+      font-weight: bold;
+      display: inline-block;
+      padding: 8rpx 24rpx;
+      background: rgba(76, 217, 100, 0.1);
+      border-radius: 20rpx;
     }
   }
 
   .title-section {
-    margin: 60rpx 0;
+    margin: 50rpx 0;
+    text-align: center;
+    
     .main-title {
       font-size: 48rpx;
       font-weight: bold;
-      color: #333;
       display: block;
       margin-bottom: 20rpx;
+      text-align: center;
+      color: #333;
+      
       .highlight {
-        color: #42d392;
+        color: #4cd964;
       }
     }
+    
     .sub-title {
       font-size: 32rpx;
       color: #666;
+      text-align: center;
+      display: block;
     }
   }
 

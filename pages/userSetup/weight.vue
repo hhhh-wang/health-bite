@@ -138,7 +138,7 @@ export default {
   
   .progress-indicator {
     margin: 20rpx 0;
-    text-align: center;
+    text-align: center;  // 进度指示器居中
     
     text {
       font-size: 28rpx;
@@ -153,14 +153,14 @@ export default {
 
   .title-section {
     margin: 50rpx 0;
-    text-align: center;
+    text-align: center;  // 标题区域居中
     
     .main-title {
       font-size: 48rpx;
       font-weight: bold;
       display: block;
       margin-bottom: 20rpx;
-      text-align: center;
+      text-align: center;  // 主标题居中
       color: #333;
       
       .highlight {
@@ -171,8 +171,8 @@ export default {
     .sub-title {
       font-size: 32rpx;
       color: #666;
-      text-align: center;
-      display: block;
+      text-align: center;  // 副标题居中
+      display: block;  // 确保块级显示以实现居中
     }
   }
 
