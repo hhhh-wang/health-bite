@@ -175,7 +175,7 @@ export default {
       display: inline-block;
       padding: 8rpx 24rpx;
       background: rgba(76, 217, 100, 0.1);
-      border-radius: 20rpx;
+      border-radius: 50rpx;
     }
   }
 
@@ -213,7 +213,7 @@ export default {
     .option-card {
       padding: 30rpx;
       background: #f8f8f8;
-      border-radius: 20rpx;
+      border-radius: 50rpx;
       position: relative;
       transition: all 0.3s;
 
@@ -239,7 +239,7 @@ export default {
           color: #ff6b6b;
           background: rgba(255, 107, 107, 0.1);
           padding: 4rpx 16rpx;
-          border-radius: 20rpx;
+          border-radius: 50rpx;
         }
       }
 
