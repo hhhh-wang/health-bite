@@ -189,6 +189,9 @@ export default {
       color: #4cd964;
       font-weight: bold;
       display: inline-block;
+      padding: 8rpx 24rpx;
+      background: rgba(76, 217, 100, 0.1);
+      border-radius: 50rpx;
     }
   }
 
@@ -202,9 +205,21 @@ export default {
       display: block;
       margin-bottom: 20rpx;
       text-align: center;
+      color: #333;
       
       .highlight {
         color: #4cd964;
+        position: relative;
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -4rpx;
+          left: 0;
+          width: 100%;
+          height: 6rpx;
+          background: rgba(76, 217, 100, 0.2);
+          border-radius: 50rpx;
+        }
       }
     }
     
@@ -212,19 +227,32 @@ export default {
       font-size: 32rpx;
       color: #666;
       text-align: center;
-      display: block;
     }
   }
 
   .age-display {
-    margin: 60rpx 0;
+    margin: 40rpx 0;
     display: flex;
     justify-content: center;
+    align-items: center;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      width: 200rpx;
+      height: 200rpx;
+      background: rgba(76, 217, 100, 0.08);
+      border-radius: 50%;
+      z-index: 0;
+    }
     
     .age-number {
       font-size: 120rpx;
       font-weight: bold;
       color: #333;
+      position: relative;
+      z-index: 1;
     }
   }
 
@@ -232,23 +260,37 @@ export default {
     margin-top: 40rpx;
     
     .picker-box {
-      height: 120rpx;
-      background-color: #f8f8f8;
-      border-radius: 20rpx;
+      height: 110rpx;
+      background: rgba(76, 217, 100, 0.05);
+      border: 2rpx solid rgba(76, 217, 100, 0.15);
+      border-radius: 50rpx;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 40rpx;
+      padding: 0 30rpx;
+      transition: all 0.3s ease;
+      
+      &:active {
+        transform: scale(0.98);
+        background: rgba(76, 217, 100, 0.08);
+      }
       
       text {
         font-size: 32rpx;
         color: #333;
+      }
+      
+      .u-icon {
+        background: rgba(76, 217, 100, 0.1);
+        padding: 10rpx;
+        border-radius: 50rpx;
       }
     }
   }
 
   .guide-footer {
     margin-top: auto;
+    margin-bottom: 60rpx;
   }
 }
 </style> 
