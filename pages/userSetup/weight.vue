@@ -23,26 +23,28 @@
 
     <!-- 体重显示和选择区域 -->
     <view class="weight-section">
-      <!-- 大号数字显示 -->
-      <view class="weight-display">
-        <text class="number">{{ weight.toFixed(1) }}</text>
-        <text class="unit">kg</text>
-      </view>
+      <view class="weight-container">
+        <!-- 左侧大号数字显示 -->
+        <view class="weight-display">
+          <text class="number">{{ weight.toFixed(1) }}</text>
+          <text class="unit">kg</text>
+        </view>
 
-      <!-- 体重选择器 -->
-      <view class="weight-picker">
-        <picker-view
-          :value="weightIndex"
-          @change="onWeightChange"
-          :indicator-style="indicatorStyle"
-          :mask-style="maskStyle"
-        >
-          <picker-view-column>
-            <view class="column-item" v-for="item in weightRange" :key="item">
-              {{ item.toFixed(1) }}kg
-            </view>
-          </picker-view-column>
-        </picker-view>
+        <!-- 右侧体重选择器 -->
+        <view class="weight-picker">
+          <picker-view
+            :value="weightIndex"
+            @change="onWeightChange"
+            :indicator-style="indicatorStyle"
+            :mask-style="maskStyle"
+          >
+            <picker-view-column>
+              <view class="column-item" v-for="item in weightRange" :key="item">
+                {{ item.toFixed(1) }}kg
+              </view>
+            </picker-view-column>
+          </picker-view>
+        </view>
       </view>
     </view>
 
@@ -74,36 +76,31 @@ export default {
   
   data() {
     return {
-      weight: 60,
-      weightIndex: [300], // 默认60kg的索引位置
+      weight: 60.0,
+      weightIndex: [0],
+      // 在 data 中直接初始化 weightRange
+      weightRange: Array.from({ length: 1701 }, (_, i) => (i + 300) / 10), // 30.0kg 到 200.0kg
       minWeight: 30,
       maxWeight: 200,
       currentProgress: 75,
       currentPage: 6,
       totalPages: 8,
       // 选中框的样式
-      indicatorStyle: 'height: 100rpx; border-top: 1rpx solid #eee; border-bottom: 1rpx solid #eee;',
+      indicatorStyle: 'height: 100rpx; background-color: rgba(76, 217, 100, 0.1);',
       // 蒙层的样式
-      maskStyle: 'background-image: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.6));',
+      maskStyle: 'background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)), linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));'
     }
   },
 
-  computed: {
-    weightRange() {
-      const range = []
-      // 生成0.1kg间隔的体重范围
-      for (let i = this.minWeight * 10; i <= this.maxWeight * 10; i++) {
-        range.push(i / 10)
-      }
-      return range
-    }
+  created() {
+    // 只设置默认选中值
+    this.weightIndex = [Math.round((this.weight - 30) * 10)]
   },
 
   methods: {
     onWeightChange(e) {
       const index = e.detail.value[0]
       this.weight = this.weightRange[index]
-      this.weightIndex = [index]
     },
 
     validateForm() {
@@ -125,12 +122,6 @@ export default {
       // 更新进度
       this.currentProgress = (this.currentPage + 1) * 12.5
     }
-  },
-
-  mounted() {
-    // 初始化选中值的索引
-    const initialIndex = this.weightRange.indexOf(this.weight)
-    this.weightIndex = [initialIndex]
   }
 }
 </script>
@@ -141,82 +132,95 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: linear-gradient(to bottom, #f8fffa, #ffffff);
   padding: 0 40rpx;
   box-sizing: border-box;
   
   .progress-indicator {
     margin: 20rpx 0;
+    text-align: center;
+    
     text {
       font-size: 28rpx;
-      color: #999;
+      color: #4cd964;
+      font-weight: bold;
+      display: inline-block;
+      padding: 8rpx 24rpx;
+      background: rgba(76, 217, 100, 0.1);
+      border-radius: 20rpx;
     }
   }
 
   .title-section {
-    margin: 60rpx 0;
+    margin: 50rpx 0;
+    text-align: center;
+    
     .main-title {
       font-size: 48rpx;
       font-weight: bold;
-      color: #333;
       display: block;
       margin-bottom: 20rpx;
+      text-align: center;
+      color: #333;
+      
       .highlight {
-        color: #42d392;
+        color: #4cd964;
       }
     }
+    
     .sub-title {
       font-size: 32rpx;
       color: #666;
+      text-align: center;
+      display: block;
     }
   }
 
   .weight-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 40rpx auto;
+    margin: 60rpx 0;
     padding: 0 20rpx;
     
-    .weight-display {
-      flex: 0 0 auto;
+    .weight-container {
       display: flex;
-      align-items: flex-end;
-      padding: 40rpx;
-      background: rgba(66, 211, 146, 0.1);
-      border-radius: 20rpx;
-      margin-right: 40rpx;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40rpx;
       
-      .number {
-        font-size: 120rpx;
-        font-weight: bold;
-        color: #333;
-        line-height: 1;
-      }
-      
-      .unit {
-        font-size: 32rpx;
-        color: #666;
-        margin-left: 10rpx;
-        margin-bottom: 20rpx;
-      }
-    }
-    
-    .weight-picker {
-      flex: 1;
-      width: 200rpx;
-      
-      picker-view {
-        width: 100%;
-        height: 500rpx;
-        text-align: center;
+      .weight-display {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        padding-left: 40rpx;
+        
+        .number {
+          font-size: 80rpx;
+          font-weight: bold;
+          color: #333;
+        }
+        
+        .unit {
+          font-size: 32rpx;
+          color: #666;
+          margin-left: 10rpx;
+          padding-bottom: 10rpx;
+        }
       }
 
-      .column-item {
-        line-height: 100rpx;
-        text-align: center;
-        font-size: 36rpx;
-        color: #333;
+      .weight-picker {
+        flex: 1;
+        height: 400rpx;
+        
+        picker-view {
+          width: 100%;
+          height: 100%;
+          
+          .column-item {
+            line-height: 100rpx;
+            text-align: center;
+            color: #333;
+            font-size: 36rpx;
+          }
+        }
       }
     }
   }
