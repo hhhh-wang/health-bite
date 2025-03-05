@@ -295,7 +295,7 @@ export default {
     margin: 20rpx 0 40rpx;
     padding: 40rpx 30rpx;
     background: linear-gradient(135deg, #ffeddf 0%, #fff2e8 100%);
-    border-radius: 30rpx;
+    border-radius: 50rpx;
     box-shadow: 0 8rpx 20rpx rgba(255, 142, 66, 0.1);
     position: relative;
     overflow: hidden;
@@ -477,7 +477,7 @@ export default {
         align-items: center;
         margin-top: 30rpx;
         padding: 25rpx 20rpx;
-        border-radius: 20rpx;
+        border-radius: 50rpx;
         background-color: rgba(66, 168, 211, 0.1);
         
         .label {
@@ -513,7 +513,7 @@ export default {
     margin: 30rpx 0 40rpx;
     padding: 40rpx 30rpx;
     background: linear-gradient(135deg, #1b3a2b 0%, #2d5d44 100%);
-    border-radius: 30rpx;
+    border-radius: 50rpx;
     box-shadow: 0 10rpx 25rpx rgba(27, 58, 43, 0.2);
     position: relative;
     overflow: hidden;
@@ -582,7 +582,7 @@ export default {
       
       .target-item {
         background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 20rpx;
+        border-radius: 50rpx;
         padding: 30rpx;
         display: flex;
         flex-direction: column;
