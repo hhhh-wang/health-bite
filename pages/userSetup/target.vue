@@ -29,7 +29,10 @@
         @click="selectTarget('reduce')"
       >
         <image src="/static/images/target/banana.png" mode="aspectFit" class="target-icon"></image>
-        <text>我要减重</text>
+        <view class="target-text">
+          <text class="target-title">我要减重</text>
+          <text class="target-desc">控制热量摄入，健康瘦身</text>
+        </view>
       </view>
       
       <view 
@@ -38,7 +41,10 @@
         @click="selectTarget('maintain')"
       >
         <image src="/static/images/target/dumbbell.png" mode="aspectFit" class="target-icon"></image>
-        <text>我要增重</text>
+        <view class="target-text">
+          <text class="target-title">我要增重</text>
+          <text class="target-desc">科学增肌，提升体质</text>
+        </view>
       </view>
       
       <view 
@@ -47,7 +53,10 @@
         @click="selectTarget('keep')"
       >
         <image src="/static/images/target/muscle.png" mode="aspectFit" class="target-icon"></image>
-        <text>保持健康</text>
+        <view class="target-text">
+          <text class="target-title">保持健康</text>
+          <text class="target-desc">均衡营养，维持体重</text>
+        </view>
       </view>
     </view>
 
@@ -112,21 +121,25 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: linear-gradient(to bottom, #f8fffa, #ffffff);
   padding: 0 40rpx;
   box-sizing: border-box;
   
   .progress-indicator {
     margin: 20rpx 0;
+    text-align: center;
     
     text {
       font-size: 28rpx;
-      color: #999;
+      color: #4cd964;
+      font-weight: bold;
+      display: inline-block;
     }
   }
 
   .title-section {
-    margin: 60rpx 0;
+    margin: 50rpx 0;
+    text-align: center;
     
     .main-title {
       font-size: 48rpx;
@@ -134,48 +147,70 @@ export default {
       color: #333;
       display: block;
       margin-bottom: 20rpx;
+      text-align: center;
+      background: linear-gradient(to right, #4cd964, #2ac845);
+      -webkit-background-clip: text;
+      color: transparent;
     }
     
     .sub-title {
       font-size: 32rpx;
       color: #666;
+      text-align: center;
     }
   }
 
   .target-options {
-    margin-top: 60rpx;
+    margin-top: 40rpx;
     
     .target-item {
-      height: 160rpx;
+      height: 180rpx;
       margin-bottom: 30rpx;
       background-color: #f8f8f8;
-      border-radius: 20rpx;
+      border-radius: 50rpx;
       display: flex;
       align-items: center;
       padding: 0 40rpx;
       transition: all 0.3s;
+      box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+      border: 2rpx solid transparent;
       
       &.active {
-        background-color: rgba(66, 211, 146, 0.1);
-        border: 2rpx solid #42d392;
+        background-color: rgba(76, 217, 100, 0.1);
+        border: 2rpx solid #4cd964;
+        box-shadow: 0 8rpx 16rpx rgba(76, 217, 100, 0.15);
+        transform: translateY(-4rpx);
       }
       
       .target-icon {
-        width: 80rpx;
-        height: 80rpx;
+        width: 90rpx;
+        height: 90rpx;
         margin-right: 30rpx;
       }
       
-      text {
-        font-size: 32rpx;
-        color: #333;
-        font-weight: 500;
+      .target-text {
+        flex: 1;
+        
+        .target-title {
+          font-size: 34rpx;
+          color: #333;
+          font-weight: 600;
+          display: block;
+          margin-bottom: 10rpx;
+        }
+        
+        .target-desc {
+          font-size: 26rpx;
+          color: #999;
+          display: block;
+        }
       }
     }
   }
 
   .guide-footer {
     margin-top: auto;
+    margin-bottom: 60rpx;
   }
 }
 </style> 
