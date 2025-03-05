@@ -108,9 +108,9 @@ export default {
       this.$refs.progressBtn.navigateToNext();
     },
     handleSuccess() {
-      // 跳转到目标体重页面，并携带目标类型
+      // 修改这里，改为跳转到下一个页面（性别页面）
       uni.navigateTo({
-        url: `/pages/userSetup/targetWeight?target=${this.selectedTarget}`
+        url: `/pages/userSetup/gender?target=${this.selectedTarget}`
       })
     }
   }

@@ -18,7 +18,7 @@
     
     <!-- 标题区域 -->
     <view class="title-section">
-      <text class="main-title">选择您的<text class="highlight">进度</text></text>
+      <text class="main-title">选择您的<text class="highlight">计划</text></text>
       <text class="sub-title">我们将使用这些数据为您提供更好的饮食类型</text>
     </view>
 
