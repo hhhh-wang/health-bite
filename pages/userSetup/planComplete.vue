@@ -103,9 +103,11 @@
           width: '100%',
           height: '100rpx',
           background: '#42d392',
-          border: 'none'
+          border: 'none',
+          color: '#ffffff',
+          borderRadius: '50rpx'
         }"
-      >开始训练</u-button>
+      >浏览主页</u-button>
     </view>
   </view>
 </template>
@@ -617,23 +619,7 @@ export default {
   .guide-footer {
     margin-top: auto;
     padding: 20rpx 0 50rpx;
-    
-    /deep/ .u-button {
-      background: linear-gradient(135deg, #42d392 0%, #3bb077 100%) !important;
-      height: 110rpx !important;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8rpx 15rpx rgba(66, 211, 146, 0.2);
-      border-radius: 55rpx !important;
-      font-size: 36rpx !important;
-      font-weight: 600 !important;
-      letter-spacing: 2px;
-      
-      &::after {
-        border: none !important;
-      }
-    }
+    border-radius: 50rpx;
   }
 }
 </style>
