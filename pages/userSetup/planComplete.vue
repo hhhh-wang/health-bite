@@ -40,6 +40,60 @@
       />
     </view>
 
+    <!-- 营养搭配建议卡片 -->
+    <view class="nutrition-card">
+      <text class="card-title">营养搭配建议</text>
+      <view class="daily-calories">
+        <text class="number">{{ dailyCalories }}</text>
+        <text class="unit">kcal</text>
+        <text class="desc">每日总热量</text>
+      </view>
+      
+      <view class="nutrition-list">
+        <view class="nutrition-item" v-for="(item, index) in nutritionRatio" :key="index">
+          <view class="label">{{ item.name }}</view>
+          <view class="progress-bar">
+            <view class="progress" :style="{ width: item.percentage + '%', backgroundColor: item.color }"></view>
+          </view>
+          <view class="percentage">{{ item.percentage }}%</view>
+        </view>
+        
+        <view class="water-intake">
+          <view class="label">日均水量</view>
+          <view class="value">2000ml</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 如何实现目标卡片 -->
+    <view class="target-card">
+      <view class="target-title">
+        <view class="title-line"></view>
+        <text>如何实现目标</text>
+        <view class="title-line"></view>
+      </view>
+      <text class="target-subtitle">进行以下4项活动</text>
+      
+      <view class="target-grid">
+        <view class="target-item">
+          <image src="/static/images/target/food.png" mode="aspectFit"></image>
+          <text>查看您的食物数据</text>
+        </view>
+        <view class="target-item">
+          <image src="/static/images/target/balance.png" mode="aspectFit"></image>
+          <text>平衡您的摄入量</text>
+        </view>
+        <view class="target-item">
+          <image src="/static/images/target/water.png" mode="aspectFit"></image>
+          <text>保持水分充足</text>
+        </view>
+        <view class="target-item">
+          <image src="/static/images/target/exercise.png" mode="aspectFit"></image>
+          <text>更好的体适能</text>
+        </view>
+      </view>
+    </view>
+
     <!-- 底部按钮 -->
     <view class="guide-footer">
       <u-button 
@@ -81,7 +135,13 @@ export default {
       yAxisConfig: {
         min: 55,     // 根据体重范围自动计算
         max: 75      // 根据体重范围自动计算
-      }
+      },
+      dailyCalories: 2925,
+      nutritionRatio: [
+        { name: '碳水化合物', percentage: 50, color: '#42d392' },
+        { name: '脂肪', percentage: 30, color: '#ff7875' },
+        { name: '蛋白质', percentage: 20, color: '#597ef7' },
+      ],
     }
   },
 
@@ -276,6 +336,160 @@ export default {
       
       .exercise-count {
         color: #42d392;
+      }
+    }
+  }
+
+  .nutrition-card {
+    margin: 30rpx 20rpx;
+    padding: 30rpx;
+    background-color: #ffffff;
+    border-radius: 30rpx;
+    box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+
+    .card-title {
+      font-size: 32rpx;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 30rpx;
+      display: block;
+    }
+
+    .daily-calories {
+      text-align: center;
+      margin-bottom: 40rpx;
+      
+      .number {
+        font-size: 48rpx;
+        font-weight: bold;
+        color: #333;
+      }
+      
+      .unit {
+        font-size: 24rpx;
+        color: #666;
+        margin-left: 8rpx;
+      }
+      
+      .desc {
+        font-size: 24rpx;
+        color: #999;
+        margin-left: 20rpx;
+      }
+    }
+
+    .nutrition-list {
+      .nutrition-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30rpx;
+        
+        .label {
+          width: 180rpx;
+          font-size: 28rpx;
+          color: #666;
+        }
+        
+        .progress-bar {
+          flex: 1;
+          height: 12rpx;
+          background-color: #f5f5f5;
+          border-radius: 6rpx;
+          margin: 0 20rpx;
+          
+          .progress {
+            height: 100%;
+            border-radius: 6rpx;
+          }
+        }
+        
+        .percentage {
+          width: 80rpx;
+          font-size: 24rpx;
+          color: #999;
+        }
+      }
+
+      .water-intake {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20rpx;
+        padding-top: 20rpx;
+        border-top: 2rpx solid #f5f5f5;
+        
+        .label {
+          font-size: 28rpx;
+          color: #666;
+        }
+        
+        .value {
+          font-size: 28rpx;
+          color: #42d392;
+        }
+      }
+    }
+  }
+
+  .target-card {
+    margin: 30rpx 20rpx;
+    padding: 30rpx;
+    background-color: #1b3a2b;
+    border-radius: 30rpx;
+    
+    .target-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20rpx;
+      
+      .title-line {
+        width: 60rpx;
+        height: 2rpx;
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+      
+      text {
+        color: #ffffff;
+        font-size: 32rpx;
+        font-weight: bold;
+        margin: 0 20rpx;
+      }
+    }
+    
+    .target-subtitle {
+      display: block;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 24rpx;
+      margin-bottom: 40rpx;
+    }
+    
+    .target-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30rpx;
+      
+      .target-item {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 20rpx;
+        padding: 30rpx;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+        image {
+          width: 80rpx;
+          height: 80rpx;
+          margin-bottom: 20rpx;
+        }
+        
+        text {
+          color: #ffffff;
+          font-size: 28rpx;
+          text-align: center;
+        }
       }
     }
   }
