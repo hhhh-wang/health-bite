@@ -113,13 +113,17 @@ export default {
   }
 
   .progress-indicator {
+    margin: 20rpx 0;
     text-align: center;
-    margin: 40rpx 0;
     
     text {
       font-size: 28rpx;
       color: #4cd964;
       font-weight: bold;
+      display: inline-block;
+      padding: 8rpx 24rpx;
+      background: rgba(76, 217, 100, 0.1);
+      border-radius: 50rpx;
     }
   }
 

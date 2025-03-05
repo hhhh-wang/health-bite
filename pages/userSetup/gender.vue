@@ -113,6 +113,9 @@ export default {
       color: #4cd964;
       font-weight: bold;
       display: inline-block;
+      padding: 8rpx 24rpx;
+      background: rgba(76, 217, 100, 0.1);
+      border-radius: 50rpx;
     }
   }
 
