@@ -171,7 +171,7 @@ export default {
       display: inline-block;
       padding: 8rpx 24rpx;
       background: rgba(76, 217, 100, 0.1);
-      border-radius: 20rpx;
+      border-radius: 50rpx;
     }
   }
 
@@ -201,34 +201,69 @@ export default {
   }
 
   .current-weight {
-    margin: 40rpx 0;
-    padding: 30rpx;
-    background: rgba(66, 211, 146, 0.1);
-    border-radius: 16rpx;
+    margin: 40rpx auto;
+    padding: 30rpx 40rpx;
+    background: rgba(66, 211, 146, 0.08);  // 柔和的绿色背景
+    border-radius: 50rpx;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 8rpx 24rpx rgba(66, 211, 146, 0.1);  // 柔和的阴影
+    position: relative;
+    overflow: hidden;
+    
+    &::before {  // 装饰性背景图案
+      content: '';
+      position: absolute;
+      right: -20rpx;
+      top: -20rpx;
+      width: 120rpx;
+      height: 120rpx;
+      background: rgba(66, 211, 146, 0.06);
+      border-radius: 50%;
+    }
     
     .label {
       font-size: 28rpx;
       color: #666;
-      margin-bottom: 10rpx;
-      display: block;
+      margin-bottom: 16rpx;
+      position: relative;
+      z-index: 1;
+      
+      &::after {  // 下划线装饰
+        content: '';
+        position: absolute;
+        bottom: -6rpx;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40rpx;
+        height: 3rpx;
+        background: rgba(66, 211, 146, 0.3);
+        border-radius: 4rpx;
+      }
     }
     
     .weight-value {
       display: flex;
-      align-items: flex-end;
+      align-items: baseline;
+      position: relative;
+      z-index: 1;
       
       .number {
-        font-size: 48rpx;
+        font-size: 64rpx;
         font-weight: bold;
-        color: #333;
+        background: linear-gradient(45deg, #42d392, #47c98e);
+        -webkit-background-clip: text;
+        color: transparent;
         line-height: 1;
       }
       
       .unit {
-        font-size: 24rpx;
+        font-size: 28rpx;
         color: #666;
         margin-left: 8rpx;
-        margin-bottom: 8rpx;
+        opacity: 0.9;
       }
     }
   }
@@ -246,7 +281,7 @@ export default {
       align-items: flex-end;
       padding: 40rpx;
       background: rgba(66, 211, 146, 0.1);
-      border-radius: 20rpx;
+      border-radius: 50rpx;
       margin-right: 40rpx;
       
       .number {

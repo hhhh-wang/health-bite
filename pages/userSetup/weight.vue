@@ -147,7 +147,7 @@ export default {
       display: inline-block;
       padding: 8rpx 24rpx;
       background: rgba(76, 217, 100, 0.1);
-      border-radius: 20rpx;
+      border-radius: 50rpx;
     }
   }
 
