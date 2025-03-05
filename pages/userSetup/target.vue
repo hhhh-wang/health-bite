@@ -108,8 +108,10 @@ export default {
       this.$refs.progressBtn.navigateToNext();
     },
     handleSuccess() {
-      // 跳转成功后更新进度
-      this.currentProgress = (this.currentPage + 1) * 12.5;
+      // 跳转到目标体重页面，并携带目标类型
+      uni.navigateTo({
+        url: `/pages/userSetup/targetWeight?target=${this.selectedTarget}`
+      })
     }
   }
 }

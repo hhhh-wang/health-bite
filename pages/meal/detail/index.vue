@@ -31,6 +31,7 @@
 				:meals="meals"
 				:nutritionData="nutritionData"
 				:yAxis="yAxisConfig"
+				:lineNames="['总热量', '碳水化合物', '脂肪', '蛋白质']"
 				canvasId="mealChart"
 			/>
 		</view>

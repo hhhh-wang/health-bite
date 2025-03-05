@@ -111,6 +111,9 @@ export default {
   data() {
     return {
       selectedProgress: '',
+      currentWeight: 60,
+      targetWeight: 55,
+      selectedTarget: '',
       currentProgress: 100,
       currentPage: 8,
       totalPages: 8
@@ -140,7 +143,7 @@ export default {
     handleSuccess() {
       console.log('选择的进度:', this.selectedProgress)
       uni.navigateTo({
-        url: `/pages/userSetup/planComplete?currentWeight=${this.currentWeight}&targetWeight=${this.targetWeight}&selectedProgress=${this.selectedProgress}`
+        url: `/pages/userSetup/planComplete?currentWeight=${this.currentWeight}&targetWeight=${this.targetWeight}&selectedProgress=${this.selectedProgress}&target=${this.selectedTarget}`
       })
     }
   },
@@ -149,6 +152,9 @@ export default {
     if (options.currentWeight && options.targetWeight) {
       this.currentWeight = parseFloat(options.currentWeight)
       this.targetWeight = parseFloat(options.targetWeight)
+    }
+    if (options.target) {
+      this.selectedTarget = options.target
     }
   }
 }

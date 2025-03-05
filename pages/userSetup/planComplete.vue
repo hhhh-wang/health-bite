@@ -20,41 +20,30 @@
     </view>
 
     <!-- 计划卡片 -->
-    <view class="plan-card">
-      <!-- 增重目标 -->
-      <view class="weight-goal">
-        <text class="goal-text">+{{ totalWeightGain }} kg</text>
+    <view class="plan-card" style="background-color: rgb(255, 232, 215);">
+      <view class="calorie-total">
+        <text class="number">{{ totalWeightGain }}</text>
+        <text class="unit">kg</text>
       </view>
-
-      <!-- 计划周期 -->
-      <view class="plan-duration">
+      <view class="date-info">
         <text>{{ duration }} 周</text>
-        <text>+{{ weeklyGain }}kg/周</text>
+        <text class="exercise-count">+{{ weeklyGain }}kg/周</text>
       </view>
-
-      <!-- 进度图表 -->
-      <view class="progress-chart">
-        <!-- 起点体重 -->
-        <view class="weight-point start">
-          <text class="weight">{{ currentWeight }}kg</text>
-          <text class="label">今天</text>
-        </view>
-        
-        <!-- 曲线 -->
-        <view class="curve-line"></view>
-        
-        <!-- 终点体重 -->
-        <view class="weight-point end">
-          <text class="weight">{{ targetWeight }}kg</text>
-          <text class="label">{{ endDate }}</text>
-        </view>
-      </view>
+      
+      <!-- 图表区域 -->
+      <nutrition-chart
+        :meals="meals"
+        :nutritionData="nutritionData"
+        :yAxis="yAxisConfig"
+        :lineNames="['体重']"
+        canvasId="weightProgress"
+      />
     </view>
 
     <!-- 底部按钮 -->
     <view class="guide-footer">
       <u-button 
-        type="primary" 
+        type="curve" 
         @click="handleStart"
         :custom-style="{
           width: '100%',
@@ -69,10 +58,12 @@
 
 <script>
 import PageHeader from '@/components/page-header/index.vue'
+import NutritionChart from '@/components/nutrition-chart/index.vue'
 
 export default {
   components: {
-    PageHeader
+    PageHeader,
+    NutritionChart
   },
   
   data() {
@@ -81,7 +72,16 @@ export default {
       targetWeight: 72,
       duration: 16,
       weeklyGain: 0.75,
-      selectedProgress: 'beginner'
+      selectedProgress: 'beginner',
+      // 简化图表数据，只保留一条线
+      meals: ['今天', '结束日期'],  // 时间轴数据
+      nutritionData: [
+        [60, 72]    // 只保留一条主线：当前体重到目标体重
+      ],
+      yAxisConfig: {
+        min: 55,     // 根据体重范围自动计算
+        max: 75      // 根据体重范围自动计算
+      }
     }
   },
 
@@ -95,6 +95,18 @@ export default {
       const date = new Date()
       date.setDate(date.getDate() + this.duration * 7) // 将周数转换为天数
       return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+    },
+    
+    chartConfig() {
+      // 计算图表的最小值和最大值
+      const minWeight = Math.min(this.currentWeight, this.targetWeight)
+      const maxWeight = Math.max(this.currentWeight, this.targetWeight)
+      const range = maxWeight - minWeight
+      
+      return {
+        min: Math.floor(minWeight - range * 0.1),  // 留出10%的边距
+        max: Math.ceil(maxWeight + range * 0.1)
+      }
     }
   },
 
@@ -127,7 +139,24 @@ export default {
       }
       // 存储计划数据
       uni.setStorageSync('userPlanData', planData)
+    },
+
+    initChartData() {
+      // 更新图表数据，只保留一条线
+      this.meals = ['今天', this.endDate]
+      this.nutritionData = [
+        [this.currentWeight, this.targetWeight]  // 只保留主要数据线
+      ]
+      // 更新Y轴配置
+      this.yAxisConfig = {
+        min: this.chartConfig.min,
+        max: this.chartConfig.max
+      }
     }
+  },
+
+  mounted() {
+    this.initChartData()
   },
 
   onLoad(options) {
@@ -155,6 +184,19 @@ export default {
           this.weeklyGain = 0.75
           break
       }
+    }
+  },
+
+  watch: {
+    // 监听相关数据变化，更新图表
+    currentWeight() {
+      this.initChartData()
+    },
+    targetWeight() {
+      this.initChartData()
+    },
+    duration() {
+      this.initChartData()
     }
   }
 }
@@ -200,89 +242,40 @@ export default {
   }
 
   .plan-card {
-    background: rgba(66, 211, 146, 0.1);
-    border-radius: 20rpx;
-    padding: 40rpx;
-    margin: 40rpx 0;
-
-    .weight-goal {
+    margin: 20rpx;
+    padding: 30rpx;
+    background-color: #ffffff;
+    border-radius: 50rpx;
+    box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+    
+    .calorie-total {
       text-align: center;
-      margin-bottom: 30rpx;
+      margin-bottom: 15rpx;
       
-      .goal-text {
-        font-size: 64rpx;
+      .number {
+        font-size: 48rpx;
         font-weight: bold;
-        color: #42d392;
+        color: #333;
+      }
+      
+      .unit {
+        font-size: 28rpx;
+        color: #666;
+        margin-left: 10rpx;
       }
     }
-
-    .plan-duration {
+    
+    .date-info {
       display: flex;
       justify-content: center;
-      gap: 40rpx;
-      margin-bottom: 60rpx;
+      align-items: center;
+      gap: 20rpx;
+      color: #666;
+      font-size: 28rpx;
+      margin-bottom: 20rpx;
       
-      text {
-        font-size: 32rpx;
-        color: #666;
-      }
-    }
-
-    .progress-chart {
-      position: relative;
-      height: 200rpx;
-      margin-top: 60rpx;
-
-      .weight-point {
-        position: absolute;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        
-        .weight {
-          font-size: 28rpx;
-          font-weight: bold;
-          color: #333;
-          background: #fff;
-          padding: 8rpx 16rpx;
-          border-radius: 16rpx;
-          margin-bottom: 10rpx;
-        }
-        
-        .label {
-          font-size: 24rpx;
-          color: #666;
-        }
-
-        &.start {
-          left: 0;
-          bottom: 0;
-        }
-
-        &.end {
-          right: 0;
-          bottom: 0;
-        }
-      }
-
-      .curve-line {
-        position: absolute;
-        left: 10%;
-        right: 10%;
-        bottom: 50rpx;
-        height: 100rpx;
-        background: linear-gradient(to right, transparent, #42d392);
-        border-radius: 100rpx 100rpx 0 0;
-        &::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: 16rpx;
-          height: 16rpx;
-          background: #42d392;
-          border-radius: 50%;
-        }
+      .exercise-count {
+        color: #42d392;
       }
     }
   }
