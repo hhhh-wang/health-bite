@@ -28,7 +28,7 @@
         :class="{ active: selectedGender === 'male' }"
         @click="selectGender('male')"
       >
-        <image src="/static/images/gender/male.png" mode="aspectFit" class="gender-icon"></image>
+        <image src="/static/common/img/plan/guy.png" mode="aspectFit" class="gender-icon"></image>
         <text>男士</text>
       </view>
       
@@ -37,7 +37,7 @@
         :class="{ active: selectedGender === 'female' }"
         @click="selectGender('female')"
       >
-        <image src="/static/images/gender/female.png" mode="aspectFit" class="gender-icon"></image>
+        <image src="/static/common/img/plan/lady.png" mode="aspectFit" class="gender-icon"></image>
         <text>女士</text>
       </view>
     </view>
