@@ -24,14 +24,20 @@
     <!-- 身高选择器 -->
     <view class="height-selector">
       <view class="selector-container">
-        <view class="btn minus" @click="decreaseHeight">
+        <view 
+          class="btn minus" 
+          @tap="decreaseHeight"
+        >
           <text>-</text>
         </view>
         <view class="value-container">
           <text class="value">{{ height }}</text>
           <text class="unit">cm</text>
         </view>
-        <view class="btn plus" @click="increaseHeight">
+        <view 
+          class="btn plus" 
+          @tap="increaseHeight"
+        >
           <text>+</text>
         </view>
       </view>
@@ -112,104 +118,114 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: linear-gradient(to bottom, #f8fffa, #ffffff);
   padding: 0 40rpx;
   box-sizing: border-box;
   
   .progress-indicator {
     margin: 20rpx 0;
+    text-align: center;
     
     text {
       font-size: 28rpx;
-      color: #999;
+      color: #4cd964;
+      font-weight: bold;
+      display: inline-block;
+      padding: 8rpx 24rpx;
+      background: rgba(76, 217, 100, 0.1);
+      border-radius: 20rpx;
     }
   }
 
   .title-section {
-    margin: 60rpx 0;
+    margin: 50rpx 0;
+    text-align: center;
     
     .main-title {
       font-size: 48rpx;
       font-weight: bold;
-      color: #333;
       display: block;
       margin-bottom: 20rpx;
+      text-align: center;
+      color: #333;
       
       .highlight {
-        color: #42d392;
+        color: #4cd964;
       }
     }
     
     .sub-title {
       font-size: 32rpx;
       color: #666;
+      text-align: center;
+      display: block;
     }
   }
 
   .height-selector {
-    margin: 60rpx auto;
+  margin: 60rpx auto;
+  
+  .selector-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40rpx;
     
-    .selector-container {
+    .btn {
+      width: 80rpx;
+      height: 80rpx;
+      border-radius: 50%;
+      background-color: #42d392;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 40rpx;
+      position: relative;
       
-      .btn {
-        width: 80rpx;
-        height: 80rpx;
-        border-radius: 50%;
-        background-color: #42d392;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        
-        text {
-          color: #fff;
-          font-size: 48rpx;
-          font-weight: bold;
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          line-height: 1;
-          height: 48rpx;
-          width: 48rpx;
-          text-align: center;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        
-        &:active {
-          opacity: 0.8;
-        }
-      }
-      
-      .value-container {
-        min-width: 200rpx;
+      text {
+        color: #fff;
+        font-size: 48rpx;
+        font-weight: bold;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        line-height: 1;
+        height: 48rpx;
+        width: 48rpx;
         text-align: center;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 4rpx;
-        
-        .value {
-          font-size: 80rpx;
-          font-weight: bold;
-          color: #333;
-        }
-        
-        .unit {
-          font-size: 32rpx;
-          color: #666;
-          margin-left: 10rpx;
-          padding-bottom: 10rpx;
-        }
+      }
+      
+      &:active {
+        opacity: 0.8;
+      }
+    }
+    
+    .value-container {
+      min-width: 200rpx;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4rpx;
+      
+      .value {
+        font-size: 80rpx;
+        font-weight: bold;
+        color: #333;
+      }
+      
+      .unit {
+        font-size: 32rpx;
+        color: #666;
+        margin-left: 10rpx;
+        padding-bottom: 10rpx;
       }
     }
   }
+}
 
   .guide-footer {
     margin-top: auto;
