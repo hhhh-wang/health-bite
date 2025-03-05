@@ -76,19 +76,19 @@
       
       <view class="target-grid">
         <view class="target-item">
-          <image src="/static/images/target/food.png" mode="aspectFit"></image>
+          <image src="/static/common/img/plan/food-data.png" mode="aspectFit"></image>
           <text>查看您的食物数据</text>
         </view>
         <view class="target-item">
-          <image src="/static/images/target/balance.png" mode="aspectFit"></image>
+          <image src="/static/common/img/plan/balanced-intake.png" mode="aspectFit"></image>
           <text>平衡您的摄入量</text>
         </view>
         <view class="target-item">
-          <image src="/static/images/target/water.png" mode="aspectFit"></image>
+          <image src="/static/common/img/plan/hydration.png" mode="aspectFit"></image>
           <text>保持水分充足</text>
         </view>
         <view class="target-item">
-          <image src="/static/images/target/exercise.png" mode="aspectFit"></image>
+          <image src="/static/common/img/plan/fitness.png" mode="aspectFit"></image>
           <text>更好的体适能</text>
         </view>
       </view>
@@ -127,14 +127,13 @@ export default {
       duration: 16,
       weeklyGain: 0.75,
       selectedProgress: 'beginner',
-      // 简化图表数据，只保留一条线
-      meals: ['今天', '结束日期'],  // 时间轴数据
+      meals: ['今天', '结束日期'],
       nutritionData: [
-        [60, 72]    // 只保留一条主线：当前体重到目标体重
+        [60, 72]
       ],
       yAxisConfig: {
-        min: 55,     // 根据体重范围自动计算
-        max: 75      // 根据体重范围自动计算
+        min: 55,
+        max: 75
       },
       dailyCalories: 2925,
       nutritionRatio: [
@@ -151,20 +150,18 @@ export default {
     },
     
     endDate() {
-      // 使用原生 Date 对象计算结束日期
       const date = new Date()
-      date.setDate(date.getDate() + this.duration * 7) // 将周数转换为天数
+      date.setDate(date.getDate() + this.duration * 7)
       return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
     },
     
     chartConfig() {
-      // 计算图表的最小值和最大值
       const minWeight = Math.min(this.currentWeight, this.targetWeight)
       const maxWeight = Math.max(this.currentWeight, this.targetWeight)
       const range = maxWeight - minWeight
       
       return {
-        min: Math.floor(minWeight - range * 0.1),  // 留出10%的边距
+        min: Math.floor(minWeight - range * 0.1),
         max: Math.ceil(maxWeight + range * 0.1)
       }
     }
@@ -178,9 +175,7 @@ export default {
     },
 
     handleStart() {
-      // 保存用户计划数据到本地或服务器
       this.savePlanData()
-      // 跳转到首页
       uni.reLaunch({
         url: '/pages/sys/home/index'
       })
@@ -197,17 +192,14 @@ export default {
         startDate: `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`,
         endDate: this.endDate
       }
-      // 存储计划数据
       uni.setStorageSync('userPlanData', planData)
     },
 
     initChartData() {
-      // 更新图表数据，只保留一条线
       this.meals = ['今天', this.endDate]
       this.nutritionData = [
-        [this.currentWeight, this.targetWeight]  // 只保留主要数据线
+        [this.currentWeight, this.targetWeight]
       ]
-      // 更新Y轴配置
       this.yAxisConfig = {
         min: this.chartConfig.min,
         max: this.chartConfig.max
@@ -220,7 +212,6 @@ export default {
   },
 
   onLoad(options) {
-    // 获取从上一页传递的数据
     if (options.currentWeight) {
       this.currentWeight = parseFloat(options.currentWeight)
     }
@@ -229,7 +220,6 @@ export default {
     }
     if (options.selectedProgress) {
       this.selectedProgress = options.selectedProgress
-      // 根据选择的进度设置相应的周期和每周增重
       switch(options.selectedProgress) {
         case 'advanced':
           this.duration = 4
@@ -248,7 +238,6 @@ export default {
   },
 
   watch: {
-    // 监听相关数据变化，更新图表
     currentWeight() {
       this.initChartData()
     },
@@ -268,60 +257,79 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(to bottom, #f8fffa, #ffffff);
+  background: linear-gradient(135deg, #eaffef 0%, #f8fffa 100%);
   padding: 0 40rpx;
   box-sizing: border-box;
   
   .title-section {
-    margin: 50rpx 0;
-    text-align: center;  // 标题区域居中
+    margin: 60rpx 0;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 20rpx;  // 设置段落之间的间距
+    gap: 20rpx;
     
     .main-title {
-      font-size: 48rpx;
-      font-weight: bold;
+      font-size: 52rpx;
+      font-weight: 800;
       display: block;
-      text-align: center;  // 主标题居中
-      color: #333;
-      margin-bottom: 30rpx;  // 主标题与副标题之间的间距
+      text-align: center;
+      color: #1b3a2b;
+      margin-bottom: 30rpx;
+      letter-spacing: 1px;
     }
     
     .sub-title {
-      font-size: 32rpx;
-      color: #666;
-      text-align: center;  // 副标题居中
-      display: block;  // 确保块级显示以实现居中
-      line-height: 1.5;  // 增加行高，提高可读性
+      font-size: 34rpx;
+      color: #3a6351;
+      text-align: center;
+      display: block;
+      line-height: 1.5;
       
       &:last-child {
-        margin-top: 10rpx;  // 最后一段副标题增加额外的上边距
+        margin-top: 10rpx;
       }
     }
   }
 
   .plan-card {
-    margin: 20rpx;
-    padding: 30rpx;
-    background-color: #ffffff;
-    border-radius: 50rpx;
-    box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+    margin: 20rpx 0 40rpx;
+    padding: 40rpx 30rpx;
+    background: linear-gradient(135deg, #ffeddf 0%, #fff2e8 100%);
+    border-radius: 30rpx;
+    box-shadow: 0 8rpx 20rpx rgba(255, 142, 66, 0.1);
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -10rpx;
+      right: -10rpx;
+      width: 100rpx;
+      height: 100rpx;
+      background: rgba(255, 142, 66, 0.1);
+      border-radius: 50%;
+      z-index: 0;
+    }
     
     .calorie-total {
       text-align: center;
-      margin-bottom: 15rpx;
+      margin-bottom: 20rpx;
+      position: relative;
+      z-index: 1;
       
       .number {
-        font-size: 48rpx;
-        font-weight: bold;
-        color: #333;
+        font-size: 72rpx;
+        font-weight: 800;
+        color: #ff7e36;
+        letter-spacing: -1px;
       }
       
       .unit {
-        font-size: 28rpx;
-        color: #666;
+        font-size: 32rpx;
+        color: #ff7e36;
         margin-left: 10rpx;
+        font-weight: 600;
       }
     }
     
@@ -329,52 +337,89 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 20rpx;
-      color: #666;
-      font-size: 28rpx;
-      margin-bottom: 20rpx;
+      gap: 30rpx;
+      color: #785a44;
+      font-size: 30rpx;
+      margin-bottom: 30rpx;
+      position: relative;
+      z-index: 1;
+      font-weight: 500;
       
       .exercise-count {
-        color: #42d392;
+        color: #ff7e36;
+        font-weight: 700;
+        position: relative;
+        padding: 6rpx 14rpx;
+        background-color: rgba(255, 126, 54, 0.1);
+        border-radius: 50rpx;
       }
     }
   }
 
   .nutrition-card {
-    margin: 30rpx 20rpx;
-    padding: 30rpx;
+    margin: 30rpx 0;
+    padding: 40rpx 30rpx;
     background-color: #ffffff;
-    border-radius: 30rpx;
-    box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+    border-radius: 50rpx;
+    box-shadow: 0 8rpx 20rpx rgba(66, 211, 146, 0.1);
+    position: relative;
+    overflow: hidden;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 6rpx;
+      background: linear-gradient(90deg, #42d392 0%, #a6e9c8 100%);
+    }
 
     .card-title {
-      font-size: 32rpx;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 30rpx;
+      font-size: 36rpx;
+      font-weight: 700;
+      color: #1b3a2b;
+      margin-bottom: 40rpx;
       display: block;
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10rpx;
+        left: 0;
+        width: 60rpx;
+        height: 3rpx;
+        background-color: #42d392;
+      }
     }
 
     .daily-calories {
       text-align: center;
-      margin-bottom: 40rpx;
+      margin-bottom: 50rpx;
+      background: rgba(66, 211, 146, 0.1);
+      border-radius: 50rpx;
+      padding: 20rpx;
       
       .number {
-        font-size: 48rpx;
-        font-weight: bold;
-        color: #333;
+        font-size: 64rpx;
+        font-weight: 800;
+        color: #42d392;
+        letter-spacing: -1px;
       }
       
       .unit {
-        font-size: 24rpx;
-        color: #666;
+        font-size: 28rpx;
+        color: #42d392;
         margin-left: 8rpx;
+        font-weight: 600;
       }
       
       .desc {
-        font-size: 24rpx;
-        color: #999;
+        font-size: 26rpx;
+        color: #3a6351;
         margin-left: 20rpx;
+        font-weight: 500;
       }
     }
 
@@ -382,31 +427,47 @@ export default {
       .nutrition-item {
         display: flex;
         align-items: center;
-        margin-bottom: 30rpx;
+        margin-bottom: 35rpx;
         
         .label {
           width: 180rpx;
-          font-size: 28rpx;
-          color: #666;
+          font-size: 30rpx;
+          color: #3a6351;
+          font-weight: 600;
         }
         
         .progress-bar {
           flex: 1;
-          height: 12rpx;
+          height: 16rpx;
           background-color: #f5f5f5;
-          border-radius: 6rpx;
+          border-radius: 50rpx;
           margin: 0 20rpx;
+          overflow: hidden;
+          position: relative;
           
           .progress {
             height: 100%;
-            border-radius: 6rpx;
+            border-radius: 50rpx;
+            transition: width 0.3s ease;
+            position: relative;
+            
+            &::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            }
           }
         }
         
         .percentage {
           width: 80rpx;
-          font-size: 24rpx;
-          color: #999;
+          font-size: 26rpx;
+          color: #3a6351;
+          font-weight: 600;
         }
       }
 
@@ -414,61 +475,110 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: 20rpx;
-        padding-top: 20rpx;
-        border-top: 2rpx solid #f5f5f5;
+        margin-top: 30rpx;
+        padding: 25rpx 20rpx;
+        border-radius: 20rpx;
+        background-color: rgba(66, 168, 211, 0.1);
         
         .label {
-          font-size: 28rpx;
-          color: #666;
+          font-size: 30rpx;
+          color: #3a6351;
+          font-weight: 600;
+          position: relative;
+          padding-left: 35rpx;
+          
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24rpx;
+            height: 24rpx;
+            background-color: #42a8d3;
+            border-radius: 50%;
+          }
         }
         
         .value {
-          font-size: 28rpx;
-          color: #42d392;
+          font-size: 32rpx;
+          color: #42a8d3;
+          font-weight: 700;
         }
       }
     }
   }
 
   .target-card {
-    margin: 30rpx 20rpx;
-    padding: 30rpx;
-    background-color: #1b3a2b;
+    margin: 30rpx 0 40rpx;
+    padding: 40rpx 30rpx;
+    background: linear-gradient(135deg, #1b3a2b 0%, #2d5d44 100%);
     border-radius: 30rpx;
+    box-shadow: 0 10rpx 25rpx rgba(27, 58, 43, 0.2);
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -30rpx;
+      right: -30rpx;
+      width: 150rpx;
+      height: 150rpx;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -40rpx;
+      left: -40rpx;
+      width: 200rpx;
+      height: 200rpx;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 50%;
+    }
     
     .target-title {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20rpx;
+      margin-bottom: 30rpx;
+      position: relative;
+      z-index: 1;
       
       .title-line {
-        width: 60rpx;
+        width: 40rpx;
         height: 2rpx;
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.6);
       }
       
       text {
         color: #ffffff;
-        font-size: 32rpx;
+        font-size: 36rpx;
         font-weight: bold;
         margin: 0 20rpx;
+        letter-spacing: 1px;
       }
     }
     
     .target-subtitle {
       display: block;
       text-align: center;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 24rpx;
-      margin-bottom: 40rpx;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 26rpx;
+      margin-bottom: 50rpx;
+      position: relative;
+      z-index: 1;
     }
     
     .target-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 30rpx;
+      position: relative;
+      z-index: 1;
       
       .target-item {
         background-color: rgba(255, 255, 255, 0.1);
@@ -478,17 +588,27 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        backdrop-filter: blur(5px);
+        
+        &:hover {
+          transform: translateY(-5rpx);
+          background-color: rgba(255, 255, 255, 0.15);
+        }
         
         image {
-          width: 80rpx;
-          height: 80rpx;
-          margin-bottom: 20rpx;
+          width: 90rpx;
+          height: 90rpx;
+          margin-bottom: 25rpx;
+          filter: drop-shadow(0 4rpx 6rpx rgba(0, 0, 0, 0.1));
         }
         
         text {
           color: #ffffff;
           font-size: 28rpx;
           text-align: center;
+          font-weight: 500;
+          line-height: 1.4;
         }
       }
     }
@@ -496,7 +616,24 @@ export default {
 
   .guide-footer {
     margin-top: auto;
-    padding-bottom: 40rpx;
+    padding: 20rpx 0 50rpx;
+    
+    /deep/ .u-button {
+      background: linear-gradient(135deg, #42d392 0%, #3bb077 100%) !important;
+      height: 110rpx !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8rpx 15rpx rgba(66, 211, 146, 0.2);
+      border-radius: 55rpx !important;
+      font-size: 36rpx !important;
+      font-weight: 600 !important;
+      letter-spacing: 2px;
+      
+      &::after {
+        border: none !important;
+      }
+    }
   }
 }
-</style> 
+</style>
