@@ -14,23 +14,32 @@
       <text>1 / 8</text>
     </view>
     
-    <!-- 标题区域 -->
-    <view class="title-section">
-      <text class="main-title">输入您的用户名</text>
-      <text class="sub-title">我们需要用它来识别您</text>
-    </view>
+    <!-- 主要内容区域 -->
+    <view class="content-wrapper">
+      <!-- 标题区域 -->
+      <view class="title-section">
+        <text class="main-title">输入您的用户名</text>
+        <text class="sub-title">我们使用这些数据为您提供更好的饮食类型</text>
+        <image class="healthy-icon" src="/static/images/healthy-user.png" mode="aspectFit"></image>
+      </view>
 
-    <!-- 输入区域 -->
-    <view class="input-section">
-      <u-input
-        v-model="username"
-        :border="false"
-        placeholder="请输入用户名"
-        :customStyle="{
-          padding: '20rpx 0',
-          borderBottom: '1px solid #eee'
-        }"
-      ></u-input>
+      <!-- 输入区域 -->
+      <view class="input-section">
+        <u-input
+          v-model="username"
+          :border="false"
+          placeholder="请输入用户名"
+          :customStyle="{
+            padding: '20rpx 30rpx',
+            border: '2rpx solid #4cd964',
+            borderRadius: '50rpx'
+          }"
+        >
+          <template slot="prefix">
+            <u-icon name="account" color="#4cd964" size="40"></u-icon>
+          </template>
+        </u-input>
+      </view>
     </view>
 
     <!-- 底部区域 -->
@@ -90,42 +99,72 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: linear-gradient(to bottom, #f8fffa, #ffffff);
   padding: 0 40rpx;
   box-sizing: border-box;
   
+  .content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -100rpx; // 向上偏移以实现视觉上的居中
+  }
+
   .progress-indicator {
-    margin: 20rpx 0;
+    text-align: center;
+    margin: 40rpx 0;
     
     text {
       font-size: 28rpx;
-      color: #999;
+      color: #4cd964;
+      font-weight: bold;
     }
   }
 
   .title-section {
-    margin: 60rpx 0;
+    text-align: center;
+    margin: 40rpx 0;
+    position: relative;
+    width: 100%;
     
     .main-title {
       font-size: 48rpx;
       font-weight: bold;
-      color: #333;
       display: block;
       margin-bottom: 20rpx;
+      background: linear-gradient(to right, #4cd964, #2ac845);
+      -webkit-background-clip: text;
+      color: transparent;
     }
     
     .sub-title {
       font-size: 32rpx;
       color: #666;
     }
+    
+    .healthy-icon {
+      width: 120rpx;
+      height: 120rpx;
+      position: absolute;
+      right: 0;
+      top: 10rpx;
+    }
   }
 
   .input-section {
-    margin: 40rpx 0;
+    margin: 60rpx 0;
+    background-color: rgba(76, 217, 100, 0.05);
+    padding: 30rpx;
+    border-radius: 16rpx;
+    box-shadow: 0 4rpx 12rpx rgba(76, 217, 100, 0.1);
+    width: 100%;
   }
 
   .guide-footer {
     margin-top: auto;
+    margin-bottom: 60rpx;
   }
 }
 </style> 
