@@ -69,7 +69,6 @@
         :need-validate="true"
         validate-msg="请选择您的目标"
         @validate="validateForm"
-        @success="handleSuccess"
       />
     </view>
   </view>
@@ -101,17 +100,16 @@ export default {
     },
     validateForm() {
       if (!this.selectedTarget) {
-        this.$u.toast('请选择您的目标');
-        return;
+        this.$u.toast('请选择您的目标')
+        return
       }
-      // 验证通过，手动触发组件的跳转方法
-      this.$refs.progressBtn.navigateToNext();
-    },
-    handleSuccess() {
-      // 修改这里，改为跳转到下一个页面（性别页面）
+      // 直接使用 uni.navigateTo
       uni.navigateTo({
         url: `/pages/userSetup/gender?target=${this.selectedTarget}`
       })
+    },
+    handleSuccess() {
+      // 不需要这个方法了
     }
   }
 }

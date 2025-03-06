@@ -51,7 +51,6 @@
         :need-validate="true"
         validate-msg="请选择您的性别"
         @validate="validateForm"
-        @success="handleSuccess"
       />
     </view>
   </view>
@@ -83,12 +82,16 @@ export default {
         this.$u.toast('请选择您的性别')
         return
       }
-      // 验证通过，手动触发组件的跳转方法
-      this.$refs.progressBtn.navigateToNext()
+      // 在这里直接处理跳转
+      uni.navigateTo({
+        url: `/pages/userSetup/birthday?gender=${this.selectedGender}`,
+        success: () => {
+          this.currentProgress = (this.currentPage + 1) * 12.5
+        }
+      })
     },
     handleSuccess() {
-      // 跳转成功后更新进度
-      this.currentProgress = (this.currentPage + 1) * 12.5
+      // 不需要重复处理
     }
   }
 }
