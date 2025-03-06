@@ -1,7 +1,7 @@
 <template>
 	<view class="wrap">
 		<js-lang title="login.title" :showBtn="true"></js-lang>
-		<view class="logo"><image src="/static/jeesite/logo200.png"></image></view>
+		<view class="logo"><image src="/static/images/logo.png"></image></view>
 		<view class="list">
 			<view class="list-call">
 				<u-icon class="u-icon" size="40" name="account"></u-icon>
