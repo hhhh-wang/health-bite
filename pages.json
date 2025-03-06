@@ -276,26 +276,26 @@
 		"list": [
 			{
 				"pagePath": "pages/sys/home/index",
-				"iconPath": "static/jeesite/tabbar/home_1.png",
-				"selectedIconPath": "static/jeesite/tabbar/home_2.png",
+				"iconPath": "/static/common/tabbar/home.png",
+				"selectedIconPath": "/static/common/tabbar/home2.png",
 				"text": "首页"
 			},
 			{
 				"pagePath": "pages/meal/detail/index",
-				"iconPath": "static/jeesite/tabbar/msg_1.png",
-				"selectedIconPath": "static/jeesite/tabbar/msg_2.png",
+				"iconPath": "/static/common/tabbar/diet-details.png",
+				"selectedIconPath": "/static/common/tabbar/diet-details2.png",
 				"text": "饮食详情"
 			},
 			{
 				"pagePath": "pages/data/index",
-				"iconPath": "static/jeesite/tabbar/stats_1.png",
-				"selectedIconPath": "static/jeesite/tabbar/stats_2.png",
+				"iconPath": "/static/common/tabbar/data-report.png",
+				"selectedIconPath": "/static/common/tabbar/data-report2.png",
 				"text": "数据"
 			},
 			{
 				"pagePath": "pages/sys/user/index",
-				"iconPath": "static/jeesite/tabbar/my_1.png",
-				"selectedIconPath": "static/jeesite/tabbar/my_2.png",
+				"iconPath": "/static/common/tabbar/my_1.png",
+				"selectedIconPath": "/static/common/tabbar/my_2.png",
 				"text": "我的"
 			}
 		]
