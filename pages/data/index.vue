@@ -34,7 +34,9 @@
 		
 		<!-- 内容区域 -->
 		<view class="tab-content">
-			<component :is="currentComponent"></component>
+			<calorie-tab v-if="current === 0" />
+			<nutrition-tab v-if="current === 1" />
+			<nutrition-distribution-tab v-if="current === 2" />
 		</view>
 		
 		<!-- 日期选择器 -->
@@ -59,12 +61,13 @@
 </template>
 
 <script>
-// 引入各个标签页组件
-const CalorieTab = () => import('@/components/calorie-tab/index');
-const NutritionTab = () => import('@/components/nutrition-tab/index');
-const NutritionDistributionTab = () => import('@/components/nutrition-distribution-tab/index');
+// 修改组件引入方式
+import CalorieTab from '@/components/calorie-tab/index.vue'
+import NutritionTab from '@/components/nutrition-tab/index.vue'
+import NutritionDistributionTab from '@/components/nutrition-distribution-tab/index.vue'
 
 export default {
+	// 正确注册组件
 	components: {
 		CalorieTab,
 		NutritionTab,
@@ -91,19 +94,6 @@ export default {
 	},
 	computed: {
 		
-		// 根据当前选中的标签返回对应的组件
-		currentComponent() {
-			switch(this.current) {
-				case 0: 
-					return 'CalorieTab';
-				case 1: 
-					return 'NutritionTab';
-				case 2: 
-					return 'NutritionDistributionTab';
-				default: 
-					return 'CalorieTab';
-			}
-		}
 	},
 	onLoad() {
 		// 初始化日期为今天
