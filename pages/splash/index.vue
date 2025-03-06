@@ -2,7 +2,7 @@
   <view class="splash-container">
     <view class="content-wrapper">
       <view class="splash-content">
-        <image class="logo" src="/static/images/logo.svg" mode="aspectFit"></image>
+        <image class="logo" src="/static/images/logo.png" mode="aspectFit"></image>
         <text class="title">健康饮食</text>
       </view>
     </view>
