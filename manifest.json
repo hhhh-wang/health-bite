@@ -4,7 +4,7 @@
  */
 {
     "name" : "health-bite",
-    "appid" : "__UNI__GFA080B2",
+    "appid" : "__UNI__3A0FA68",
     "description" : "健康饮食",
     "versionName" : "1.0.0",
     "versionCode" : 1,
@@ -109,7 +109,7 @@
     },
     "quickapp" : {},
     "mp-weixin" : {
-        "appid" : "wx335f34af8ccb4131",
+        "appid" : "wx6e08b5b6168f8eef",
         "setting" : {
             "urlCheck" : false,
             "es6" : false,
