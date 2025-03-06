@@ -57,7 +57,6 @@
         :need-validate="true"
         validate-msg="请选择您的体重"
         @validate="validateForm"
-        @success="handleSuccess"
       >
       </progress-button>
     </view>
@@ -108,19 +107,10 @@ export default {
         this.$u.toast('请选择有效的体重')
         return false
       }
-      // 验证通过，手动触发组件的跳转方法
-      this.$refs.progressBtn.navigateToNext()
-      return true
-    },
-
-    handleSuccess() {
-      console.log('handleSuccess triggered')
-      // 跳转到目标体重页面，并携带当前体重数据
+      // 直接跳转
       uni.navigateTo({
         url: `/pages/userSetup/targetWeight?currentWeight=${this.weight}`
       })
-      // 更新进度
-      this.currentProgress = (this.currentPage + 1) * 12.5
     }
   }
 }

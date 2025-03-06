@@ -82,16 +82,10 @@ export default {
         this.$u.toast('请选择您的性别')
         return
       }
-      // 在这里直接处理跳转
+      // 直接跳转
       uni.navigateTo({
-        url: `/pages/userSetup/birthday?gender=${this.selectedGender}`,
-        success: () => {
-          this.currentProgress = (this.currentPage + 1) * 12.5
-        }
+        url: '/pages/userSetup/birthday'
       })
-    },
-    handleSuccess() {
-      // 不需要重复处理
     }
   }
 }
