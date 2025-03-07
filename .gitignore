@@ -5,3 +5,4 @@
 /.hbuilderx/*
 /.idea/*
 deploy.sh
+unpackage/resources/

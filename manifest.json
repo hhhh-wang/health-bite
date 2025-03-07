@@ -29,10 +29,12 @@
         "nvueCompiler" : "uni-app",
         "compilerVersion" : 3,
         "modules" : {
-            "OAuth" : {}
+            "OAuth" : {},
+            "Barcode" : {}
         },
         "distribute" : {
             "android" : {
+                "packagename" : "com.healthbite", // 你的包名
                 "permissions" : [
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
                     "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",

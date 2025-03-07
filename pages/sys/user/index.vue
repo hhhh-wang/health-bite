@@ -5,7 +5,7 @@
 			<view class="avatar-container">
 				<image class="avatar" :src="avatarUrl"></image>
 			</view>
-			<view class="user-name">KOTO</view>
+			<view class="user-name">变量</view>
 			<view class="user-stats">
 				<text>{{age}} 岁</text>
 				<text class="stat-divider">|</text>
@@ -140,7 +140,8 @@ export default {
 	},
 	computed: {
 		avatarUrl() {
-			let url = this.vuex_user.avatarUrl || '/ctxPath/static/images/user1.jpg';
+			// let url = this.vuex_user.avatarUrl || '/static/default-avatar.png';
+			let url = '/static/default-avatar.png'
 			url = url.replace('/ctxPath/', this.vuex_baseUrl + '/');
 			return url + '?t=' + new Date().getTime();
 		}

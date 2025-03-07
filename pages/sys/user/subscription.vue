@@ -41,7 +41,7 @@
           </view>
           <view class="plan-price">
             <text class="currency">¥</text>
-            <text class="amount">39</text>
+            <text class="amount">15</text>
             <text class="period">/月</text>
           </view>
           <view class="plan-features">
@@ -71,9 +71,9 @@
           </view>
           <view class="plan-price">
             <text class="currency">¥</text>
-            <text class="amount">199</text>
+            <text class="amount">120</text>
             <text class="period">/年</text>
-            <text class="discount">相当于¥16.6/月</text>
+            <text class="discount">相当于¥10/月</text>
           </view>
           <view class="plan-features">
             <view class="feature">
