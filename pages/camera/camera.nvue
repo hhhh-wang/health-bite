@@ -1,5 +1,19 @@
 <template>
-	<view class="live-camera" :style="{ width: windowWidth, height: windowHeight }">
+	<view class="live-camera" :style="{ width: windowWidth + 'px', height: windowHeight + 'px' }">
+		<!-- 顶部导航栏 -->
+		<view class="custom-navbar">
+			<view class="left-btn" @tap="back">
+				<text class="nav-icon">←</text>
+			</view>
+			<view class="center-title">
+				<text class="title-text">拍一拍食物</text>
+			</view>
+			<view class="right-btn" @tap="flip">
+				<text class="nav-icon">↺</text>
+			</view>
+		</view>
+		
+		<!-- 相机视图 -->
 		<live-pusher
 			id="livePusher"
 			ref="livePusher"
@@ -17,21 +31,34 @@
 			:enable-mic="false"
 			:zoom="false"
 			@statechange="statechange"
-			:style="{ width: windowWidth, height: windowHeight }"
+			:style="{ width: windowWidth + 'px', height: windowHeight - 180 + 'px' }"
 		></live-pusher>
 
-		<view class="menu">
-			<!--底部菜单区域背景-->
-			<cover-image class="menu-mask" src="/static/live-camera/bar.png"></cover-image>
-
-			<!--返回键-->
-			<cover-image class="menu-back" @tap="back" src="/static/live-camera/back.png"></cover-image>
-
-			<!--快门键-->
-			<cover-image class="menu-snapshot" @tap="snapshot" src="/static/live-camera/shutter.png"></cover-image>
-
-			<!--反转键-->
-			<cover-image class="menu-flip" @tap="flip" src="/static/live-camera/flip.png"></cover-image>
+		<!-- 取景框 -->
+		<cover-image 
+			class="outline-img" 
+			src="/static/camera/food-outline.png"
+			:style="{
+				width: windowWidth + 'px',
+				height: windowHeight - 360 + 'px',
+				top: '120px'
+			}"
+		></cover-image>
+		
+		<!-- 底部控制区 -->
+		<view class="footer-controls">
+			<view class="control-background"></view>
+			<view class="btn-row">
+				<view class="back-btn" @tap="back">
+					<text class="btn-text">返回</text>
+				</view>
+				<view class="snapshot-btn" @tap="snapshot">
+					<text class="snapshot-icon">●</text>
+				</view>
+				<view class="album-btn" @tap="chooseFromAlbum">
+					<text class="btn-text">相册</text>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -43,8 +70,8 @@ export default {
 		return {
 			poenCarmeInterval:null,//打开相机的轮询
 			aspect: '2:3', //比例
-			windowWidth: '', //屏幕可用宽度
-			windowHeight: '', //屏幕可用高度
+			windowWidth: 0, //屏幕可用宽度
+			windowHeight: 0, //屏幕可用高度
 			camerastate: false, //相机准备好了
 			livePusher: null, //流视频对象
 			snapshotsrc: null //快照
@@ -53,6 +80,15 @@ export default {
 	onLoad(e) {
 		_this = this;
 		this.initCamera();
+		// 获取屏幕尺寸
+		const systemInfo = uni.getSystemInfoSync();
+		this.windowWidth = systemInfo.windowWidth;
+		this.windowHeight = systemInfo.windowHeight;
+		
+		// 计算相机比例
+		let zcs = this.aliquot(this.windowWidth, this.windowHeight);
+		this.aspect = (this.windowWidth/zcs) + ':' + (this.windowHeight/zcs);
+		console.log('画面比例：' + this.aspect);
 	},
 	onReady() {
 		this.livePusher = uni.createLivePusherContext('livePusher', this);
@@ -120,7 +156,6 @@ export default {
 			}
 		},
 		
-
 		//返回
 		back() {
 			uni.navigateBack();
@@ -145,10 +180,7 @@ export default {
 			});
 		},
 
-		//反转
-		flip() {
-			this.livePusher.switchCamera();
-		},
+		// 移除闪光灯相关方法
 
 		//设置
 		setImage() {
@@ -183,57 +215,170 @@ export default {
 			// 实现你的食物识别逻辑
 			console.log('开始识别食物图片：', imagePath);
 			// ...
+		},
+		
+		// 从相册选择
+		chooseFromAlbum() {
+			uni.chooseImage({
+				count: 1,
+				sourceType: ['album'],
+				success: (res) => {
+					// 处理选中的图片
+					this.snapshotsrc = res.tempFilePaths[0];
+					this.setImage();
+					uni.navigateBack();
+				}
+			});
 		}
 	}
 };
 </script>
 
-<style lang="scss">
+<style>
 .live-camera {
+	flex: 1;
+	position: relative;
+	background-color: #000000;
+}
+
+.livePusher {
+	position: absolute;
+	top: 80px;
+	left: 0;
+}
+
+/* 顶部导航栏 */
+.custom-navbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 750rpx;
+	height: 120px;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	padding-left: 40rpx;
+	padding-right: 40rpx;
+	padding-top: 20px;
+	background-color: rgba(0, 0, 0, 0.6);
+	z-index: 10;
+}
+
+.left-btn, .right-btn {
+	width: 100rpx;
+	height: 100rpx;
 	justify-content: center;
 	align-items: center;
-	.menu {
-		position: absolute;
-		left: 0;
-		bottom: 0;
-		width: 750rpx;
-		height: 180rpx;
-		z-index: 98;
-		align-items: center;
-		justify-content: center;
-		.menu-mask {
-			position: absolute;
-			left: 0;
-			bottom: 0;
-			width: 750rpx;
-			height: 180rpx;
-			z-index: 98;
-		}
-		.menu-back {
-			position: absolute;
-			left: 30rpx;
-			bottom: 50rpx;
-			width: 80rpx;
-			height: 80rpx;
-			z-index: 99;
-			align-items: center;
-			justify-content: center;
-		}
-		.menu-snapshot {
-			width: 130rpx;
-			height: 130rpx;
-			z-index: 99;
-		}
-		.menu-flip {
-			position: absolute;
-			right: 30rpx;
-			bottom: 50rpx;
-			width: 80rpx;
-			height: 80rpx;
-			z-index: 99;
-			align-items: center;
-			justify-content: center;
-		}
-	}
+	border-radius: 50rpx;
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.center-title {
+	flex: 1;
+	align-items: center;
+}
+
+.title-text {
+	color: #ffffff;
+	font-size: 40rpx;
+	font-weight: bold;
+	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.nav-icon {
+	color: #ffffff;
+	font-size: 48rpx;
+}
+
+/* 取景框 */
+.outline-img {
+	position: fixed;
+	left: 0;
+	z-index: 99;
+}
+
+.corner {
+	position: absolute;
+	width: 60rpx;
+	height: 60rpx;
+	border-color: #42d392;
+	border-style: solid;
+	border-width: 6px;
+}
+
+.scan-tip {
+	position: absolute;
+	bottom: 25%;
+	width: 750rpx;
+	align-items: center;
+	justify-content: center;
+}
+
+.tip-text {
+	color: #ffffff;
+	font-size: 28rpx;
+	background-color: rgba(66, 211, 146, 0.7);
+	padding: 10rpx 20rpx;
+	border-radius: 30rpx;
+}
+
+/* 底部控制区 */
+.footer-controls {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 750rpx;
+	height: 240px;
+	z-index: 10;
+}
+
+.control-background {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 750rpx;
+	height: 240rpx;
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.btn-row {
+	position: absolute;
+	left: 0;
+	bottom: 30rpx;
+	width: 750rpx;
+	height: 180rpx;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	padding: 0 60rpx;
+}
+
+.back-btn, .album-btn {
+	width: 160rpx;
+	height: 90rpx;
+	border-radius: 45rpx;
+	background-color: rgba(255, 255, 255, 0.2);
+	align-items: center;
+	justify-content: center;
+}
+
+.snapshot-btn {
+	width: 160rpx;
+	height: 160rpx;
+	border-radius: 80rpx;
+	background-color: #42d392;
+	align-items: center;
+	justify-content: center;
+}
+
+.snapshot-icon {
+	color: #ffffff;
+	font-size: 100rpx;
+}
+
+.btn-text {
+	color: #ffffff;
+	font-size: 32rpx;
+	font-weight: 500;
 }
 </style>
