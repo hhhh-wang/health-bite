@@ -259,6 +259,13 @@
 				"navigationStyle": "custom",
 				"navigationBarTitleText": "计划完成"
 			}
+		},
+		{
+			"path": "pages/camera/camera",
+			"style" :{
+				"navigationStyle":"custom",
+				"backgroundColor":"#000000"
+            }
 		}
 	],
 	"subPackages": [],

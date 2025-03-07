@@ -23,7 +23,14 @@
 		
 		<!-- 扫描区域 -->
 		<view class="scan-area">
-			<camera class="camera" device-position="back" :flash="flashMode" @error="handleError">
+			<camera 
+				class="camera" 
+				device-position="back" 
+				:flash="flashMode" 
+				@error="handleError"
+				@initdone="handleCameraInit"
+				v-if="cameraInited"
+			>
 				<cover-view class="scan-box">
 					<cover-view class="corner top-left"></cover-view>
 					<cover-view class="corner top-right"></cover-view>
@@ -78,8 +85,9 @@ export default {
 		return {
 			isFlashOn: false,
 			flashMode: 'off',
-			showScanResult: true, // 控制扫描结果的显示
-			scanResult: null // 存储扫描结果数据
+			showScanResult: false,
+			scanResult: null,
+			cameraInited: false
 		}
 	},
 	methods: {
@@ -92,8 +100,8 @@ export default {
 		handleError(e) {
 			console.error('相机错误：', e);
 			uni.showToast({
-				title: '相机启动失败',
-				icon: 'error'
+				title: '相机启动失败，请检查权限',
+				icon: 'none'
 			});
 		},
 		toggleFlash() {
@@ -128,12 +136,21 @@ export default {
 				}
 			});
 		},
+		handleCameraInit() {
+			console.log('相机初始化完成');
+			this.cameraInited = true;
+		},
 		handleScan() {
-			// 扫描处理
-			uni.showToast({
-				title: '开始扫描',
-				icon: 'none',
-				duration: 1500
+			if (!this.cameraInited) {
+				uni.showToast({
+					title: '相机未准备好',
+					icon: 'none'
+				});
+				return;
+			}
+			
+			uni.showLoading({
+				title: '正在扫描...'
 			});
 			
 			const camera = uni.createCameraContext();
@@ -141,8 +158,8 @@ export default {
 				quality: 'high',
 				success: (res) => {
 					console.log('拍照成功：', res.tempImagePath);
-					// 显示扫描结果
 					this.showScanResult = true;
+					uni.hideLoading();
 					uni.showToast({
 						title: '扫描成功',
 						icon: 'success'
@@ -150,6 +167,7 @@ export default {
 				},
 				fail: (err) => {
 					console.error('拍照失败：', err);
+					uni.hideLoading();
 					uni.showToast({
 						title: '扫描失败',
 						icon: 'error'
@@ -157,8 +175,6 @@ export default {
 				}
 			});
 		},
-		
-		// 添加到饮食记录
 		handleAdd() {
 			// TODO: 处理添加逻辑
 			uni.showToast({
@@ -170,29 +186,64 @@ export default {
 			setTimeout(() => {
 				this.handleBack();
 			}, 1500);
+		},
+		requestCameraPermission() {
+			// #ifdef APP-PLUS
+			const that = this;
+			plus.android.requestPermissions(
+				['android.permission.CAMERA'],
+				function(resultObj) {
+					if (resultObj.granted.length > 0) {
+						that.initCamera();
+					} else {
+						uni.showModal({
+							title: '提示',
+							content: '需要相机权限才能使用此功能',
+							success: function(res) {
+								if (res.confirm) {
+									that.openAppSettings();
+								} else {
+									that.handleBack();
+								}
+							}
+						});
+					}
+				},
+				function(error) {
+					console.error('Error requesting permissions: ', error);
+				}
+			);
+			// #endif
+		},
+		openAppSettings() {
+			// #ifdef APP-PLUS
+			const main = plus.android.runtimeMainActivity();
+			const Intent = plus.android.importClass("android.content.Intent");
+			const Settings = plus.android.importClass("android.provider.Settings");
+			const intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+			const Uri = plus.android.importClass("android.net.Uri");
+			const uri = Uri.fromParts("package", plus.runtime.appid, null);
+			intent.setData(uri);
+			main.startActivity(intent);
+			// #endif
+		},
+		initCamera() {
+			setTimeout(() => {
+				this.cameraInited = true;
+			}, 500);
 		}
 	},
 	onLoad() {
-		// 检查相机权限
-		// #ifdef MP-WEIXIN
-		uni.getSetting({
-			success: (res) => {
-				if (!res.authSetting['scope.camera']) {
-					uni.showModal({
-						title: '提示',
-						content: '需要使用相机权限，是否前往设置？',
-						success: (modalRes) => {
-							if (modalRes.confirm) {
-								uni.openSetting();
-							} else {
-								this.handleBack();
-							}
-						}
-					});
-				}
-			}
-		});
-		// #endif
+		// 请求相机权限
+		this.requestCameraPermission();
+	},
+	onShow() {
+		// 页面显示时，重新初始化相机
+		this.initCamera();
+	},
+	onHide() {
+		// 页面隐藏时，释放相机资源
+		this.cameraInited = false;
 	}
 }
 </script>
@@ -311,13 +362,15 @@ export default {
 
 	.scan-area {
 		width: 100%;
-		height: calc(100vh - 12vh); // 减去导航栏高度
+		height: calc(100vh - 12vh);
 		position: relative;
 		z-index: 2;
+		background-color: #222;
 		
 		.camera {
 			width: 100%;
 			height: 100%;
+			display: block;
 		}
 		
 		.scan-box {
@@ -379,9 +432,9 @@ export default {
 				left: 0;
 				top: 0;
 				width: 100%;
-				height: 4rpx; // 增加扫描线的粗细
-				background: linear-gradient(to right, transparent, #42d392, transparent); // 添加渐变效果
-				box-shadow: 0 0 8rpx rgba(66, 211, 146, 0.8); // 添加发光效果
+				height: 4rpx;
+				background: linear-gradient(to right, transparent, #42d392, transparent);
+				box-shadow: 0 0 8rpx rgba(66, 211, 146, 0.8);
 				animation: scan 2s linear infinite;
 			}
 		}

@@ -118,8 +118,8 @@ import { navigateBack } from '@/common/utils/navigate';
 export default {
 	
 	components: {
-		'nutrition-chart': () => import('@/components/nutrition-chart/index.vue'),
-		'u-icon': () => import('@/uview-ui/components/u-icon/u-icon.vue')
+		'nutrition-chart': () => import('@/components/nutrition-chart/index'),
+		'u-icon': () => import('@/uview-ui/components/u-icon/u-icon')
 	},
 	data() {
 		return {
@@ -179,7 +179,7 @@ export default {
 		},
 		handleScan() {
 			uni.navigateTo({
-				url: '/pages/meal/detail/scan',
+				url: '../../../pages/camera/camera',
 				success: () => {
 					console.log('跳转到扫描页面成功');
 				},
