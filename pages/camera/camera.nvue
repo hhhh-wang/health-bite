@@ -20,33 +20,30 @@
 			:style="{ width: windowWidth, height: windowHeight }"
 		></live-pusher>
 
-		<!-- 添加顶部遮罩 -->
-		<view class="top-mask">
-			<cover-image class="top-mask-bg" src="/static/live-camera/bar.png"></cover-image>
-			<!-- 标题 -->
-			<view class="nav-title">
-				<text class="title-text">请对准食物拍摄</text>
-				<text class="subtitle-text">让我来帮你记录美味时刻</text>
-			</view>
-
-		</view>
-
-		<!-- 取景框 -->
+		<!-- 添加取景框 -->
 		<cover-image 
 			class="outline-img" 
 			src="/static/camera/food-outline.png"
 			:style="{ 
 				width: windowWidth + 'px',
-				height: contentHeight + 'px',  // 使用计算后的内容区域高度
-				top: '240rpx'  // 顶部导航栏高度
+				height: contentHeight + 'px',
+				top: '240rpx'
 			}"
 		></cover-image>
 
+		<!-- 顶部遮罩 -->
+		<view class="top-mask">
+			<cover-image class="top-mask-bg" src="/static/camera/bar.png"></cover-image>
+			<view class="nav-title">
+				<text class="title-text">请对准食物拍摄</text>
+				<text class="subtitle-text">让我来帮你记录美味时刻</text>
+			</view>
+		</view>
+
+		<!-- 底部菜单 -->
 		<view class="menu">
-			<!--底部菜单区域背景-->
-			<cover-image class="menu-mask" src="/static/live-camera/bar.png"></cover-image>
+			<cover-image class="menu-mask" src="/static/camera/bar.png"></cover-image>
 			
-			<!-- 底部按钮容器 -->
 			<view class="menu-buttons">
 				<!-- 返回按钮 -->
 				<view class="menu-btn" @tap="back">
@@ -89,16 +86,16 @@ export default {
 	},
 	data() {
 		return {
-			poenCarmeInterval:null,//打开相机的轮询
-			aspect: '2:3', //比例
-			windowWidth: '', //屏幕可用宽度
-			windowHeight: '', //屏幕可用高度
+			poenCarmeInterval: null,
+			aspect: '2:3',
+			windowWidth: '',
+			windowHeight: '',
 			contentHeight: '', // 添加内容区域高度
 			topBarHeight: 240, // 顶部导航栏高度（rpx）
 			bottomBarHeight: 300, // 底部遮罩高度（rpx）
-			camerastate: false, //相机准备好了
-			livePusher: null, //流视频对象
-			snapshotsrc: null, //快照
+			camerastate: false,
+			livePusher: null,
+			snapshotsrc: null,
 			currentFood: null,
 		};
 	},
@@ -108,7 +105,7 @@ export default {
 	},
 	onReady() {
 		this.livePusher = uni.createLivePusherContext('livePusher', this);
-		this.startPreview(); //开启预览并设置摄像头
+		this.startPreview();
 		this.poenCarme();
 	},
 	methods: {
@@ -130,8 +127,8 @@ export default {
 					_this.windowWidth = res.windowWidth;
 					_this.windowHeight = res.windowHeight;
 					
-					// 计算实际像素值（将rpx转换为px）
-					const rpxRatio = res.windowWidth / 750; // 1rpx对应的px值
+					// 计算实际像素值
+					const rpxRatio = res.windowWidth / 750;
 					const topBarPx = _this.topBarHeight * rpxRatio;
 					const bottomBarPx = _this.bottomBarHeight * rpxRatio;
 					
@@ -141,7 +138,6 @@ export default {
 					// 计算相机比例
 					let zcs = _this.aliquot(_this.windowWidth, _this.contentHeight);
 					_this.aspect = (_this.windowWidth/zcs) + ':' + (_this.contentHeight/zcs);
-					console.log('画面比例：' + _this.aspect);
 				}
 			});
 		},
@@ -279,6 +275,44 @@ export default {
 	z-index: 97;
 }
 
+.top-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 750rpx;
+	height: 240rpx;
+	z-index: 98;
+}
+
+.top-mask-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 750rpx;
+	height: 240rpx;
+	z-index: 98;
+}
+
+.nav-title {
+	position: absolute;
+	top: 60rpx;
+	width: 750rpx;
+	z-index: 99;
+	align-items: center;
+}
+
+.title-text {
+	color: #ffffff;
+	font-size: 36rpx;
+	font-weight: 600;
+	margin-bottom: 8rpx;
+}
+
+.subtitle-text {
+	color: rgba(255, 255, 255, 0.8);
+	font-size: 24rpx;
+}
+
 .menu {
 	position: absolute;
 	left: 0;
@@ -297,7 +331,6 @@ export default {
 	z-index: 98;
 }
 
-/* 底部按钮容器 */
 .menu-buttons {
 	position: absolute;
 	bottom: 60rpx;
@@ -311,11 +344,10 @@ export default {
 	padding: 0 60rpx;
 }
 
-/* 左右按钮样式 */
 .menu-btn {
 	width: 160rpx;
 	height: 90rpx;
-	background-color: rgba(66, 211, 146, 0.3);  /* 使用绿色 */
+	background-color: rgba(66, 211, 146, 0.3);
 	border: 2rpx solid rgba(66, 211, 146, 0.5);
 	border-radius: 45rpx;
 	align-items: center;
@@ -323,7 +355,6 @@ export default {
 	flex-direction: column;
 }
 
-/* 快门按钮样式 */
 .shutter-container {
 	width: 140rpx;
 	height: 140rpx;
@@ -345,69 +376,13 @@ export default {
 	width: 100rpx;
 	height: 100rpx;
 	border-radius: 50rpx;
-	background-color: #42d392;  /* 使用绿色 */
+	background-color: #42d392;
 	border: 4rpx solid rgba(255, 255, 255, 0.8);
 }
 
-/* 按钮文字样式 */
 .btn-text {
 	color: #FFFFFF;
 	font-size: 26rpx;
 	margin-top: 6rpx;
-	font-weight: 500;
-}
-
-/* 添加顶部遮罩样式 */
-.top-mask {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 750rpx;
-	height: 240rpx;
-	z-index: 98;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-	padding: 60rpx 30rpx 0;
-}
-
-.top-mask-bg {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 750rpx;
-	height: 240rpx;
-	z-index: 98;
-}
-
-.nav-title {
-	flex: 1;
-	align-items: center;
-	justify-content: center;
-	z-index: 99;
-	padding-top: 60rpx;
-}
-
-.title-text {
-	color: #ffffff;
-	font-size: 36rpx;
-	font-weight: 600;
-	margin-bottom: 8rpx;
-}
-
-.subtitle-text {
-	color: rgba(255, 255, 255, 0.8);
-	font-size: 24rpx;
-	margin-top: 4rpx;
-}
-
-/* 按钮点击效果 */
-.menu-btn:active {
-	transform: scale(0.95);
-	background-color: rgba(66, 211, 146, 0.4);
-}
-
-.shutter-outer:active {
-	transform: scale(0.95);
 }
 </style>
