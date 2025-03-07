@@ -40,8 +40,8 @@ export default {
   position: absolute;
   left: 30rpx;
   right: 30rpx;
-  z-index: 100;
-  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 500;
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 20rpx;
   padding: 20rpx;
 }

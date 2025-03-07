@@ -31,6 +31,14 @@
 			}"
 		></cover-image>
 
+		<!-- 食材卡片 -->
+		<food-card 
+			v-if="currentFood"
+			:food="currentFood"
+			:top="240"
+			class="food-card"
+		></food-card>
+
 		<!-- 顶部遮罩 -->
 		<view class="top-mask">
 			<cover-image class="top-mask-bg" src="/static/camera/bar.png"></cover-image>
@@ -65,13 +73,6 @@
 				</view>
 			</view>
 		</view>
-
-		<!-- 食材卡片 -->
-		<food-card 
-			v-if="currentFood"
-			:food="currentFood"
-			:top="240"
-		></food-card>
 	</view>
 </template>
 
@@ -184,20 +185,56 @@ export default {
 
 		//抓拍
 		async snapshot() {
-			uni.vibrateShort();
-			this.livePusher.snapshot({
-				success: async (e) => {
-					this.snapshotsrc = e.message.tempImagePath;
-					// 在拍照后进行识别
-					await this.recognizeFood(this.snapshotsrc);
-					// 延迟返回，让用户看到识别结果
-					setTimeout(() => {
+			try {
+				// 震动反馈
+				uni.vibrateShort();
+				
+				// 拍照
+				const photoResult = await new Promise((resolve, reject) => {
+					this.livePusher.snapshot({
+						success: (e) => resolve(e.message.tempImagePath),
+						fail: reject
+					});
+				});
+				
+				if (photoResult) {
+					this.snapshotsrc = photoResult;
+					
+					// 显示加载提示
+					uni.showLoading({
+						title: '正在识别...'
+					});
+					
+					try {
+						// 调用识别服务
+						await this.recognizeFood(this.snapshotsrc);
+						
+						// 停止预览
 						this.stopPreview();
-						this.setImage();
-						uni.navigateBack();
-					}, 1500);
+						
+						// 隐藏加载提示
+						uni.hideLoading();
+						
+						// 显示识别结果一段时间后返回
+						//setTimeout(() => {
+						//	uni.navigateBack();
+						//}, 1500);
+						
+					} catch (error) {
+						uni.hideLoading();
+						uni.showToast({
+							title: '识别失败，请重试',
+							icon: 'none'
+						});
+					}
 				}
-			});
+			} catch (error) {
+				console.error('拍照失败:', error);
+				uni.showToast({
+					title: '拍照失败，请重试',
+					icon: 'none'
+				});
+			}
 		},
 
 		// 移除闪光灯相关方法
@@ -233,14 +270,17 @@ export default {
 		// 示例：识别食物
 		async recognizeFood(imagePath) {
 			try {
-				// 这里模拟识别结果始终为"hotdog"
-				const foodName = "hotdog";
-				const foodInfo = await getFoodInfo(foodName);
+				// 这里替换为实际的图片上传和识别服务
+				// const result = await uploadAndRecognize(imagePath);
+				
+				// 示例：模拟识别结果
+				const foodInfo = await getFoodInfo("hotdog");
 				if (foodInfo) {
 					this.currentFood = foodInfo;
 				}
 			} catch (error) {
 				console.error('识别食材失败:', error);
+				throw error; // 向上传递错误
 			}
 		},
 		
@@ -249,10 +289,29 @@ export default {
 			uni.chooseImage({
 				count: 1,
 				sourceType: ['album'],
-				success: (res) => {
-					this.snapshotsrc = res.tempFilePaths[0];
-					this.setImage();
-					uni.navigateBack();
+				success: async (res) => {
+					try {
+						this.snapshotsrc = res.tempFilePaths[0];
+						
+						uni.showLoading({
+							title: '正在识别...'
+						});
+						
+						await this.recognizeFood(this.snapshotsrc);
+						
+						uni.hideLoading();
+						
+						setTimeout(() => {
+							uni.navigateBack();
+						}, 1500);
+						
+					} catch (error) {
+						uni.hideLoading();
+						uni.showToast({
+							title: '识别失败，请重试',
+							icon: 'none'
+						});
+					}
 				}
 			});
 		},
@@ -314,7 +373,7 @@ export default {
 }
 
 .menu {
-	position: absolute;
+	position: fixed;
 	left: 0;
 	bottom: 0;
 	width: 750rpx;
@@ -384,5 +443,11 @@ export default {
 	color: #FFFFFF;
 	font-size: 26rpx;
 	margin-top: 6rpx;
+}
+.food-card {
+	position: fixed;
+	left: 30rpx;
+	right: 30rpx;
+	z-index: 999;
 }
 </style>
