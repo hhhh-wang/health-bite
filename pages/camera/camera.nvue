@@ -354,7 +354,7 @@ export default {
 
 .nav-title {
 	position: absolute;
-	top: 60rpx;
+	top: 200rpx;
 	width: 750rpx;
 	z-index: 99;
 	align-items: center;
@@ -373,7 +373,7 @@ export default {
 }
 
 .menu {
-	position: fixed;
+	position: absolute;
 	left: 0;
 	bottom: 0;
 	width: 750rpx;
@@ -446,8 +446,6 @@ export default {
 }
 .food-card {
 	position: fixed;
-	left: 30rpx;
-	right: 30rpx;
 	z-index: 999;
 }
 </style>

@@ -6,11 +6,13 @@
         <text class="portion">{{ food.portion }}份</text>
       </view>
       <view class="right">
-        <text class="calories">{{ food.calories }} kcal</text>
+        <text class="calories">{{ getCalories.value }} {{ getCalories.unit }}</text>
         <view class="nutrients">
-          <text class="nutrient">{{ food.protein }}g</text>
-          <text class="nutrient">{{ food.fat }}g</text>
-          <text class="nutrient">{{ food.carbs }}g</text>
+          <text v-for="item in getNutrients" 
+                :key="item.key" 
+                class="nutrient">
+            {{ item.label }} {{ item.value }}{{ item.unit }}
+          </text>
         </view>
       </view>
       <view class="add-btn">
@@ -31,6 +33,16 @@ export default {
       type: Number,
       default: 100
     }
+  },
+  computed: {
+    // 获取热量信息
+    getCalories() {
+      return this.food.nutrients?.find(item => item.key === 'calories') || { value: 0, unit: '千卡' };
+    },
+    // 获取其他营养成分（除热量外）
+    getNutrients() {
+      return this.food.nutrients?.filter(item => item.key !== 'calories') || [];
+    }
   }
 }
 </script>
@@ -42,7 +54,7 @@ export default {
   right: 30rpx;
   z-index: 500;
   background-color: rgba(255, 255, 255, 1);
-  border-radius: 20rpx;
+  border-radius: 50rpx;
   padding: 20rpx;
 }
 
