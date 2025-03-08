@@ -15,7 +15,7 @@
           </text>
         </view>
       </view>
-      <view class="add-btn">
+      <view class="add-btn" @click="handleAddFood">
         <text class="add-icon">+</text>
       </view>
     </view>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { navigateBack } from '@/common/utils/navigate'
+
 export default {
   props: {
     food: {
@@ -34,6 +36,37 @@ export default {
       default: 100
     }
   },
+  
+  methods: {
+    handleAddFood() {
+      // 构造食物数据
+      const foodData = {
+        name: this.food.name,
+        portion: this.food.portion,
+        calories: this.getCalories.value,
+        carbs: this.getNutrients.find(n => n.key === 'carbs')?.value || 0,
+        fat: this.getNutrients.find(n => n.key === 'fat')?.value || 0,
+        protein: this.getNutrients.find(n => n.key === 'protein')?.value || 0
+      }
+      
+      // 添加到 store
+      this.$store.dispatch('meal/addFood', foodData)
+      
+      // 显示提示
+      uni.showToast({
+        title: '添加成功',
+        icon: 'success'
+      })
+      
+      // 使用通用导航方法返回
+      navigateBack({
+        redirectUrl: '/pages/meal/detail/index',
+        isTab: false,
+        delta: 1
+      })
+    }
+  },
+  
   computed: {
     // 获取热量信息
     getCalories() {

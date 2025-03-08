@@ -64,39 +64,31 @@
 		<!-- 已完成运动列表 -->
 		<view class="exercise-title">饮食数据</view>
 		<view class="food-list">       
-			<view class="food-item">
-				<view class="food-basic-info">
-					<image src="/static/common/img/food/hotdog.png" class="food-icon"></image>
-					<view class="food-main-info">
-						<text class="food-name">热狗</text>
-						<text class="food-portion">1份</text>
+			<template v-for="food in $store.state.meal.foodList">
+				<view class="food-item" :key="food.id">
+					<view class="food-basic-info">
+						<image src="/static/common/img/food/hotdog.png" class="food-icon"></image>
+						<view class="food-main-info">
+							<text class="food-name">{{ food.name }}</text>
+							<text class="food-portion">{{ food.portion }}</text>
+						</view>
+					</view>
+					<view class="food-nutrition">
+						<text class="nutrition-item calories">{{ food.calories }} kcal</text>
+						<text class="nutrition-item carbs">{{ food.carbs }} g</text>
+						<text class="nutrition-item fat">{{ food.fat }} g</text>
+						<text class="nutrition-item protein">{{ food.protein }} g</text>
+					</view>
+					<view class="action-buttons">
+						<view class="delete-btn" @click="handleDelete(food.id)">
+							<u-icon name="close" color="#ff4c4c" size="16"></u-icon>
+						</view>
+						<view class="edit-btn" @click="handleEdit(food)">
+							<u-icon name="edit-pen" color="#42d392" size="16"></u-icon>
+						</view>
 					</view>
 				</view>
-				<view class="food-nutrition">
-					<text class="nutrition-item calories">152 kcal</text>
-					<text class="nutrition-item carbs">0 g</text>
-					<text class="nutrition-item fat">8 g</text>
-					<text class="nutrition-item protein">13 g</text>
-				</view>
-				<view class="action-buttons">
-                    <view class="delete-btn">
-						<u-icon name="close" color="#ff4c4c" size="16"></u-icon>
-					</view>
-					<view class="edit-btn" @click="handleEdit({
-						id: '1',
-						name: '热狗',
-						unit: 'g',
-						amount: '100',
-						calories: '152',
-						totalCalories: '152',
-						carbs: '0',
-						fat: '8',
-						protein: '13'
-					})">
-						<u-icon name="edit-pen" color="#42d392" size="16"></u-icon>
-					</view>
-				</view>
-			</view>
+			</template>
 		</view>
 
 		<view class="action-buttons-container">
@@ -115,7 +107,16 @@
 
 <script>
 import { navigateBack } from '@/common/utils/navigate';
+
 export default {
+	computed: {
+		foodList() {
+			return this.$store.state.meal.foodList
+		},
+		nutritionStats() {
+			return this.$store.state.meal.nutritionStats
+		}
+	},
 	
 	components: {
 		'nutrition-chart': () => import('@/components/nutrition-chart/index'),
@@ -139,11 +140,8 @@ export default {
 		}
 	},
 	methods: {
-		handleAdd() {
-			// 添加运动记录
-			uni.navigateTo({
-				url: '/pages/sys/exercise/add'
-			})
+		handleAdd(food) {
+			this.$store.dispatch('meal/addFood', food)
 		},
 		handleSearch(value) {
 			// 搜索功能实现
@@ -197,25 +195,14 @@ export default {
 				url: '/pages/meal/detail/addoredit'
 			});
 		},
-		handleEdit(foodData) {
-			uni.navigateTo({
-				url: `/pages/meal/detail/addoredit?id=${foodData.id}&name=${foodData.name}&unit=${foodData.unit}&amount=${foodData.amount}&calories=${foodData.calories}&totalCalories=${foodData.totalCalories}&carbs=${foodData.carbs}&fat=${foodData.fat}&protein=${foodData.protein}`,
-				success: (res) => {
-					if (res.errMsg === 'navigateTo:ok') {
-						uni.showToast({
-							title: '编辑成功',
-							icon: 'success'
-						});
-					}
-				},
-				fail: (err) => {
-					console.error('编辑失败：', err);
-					uni.showToast({
-						title: '编辑失败',
-						icon: 'error'
-					});
-				}
-			});
+		handleEdit(food) {
+			this.$store.dispatch('meal/updateFood', {
+				foodId: food.id,
+				food
+			})
+		},
+		handleDelete(foodId) {
+			this.$store.dispatch('meal/removeFood', foodId)
 		}
 	}
 }

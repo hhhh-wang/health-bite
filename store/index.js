@@ -4,6 +4,8 @@
 import config from '@/common/config.js';
 import Vue from 'vue'
 import Vuex from 'vuex'
+import meal from './modules/meal'  // 导入 meal 模块
+
 Vue.use(Vuex)
 
 let lifeData = {};
@@ -90,6 +92,9 @@ const store = new Vuex.Store({
 			// 保存变量到本地，见顶部函数定义
 			saveLifeData(saveKey, state[saveKey])
 		}
+	},
+	modules: {
+		meal  // 添加 meal 模块
 	}
 })
 
