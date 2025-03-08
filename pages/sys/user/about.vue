@@ -16,8 +16,8 @@
 					</view>
 				</view>
 				<view class="user-info">
-					<text class="username">KOTO</text>
-					<text class="email">koto123@gmail.com</text>
+					<text class="username">变量</text>
+					<text class="email">bianliang@gmail.com</text>
 					<view class="health-score">
 						<text class="score">健康分数：85</text>
 						<u-icon name="heart-fill" color="#ff6b6b" size="28"></u-icon>

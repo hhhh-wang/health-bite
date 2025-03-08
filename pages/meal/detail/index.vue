@@ -108,10 +108,10 @@
 
 <script>
 import { navigateBack } from '@/common/utils/navigate';
-
+import NutritionChart from '@/components/nutrition-chart/index.vue';  // 修改导入方式
 export default {
 	components: {
-		'nutrition-chart': () => import('@/components/nutrition-chart/index'),
+		NutritionChart,
 		'u-icon': () => import('@/uview-ui/components/u-icon/u-icon')
 	},
 	computed: {
