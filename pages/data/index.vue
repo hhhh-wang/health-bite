@@ -127,11 +127,20 @@ export default {
 			// 获取选中日期的数据
 			this.fetchDayData(date)
 		},
-		// 关闭日期选择器
-		calendarClose() {
-			this.showCalendar = false;
+		// 日期改变事件
+		dateChange(e) {
+			console.log('日期改变:', e)
+			const date = `${e.year}-${e.month}-${e.day}`
+			this.selectedDate = date
+			this.date_text = date
+			// 获取选中日期的数据
+			this.fetchDayData(date)
 		},
-				// 获取选中日期的数据
+		// 关闭日期选择器
+		closeCalendar() {
+			this.showCalendar = false
+		},
+		// 获取选中日期的数据
 		fetchDayData(date) {
 			// 这里添加获取数据的逻辑
 			console.log('获取日期数据:', date)

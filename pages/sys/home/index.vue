@@ -276,6 +276,16 @@ export default {
 			this.fetchDayData(date)
 		},
 		
+		// 日期改变事件
+		dateChange(e) {
+			console.log('日期改变:', e)
+			const date = `${e.year}-${e.month}-${e.day}`
+			this.selectedDate = date
+			this.date_text = date
+			// 获取选中日期的数据
+			this.fetchDayData(date)
+		},
+		
 		// 关闭日期选择器
 		closeCalendar() {
 			this.showCalendar = false
@@ -285,6 +295,8 @@ export default {
 		fetchDayData(date) {
 			// 这里添加获取数据的逻辑
 			console.log('获取日期数据:', date)
+			// 可以从 store 获取对应日期的饮食数据
+			this.$store.dispatch('meal/fetchDayMeals', date)
 		},
 		// 显示操作菜单
 		showActionSheet() {

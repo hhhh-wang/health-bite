@@ -28,6 +28,7 @@
 			
 			<!-- 图表区域 -->
 			<nutrition-chart
+				v-if="meals.length && nutritionData.length"
 				:meals="meals"
 				:nutritionData="nutritionData"
 				:yAxis="yAxisConfig"
@@ -81,10 +82,10 @@
 					</view>
 					<view class="action-buttons">
 						<view class="delete-btn" @click="handleDelete(food.id)">
-							<u-icon name="close" color="#ff4c4c" size="16"></u-icon>
+							<u-icon name="close" color="#ff4c4c" :size="32"></u-icon>
 						</view>
 						<view class="edit-btn" @click="handleEdit(food)">
-							<u-icon name="edit-pen" color="#42d392" size="16"></u-icon>
+							<u-icon name="edit-pen" color="#42d392" :size="32"></u-icon>
 						</view>
 					</view>
 				</view>
@@ -94,11 +95,11 @@
 		<view class="action-buttons-container">
 			<view class="manual-btn" @click="handleManualAdd">
 				<text>手动添加</text>
-				<u-icon name="plus" color="#42d392" size="30"></u-icon>
+				<u-icon name="plus" color="#42d392" :size="40"></u-icon>
 			</view>
 			<view class="scan-btn" @click="handleScan">
 				<text>扫描添加</text>
-				<u-icon name="scan" color="#42d392" size="30"></u-icon>
+				<u-icon name="scan" color="#42d392" :size="40"></u-icon>
 			</view>
 			
 		</view>
@@ -109,6 +110,10 @@
 import { navigateBack } from '@/common/utils/navigate';
 
 export default {
+	components: {
+		'nutrition-chart': () => import('@/components/nutrition-chart/index'),
+		'u-icon': () => import('@/uview-ui/components/u-icon/u-icon')
+	},
 	computed: {
 		foodList() {
 			return this.$store.state.meal.foodList
@@ -117,22 +122,11 @@ export default {
 			return this.$store.state.meal.nutritionStats
 		}
 	},
-	
-	components: {
-		'nutrition-chart': () => import('@/components/nutrition-chart/index'),
-		'u-icon': () => import('@/uview-ui/components/u-icon/u-icon')
-	},
 	data() {
 		return {
 			searchKeyword: '',
-			// 营养数据
-			meals: ['午餐', '晚餐'],
-			nutritionData: [
-				[ 135, 140],  // 总热量
-				[90, 95],    // 碳水化合物
-				[ 50, 55],    // 脂肪
-				[25, 30]     // 蛋白质
-			],
+			meals: [],
+			nutritionData: [],
 			yAxisConfig: {
 				min: 0,
 				max: 150
@@ -203,6 +197,21 @@ export default {
 		},
 		handleDelete(foodId) {
 			this.$store.dispatch('meal/removeFood', foodId)
+		}
+	},
+	onLoad() {
+		// 初始化图表数据
+		this.meals = ['午餐', '晚餐']
+		this.nutritionData = [
+			[135, 140],  // 总热量
+			[90, 95],    // 碳水化合物
+			[50, 55],    // 脂肪
+			[25, 30]     // 蛋白质
+		]
+		
+		// 确保 foodList 是一个数组
+		if (!this.$store.state.meal.foodList) {
+			this.$store.state.meal.foodList = []
 		}
 	}
 }
