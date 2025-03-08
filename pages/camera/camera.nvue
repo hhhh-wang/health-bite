@@ -35,7 +35,7 @@
 		<food-card 
 			v-if="currentFood"
 			:food="currentFood"
-			:top="240"
+			:top="cardTop"
 			class="food-card"
 		></food-card>
 
@@ -92,13 +92,19 @@ export default {
 			windowWidth: '',
 			windowHeight: '',
 			contentHeight: '', // 添加内容区域高度
-			topBarHeight: 240, // 顶部导航栏高度（rpx）
-			bottomBarHeight: 300, // 底部遮罩高度（rpx）
+			topBarHeight: 240,    // 顶部导航栏高度
+			outlineHeight: 600,   // 取景框高度
+			spacing: 160,         // 间距
 			camerastate: false,
 			livePusher: null,
 			snapshotsrc: null,
 			currentFood: null,
 		};
+	},
+	computed: {
+		cardTop() {
+			return this.topBarHeight + this.outlineHeight + this.spacing;  // 1000
+		}
 	},
 	onLoad(e) {
 		_this = this;

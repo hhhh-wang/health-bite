@@ -172,13 +172,6 @@
 			}
 		},
 		{
-			"path": "pages/meal/detail/scan",
-			"style": {
-				"navigationStyle": "custom",
-				"backgroundColor": "#000000"
-			}
-		},
-		{
 			"path": "pages/data/index",
 			"style": {
 				"navigationBarTitleText": ""

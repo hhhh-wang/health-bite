@@ -3,7 +3,7 @@
     <view class="card-content">
       <view class="left">
         <text class="food-name">{{ food.name }}</text>
-        <text class="portion">{{ food.portion }}份</text>
+        <text class="portion">{{ food.portion }}</text>
       </view>
       <view class="right">
         <text class="calories">{{ getCalories.value }} {{ getCalories.unit }}</text>
@@ -54,8 +54,9 @@ export default {
   right: 30rpx;
   z-index: 500;
   background-color: rgba(255, 255, 255, 1);
-  border-radius: 50rpx;
+  border-radius: 20rpx;
   padding: 20rpx;
+  margin: 50rpx 0;
 }
 
 .card-content {
@@ -66,6 +67,7 @@ export default {
 
 .left {
   flex: 1;
+  margin-left: 30rpx; 
 }
 
 .food-name {
@@ -88,6 +90,7 @@ export default {
   font-size: 28rpx;
   color: #42d392;
   font-weight: bold;
+  margin-bottom: 20rpx;
 }
 
 .nutrients {
@@ -102,8 +105,8 @@ export default {
 }
 
 .add-btn {
-  width: 60rpx;
-  height: 60rpx;
+  width: 80rpx;
+  height: 80rpx;
   border-radius: 30rpx;
   background-color: #42d392;
   align-items: center;
