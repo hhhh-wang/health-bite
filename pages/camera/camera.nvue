@@ -1,5 +1,5 @@
 <template>
-	<view class="live-camera" :style="{ width: windowWidth, height: windowHeight }">
+	<view class="live-camera" :style="{ width: windowWidth + 'px', height: windowHeight + 'px' }">
 		<live-pusher
 			id="livePusher"
 			ref="livePusher"
@@ -17,19 +17,19 @@
 			:enable-mic="false"
 			:zoom="false"
 			@statechange="statechange"
-			:style="{ width: windowWidth, height: windowHeight }"
+			:style="{ width: windowWidth + 'px', height: windowHeight + 'px' }"
 		></live-pusher>
 
 		<!-- 添加取景框 -->
-		<cover-image 
+		<!-- <cover-image 
 			class="outline-img" 
 			src="/static/camera/food-outline.png"
 			:style="{ 
 				width: windowWidth + 'px',
-				height: contentHeight + 'px',
-				top: '240rpx'
+				height: outlineHeight + 'px',
+				top: (windowHeight - outlineHeight) / 2 + 'px'  // 垂直居中
 			}"
-		></cover-image>
+		></cover-image> -->
 
 		<!-- 食材卡片 -->
 		<food-card 
@@ -40,17 +40,17 @@
 		></food-card>
 
 		<!-- 顶部遮罩 -->
-		<view class="top-mask">
-			<cover-image class="top-mask-bg" src="/static/camera/bar.png"></cover-image>
-			<view class="nav-title">
+		<view class="top-mask" :style="{ height: statusBarHeight + navBarHeight + 'px' }">
+			<cover-image class="top-mask-bg" :style="{ height: statusBarHeight + navBarHeight + 'px' }" src="/static/camera/bar.png"></cover-image>
+			<view class="nav-title" :style="{ top: statusBarHeight + 'px' }">
 				<text class="title-text">请对准食物拍摄</text>
 				<text class="subtitle-text">让我来帮你记录美味时刻</text>
 			</view>
 		</view>
 
 		<!-- 底部菜单 -->
-		<view class="menu">
-			<cover-image class="menu-mask" src="/static/camera/bar.png"></cover-image>
+		<view class="menu" :style="{ height: bottomHeight + 'px' }">
+			<cover-image class="menu-mask" :style="{ height: bottomHeight + 'px' }" src="/static/camera/bar.png"></cover-image>
 			
 			<view class="menu-buttons">
 				<!-- 返回按钮 -->
@@ -89,12 +89,12 @@ export default {
 		return {
 			poenCarmeInterval: null,
 			aspect: '2:3',
-			windowWidth: '',
-			windowHeight: '',
-			contentHeight: '', // 添加内容区域高度
-			topBarHeight: 240,    // 顶部导航栏高度
-			outlineHeight: 600,   // 取景框高度
-			spacing: 160,         // 间距
+			windowWidth: 0,
+			windowHeight: 0,
+			statusBarHeight: 20, // 状态栏高度
+			navBarHeight: 44,    // 导航栏高度
+			outlineHeight: 0,    // 取景框高度（动态计算）
+			bottomHeight: 0,     // 底部控制栏高度（动态计算）
 			camerastate: false,
 			livePusher: null,
 			snapshotsrc: null,
@@ -103,7 +103,7 @@ export default {
 	},
 	computed: {
 		cardTop() {
-			return this.topBarHeight + this.outlineHeight + this.spacing;  // 1000
+			return this.statusBarHeight + this.navBarHeight + this.outlineHeight + 100;
 		}
 	},
 	onLoad(e) {
@@ -130,29 +130,40 @@ export default {
 		//初始化相机
 		initCamera() {
 			uni.getSystemInfo({
-				success: function(res) {
-					_this.windowWidth = res.windowWidth;
-					_this.windowHeight = res.windowHeight;
+				success: (res) => {
+					// 基础尺寸数据
+					this.windowWidth = res.windowWidth;
+					this.windowHeight = res.windowHeight;
+					this.statusBarHeight = res.statusBarHeight || 20;
 					
-					// 计算实际像素值
-					const rpxRatio = res.windowWidth / 750;
-					const topBarPx = _this.topBarHeight * rpxRatio;
-					const bottomBarPx = _this.bottomBarHeight * rpxRatio;
+					// 优化计算比例
+					const navRatio = 0.07;  // 导航栏占屏幕高度的7%
+					const bottomRatio = 0.15; // 底部控制栏占屏幕高度的15%
 					
-					// 计算内容区域高度
-					_this.contentHeight = res.windowHeight - topBarPx - bottomBarPx;
+					// 计算实际像素高度
+					this.navBarHeight = Math.round(res.windowHeight * navRatio);
+					this.bottomHeight = Math.round(res.windowHeight * bottomRatio);
+					
+					// 调整取景框高度（减小为屏幕高度的50%，从之前的60%）
+					this.outlineHeight = Math.round(res.windowHeight * 0.5);
 					
 					// 计算相机比例
-					let zcs = _this.aliquot(_this.windowWidth, _this.contentHeight);
-					_this.aspect = (_this.windowWidth/zcs) + ':' + (_this.contentHeight/zcs);
+					const aspectRatio = this.calculateAspectRatio(this.windowWidth, this.windowHeight);
+					this.aspect = aspectRatio;
 				}
 			});
 		},
 		
-		//整除数计算
-		aliquot(x, y) {
-			if (x % y == 0) return y;
-			return this.aliquot(y, x % y);
+		// 计算宽高比
+		calculateAspectRatio(width, height) {
+			// 计算最大公约数
+			const gcd = this.gcd(width, height);
+			return (width/gcd) + ':' + (height/gcd);
+		},
+		
+		// 计算最大公约数
+		gcd(a, b) {
+			return b === 0 ? a : this.gcd(b, a % b);
 		},
 
 		//开始预览
@@ -330,14 +341,23 @@ export default {
 
 <style>
 .live-camera {
-	justify-content: center;
-	align-items: center;
+	position: relative;
+	flex: 1;
+}
+
+.livePusher {
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 .outline-img {
-	position: fixed;
+	position: absolute;
 	left: 0;
 	z-index: 97;
+	top: 50% !important;
+	transform: translateY(-50%);
+	margin-top: -50rpx;
 }
 
 .top-mask {
@@ -345,7 +365,6 @@ export default {
 	top: 0;
 	left: 0;
 	width: 750rpx;
-	height: 240rpx;
 	z-index: 98;
 }
 
@@ -354,16 +373,16 @@ export default {
 	top: 0;
 	left: 0;
 	width: 750rpx;
-	height: 240rpx;
 	z-index: 98;
 }
 
 .nav-title {
 	position: absolute;
-	top: 200rpx;
 	width: 750rpx;
 	z-index: 99;
 	align-items: center;
+	justify-content: center;
+	height: 88rpx;
 }
 
 .title-text {
@@ -383,7 +402,6 @@ export default {
 	left: 0;
 	bottom: 0;
 	width: 750rpx;
-	height: 300rpx;
 	z-index: 98;
 }
 
@@ -392,16 +410,15 @@ export default {
 	left: 0;
 	bottom: 0;
 	width: 750rpx;
-	height: 300rpx;
 	z-index: 98;
 }
 
 .menu-buttons {
 	position: absolute;
-	bottom: 60rpx;
+	bottom: 50rpx;
 	left: 0;
 	width: 750rpx;
-	height: 160rpx;
+	height: 180rpx;
 	z-index: 99;
 	flex-direction: row;
 	align-items: center;
@@ -450,8 +467,11 @@ export default {
 	font-size: 26rpx;
 	margin-top: 6rpx;
 }
+
 .food-card {
 	position: fixed;
 	z-index: 999;
+	left: 0;
+	width: 750rpx;
 }
 </style>
