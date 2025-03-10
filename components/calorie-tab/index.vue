@@ -2,11 +2,18 @@
 	<view class="calorie-container">
 		<!-- 顶部卡路里总览卡片 -->
 		<view class="calorie-card top-card">
+			<view class="card-bubble bubble-1"></view>
+			<view class="card-bubble bubble-2"></view>
+			
 			<view class="total-wrapper">
 				<text class="total-value">{{ totalCalories }}</text>
 				<text class="total-unit">kcal</text>
 			</view>
+			
+			<view class="total-label">总摄入量</view>
+			
 			<view class="divider"></view>
+			
 			<view class="metrics-container">
 				<view class="metric">
 					<text class="metric-value">{{ averageCalories }}</text>
@@ -21,6 +28,11 @@
 		
 		<!-- 饼图卡片 -->
 		<view class="calorie-card chart-card">
+			<view class="chart-header">
+				<text class="chart-title">卡路里分布</text>
+				<view class="chart-divider"></view>
+			</view>
+			
 			<calorie-pie-chart 
 				:mealData="pieChartData" 
 				canvasId="calories-tab-pie"
@@ -182,54 +194,87 @@ export default {
 <style lang="scss" scoped>
 .calorie-container {
 	padding: 30rpx;
-	background-color: #f7f9fc; // 浅蓝灰色背景，看起来清爽健康
+	background-color: #f8f8f8;
+	min-height: 100vh;
+	
 	// 卡片通用样式
 	.calorie-card {
 		background-color: #ffffff;
 		border-radius: 20rpx;
-		box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
+		box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
 		padding: 30rpx;
-		margin-bottom: 24rpx;
+		margin-bottom: 30rpx;
+		position: relative;
+		overflow: hidden;
 	}
 	
-	// 顶部卡片样式 - 已优化
+	// 顶部卡片样式
 	.top-card {
-		background-color: #e8f5e9; /* 淡绿色背景，传达健康感 */
-		border-radius: 28rpx;
-		box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.03);
-		padding: 36rpx 30rpx;
-		margin-bottom: 24rpx;
+		background: linear-gradient(135deg, #42d392, #34b17f);
+		border-radius: 24rpx;
+		box-shadow: 0 8rpx 20rpx rgba(66, 211, 146, 0.2);
+		padding: 40rpx 30rpx;
+		margin-bottom: 30rpx;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		position: relative;
+		overflow: hidden;
+		
+		.card-bubble {
+			position: absolute;
+			border-radius: 50%;
+			background: rgba(255, 255, 255, 0.1);
+		}
+		
+		.bubble-1 {
+			width: 160rpx;
+			height: 160rpx;
+			top: -40rpx;
+			right: -40rpx;
+		}
+		
+		.bubble-2 {
+			width: 120rpx;
+			height: 120rpx;
+			bottom: -30rpx;
+			left: 40rpx;
+		}
 		
 		.total-wrapper {
 			display: flex;
 			align-items: baseline;
-			padding-bottom: 12rpx;
+			padding-bottom: 4rpx;
 			
 			.total-value {
 				font-size: 72rpx;
 				font-weight: 700;
-				color: #2d3436;
+				color: #ffffff;
 				line-height: 1;
 				letter-spacing: -1rpx;
+				text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
 			}
 			
 			.total-unit {
 				font-size: 28rpx;
 				font-weight: 500;
-				color: #636e72;
-				margin-left: 6rpx;
+				color: rgba(255, 255, 255, 0.9);
+				margin-left: 8rpx;
 			}
+		}
+		
+		.total-label {
+			font-size: 24rpx;
+			color: rgba(255, 255, 255, 0.85);
+			margin-bottom: 16rpx;
 		}
 		
 		.divider {
 			width: 60rpx;
 			height: 4rpx;
-			background-color: #4299e1; // 健康蓝色
+			background-color: rgba(255, 255, 255, 0.6);
 			border-radius: 2rpx;
-			margin: 16rpx 0 24rpx;
+			margin: 10rpx 0 24rpx;
 		}
 		
 		.metrics-container {
@@ -253,20 +298,20 @@ export default {
 						top: 15%;
 						height: 70%;
 						width: 1rpx;
-						background-color: #e0e6ed;
+						background-color: rgba(255, 255, 255, 0.3);
 					}
 				}
 				
 				.metric-value {
 					font-size: 40rpx;
 					font-weight: 600;
-					color: #2d3436;
+					color: #ffffff;
 					margin-bottom: 4rpx;
 				}
 				
 				.metric-label {
 					font-size: 24rpx;
-					color: #636e72;
+					color: rgba(255, 255, 255, 0.85);
 					letter-spacing: 1rpx;
 				}
 			}
@@ -275,22 +320,56 @@ export default {
 	
 	// 饼图卡片
 	.chart-card {
-		background-color: #e3f2fd; /* 淡蓝色背景，增添活力感 */
-		padding: 20rpx;
+		background-color: #ffffff;
+		padding: 30rpx;
 		height: 600rpx; // 给饼图足够的高度
+		border-radius: 24rpx;
+		box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.05);
+		
+		.chart-header {
+			display: flex;
+			align-items: center;
+			margin-bottom: 20rpx;
+			
+			.chart-title {
+				font-size: 32rpx;
+				font-weight: bold;
+				color: #333;
+				margin-right: 16rpx;
+			}
+			
+			.chart-divider {
+				flex: 1;
+				height: 2rpx;
+				background: linear-gradient(90deg, #42d392, transparent);
+			}
+		}
 	}
 	
-	// 餐食详情区域 - 样式简化，因为卡片已移至组件
+	// 餐食详情区域
 	.meal-details {
 		.meal-row {
 			display: flex;
 			justify-content: space-between;
 			margin-bottom: 24rpx;
+			gap: 20rpx;
 			
 			&:last-child {
 				margin-bottom: 0;
 			}
 		}
+	}
+}
+
+@keyframes bubbleFloat {
+	0% {
+		transform: translateY(0) scale(1);
+	}
+	50% {
+		transform: translateY(-10rpx) scale(1.05);
+	}
+	100% {
+		transform: translateY(0) scale(1);
 	}
 }
 </style> 

@@ -1,57 +1,59 @@
 <template>
 	<view class="container">
-		<!-- 顶部区域 -->
-		<view class="header">
-			<view class="avatar">
-				<image src="/static/images/avatar.png" ></image>
+		<!-- 顶部区域 - 使用更活力的设计 -->
+		<view class="header-section">
+			<view class="avatar-wrapper">
+				<image src="/static/images/avatar.png" class="avatar-img"></image>
 			</view>
 			<view class="date-display">
 				<text class="date-text">{{ date_text }}</text>
 			</view>
-			<view class="date-picker" @click="showDatePicker">
-				<u-icon 
-					name="calendar" 
-					size="40" 
-					color="#ffffff"
-				></u-icon>
+			<view class="date-picker-btn btn-hover" @click="showDatePicker">
+				<u-icon name="calendar" size="40" color="#ffffff"></u-icon>
 			</view>
-
 		</view>
-		<view class="text-content">
-			<view class="hello">
+		
+		<!-- 欢迎文本 - 增加活力感 -->
+		<view class="welcome-section wave-bg">
+			<view class="greeting">
 				您好, 变量人生
 			</view>
-			<view class="weight-tip">
-				你昨天增加了2kg, 继续保持!
+			<view class="progress-message">
+				<u-icon name="arrow-upward" color="#42d392" size="28"></u-icon>
+				<text>你昨天增加了2kg, 继续保持!</text>
 			</view>
 		</view>
-		<!-- 主要内容区 -->
-		<view class="content">
-			<!-- 简约卡片卡路里展示 -->
-			<view class="simple-card">
-				<view class="card-header">
+		
+		<!-- 卡路里卡片 - 更加活力化 -->
+		<view class="fitness-card calories-card">
+			<view class="card-header">
+				<view class="icon-circle">
 					<text class="fire-icon">🔥</text>
-					<text class="card-title">大卡</text>
 				</view>
-				<view class="card-content">
-					<text class="current-value">{{currentCalories}}</text>
-					<text class="unit">kcal</text>
-				</view>
-				<view class="progress-container">
-					<view class="progress-bar">
-						<view class="progress-fill" :style="{width: caloriePercentage + '%'}"></view>
-					</view>
-				</view>
-				<view class="card-footer">
-					<text>目标: {{targetCalories}} kcal (已完成{{caloriePercentage}}%)</text>
+				<text class="card-title">今日卡路里</text>
+			</view>
+			<view class="card-content">
+				<text class="current-value">{{currentCalories}}</text>
+				<text class="unit">kcal</text>
+			</view>
+			<view class="progress-container">
+				<view class="progress-bar">
+					<view class="progress-fill" :style="{width: caloriePercentage + '%'}"></view>
+					<view class="progress-indicator" :style="{left: caloriePercentage + '%'}"></view>
 				</view>
 			</view>
+			<view class="card-footer">
+				<text>目标: {{targetCalories}} kcal (已完成{{caloriePercentage}}%)</text>
+			</view>
 		</view>
+		
+		<!-- 营养素卡片 - 更鲜明的视觉效果 -->
 		<view class="nutrition-cards">
 			<!-- 碳水化合物卡片 -->
-			<view class="nutrition-card">
+			<view class="nutrition-card carbs-card">
 				<view class="card-top">
-					<view class="nutrient-title">总碳水化合物</view>
+					<view class="nutrient-icon">🌾</view>
+					<view class="nutrient-title">碳水化合物</view>
 					<view class="nutrient-value">
 						<text class="number">134</text>
 						<text class="unit">g</text>
@@ -66,8 +68,9 @@
 			</view>
 			
 			<!-- 脂肪卡片 -->
-			<view class="nutrition-card">
+			<view class="nutrition-card fat-card">
 				<view class="card-top">
+					<view class="nutrient-icon">🥑</view>
 					<view class="nutrient-title">总脂肪</view>
 					<view class="nutrient-value">
 						<text class="number">94</text>
@@ -82,66 +85,108 @@
 				</view>
 			</view>
 		</view>
-
-		<!-- 在原有代码后添加新的内容区 -->
-		<view class="content-area">
-			<!-- 饮食区域 -->
-			<view class="today-header">
-				<text class="title">今天的饮食</text>
-				<view class="more-btn" @click="showActionSheet">
-					<u-icon name="more-dot-fill" size="40" color="#42d392"></u-icon>
+		
+		<!-- 饮食区域 - 更友好的设计 -->
+		<view class="content-section">
+			<view class="section-header">
+				<view class="title-with-icon">
+					<u-icon name="shopping-cart" size="36" color="#42d392"></u-icon>
+					<text class="section-title">今天的饮食</text>
 				</view>
-			</view>
-			<view class="diet-list">
-				<!-- 早餐 -->
-				<view class="food-item">
-
-					<image src="/static/common/img/breakfast.png" class="meal-icon"></image>
-					<view class="food-info">
-						<text class="meal-type">早餐</text>
-						<view class="food-stats">
-							<text>3 食物</text>
-							<text class="calories">582 / 631 kcal</text>
-						</view>
-					</view>
-					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
-				</view>
-
-				<!-- 午餐 -->
-				<view class="food-item">
-					<image src="/static/common/img/lunch.png" class="meal-icon"></image>
-					<view class="food-info">
-						<text class="meal-type">午餐</text>
-						<view class="food-stats">
-							<text>3 食物</text>
-							<text class="calories">1157 / 1262 kcal</text>
-						</view>
-					</view>
-					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
-				</view>
-
-				<!-- 晚餐 -->
-				<view class="food-item">
-					<image src="/static/common/img/dinner.png" class="meal-icon"></image>
-					<view class="food-info">
-						<text class="meal-type">晚餐</text>
-						<view class="food-stats">
-							<text>0 食物</text>
-							<text class="calories">0 / 946 kcal</text>
-						</view>
-					</view>
-					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+				<view class="action-btn btn-hover" @click="showActionSheet">
+					<u-icon name="more-dot-fill" size="40" color="#ffffff"></u-icon>
 				</view>
 			</view>
 			
-			<!-- 饮水区域 -->
-			<view class="today-header">
-				<text class="title">饮水量</text>
-				<view class="more-btn">
-					<u-icon name="more-dot-fill" size="40" color="#42d392"></u-icon>
+			<!-- 饮食列表 - 更流畅的卡片设计 -->
+			<view class="meal-list">
+				<!-- 早餐 -->
+				<view class="meal-card btn-hover">
+					<image src="/static/common/img/breakfast.png" class="meal-icon"></image>
+					<view class="meal-details">
+						<text class="meal-name">早餐</text>
+						<view class="meal-stats">
+							<view class="stat-item">
+								<u-icon name="grid" size="24" color="#666666"></u-icon>
+								<text>3 食物</text>
+							</view>
+							<view class="stat-item">
+								<u-icon name="fire" size="24" color="#ff9736"></u-icon>
+								<text class="calories">582 / 631 kcal</text>
+							</view>
+						</view>
+					</view>
+					<view class="arrow-icon">
+						<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+					</view>
+				</view>
+				
+				<!-- 午餐 -->
+				<view class="meal-card btn-hover">
+					<image src="/static/common/img/lunch.png" class="meal-icon"></image>
+					<view class="meal-details">
+						<text class="meal-name">午餐</text>
+						<view class="meal-stats">
+							<view class="stat-item">
+								<u-icon name="grid" size="24" color="#666666"></u-icon>
+								<text>3 食物</text>
+							</view>
+							<view class="stat-item">
+								<u-icon name="fire" size="24" color="#ff9736"></u-icon>
+								<text class="calories">1157 / 1262 kcal</text>
+							</view>
+						</view>
+					</view>
+					<view class="arrow-icon">
+						<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+					</view>
+				</view>
+				
+				<!-- 晚餐 -->
+				<view class="meal-card btn-hover">
+					<image src="/static/common/img/dinner.png" class="meal-icon"></image>
+					<view class="meal-details">
+						<text class="meal-name">晚餐</text>
+						<view class="meal-stats">
+							<view class="stat-item">
+								<u-icon name="grid" size="24" color="#666666"></u-icon>
+								<text>0 食物</text>
+							</view>
+							<view class="stat-item">
+								<u-icon name="fire" size="24" color="#ff9736"></u-icon>
+								<text class="calories">0 / 946 kcal</text>
+							</view>
+						</view>
+					</view>
+					<view class="arrow-icon">
+						<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+					</view>
 				</view>
 			</view>
+		</view>
+		
+		<!-- 饮水区域 - 视觉感更强 -->
+		<view class="content-section">
+			<view class="section-header">
+				<view class="title-with-icon">
+					<u-icon name="glass" size="36" color="#4eb8f0"></u-icon>
+					<text class="section-title">饮水量</text>
+				</view>
+				<view class="action-btn water-btn btn-hover">
+					<u-icon name="plus" size="36" color="#ffffff"></u-icon>
+				</view>
+			</view>
+			
 			<view class="water-section">
+				<view class="water-level">
+					<view class="water-wave" style="height: 20%"></view>
+					<view class="water-stats">
+						<text class="amount">570</text>
+						<text class="separator">/</text>
+						<text class="total">2000ml</text>
+						<text class="percentage">28%</text>
+					</view>
+				</view>
 				<view class="water-cups">
 					<view class="cup active"></view>
 					<view class="cup active"></view>
@@ -151,43 +196,44 @@
 					<view class="cup"></view>
 					<view class="cup"></view>
 				</view>
-				<view class="water-stats">
-					<text class="amount">570</text>
-					<text class="separator">/</text>
-					<text class="total">2000ml</text>
-					<text class="percentage">20%</text>
+			</view>
+		</view>
+		
+		<!-- 运动区域 - 更有活力 -->
+		<view class="content-section">
+			<view class="section-header">
+				<view class="title-with-icon">
+					<u-icon name="heart" size="36" color="#ff5e3a"></u-icon>
+					<text class="section-title">运动</text>
+				</view>
+				<view class="action-btn exercise-btn btn-hover">
+					<u-icon name="plus" size="36" color="#ffffff"></u-icon>
 				</view>
 			</view>
-
-			<!-- 运动区域 -->
-			<view class="today-header">
-				<text class="title">运动</text>
-				<view class="more-btn">
-					<u-icon name="more-dot-fill" size="40" color="#42d392"></u-icon>
-				</view>
-			</view>
-			<view class="diet-list">
-				<view class="food-item" @click="goToExercise">
-					<image src="/static/common/img/sports.png" class="meal-icon"></image>
-					<view class="food-info">
-						<text class="meal-type">运动</text>
-						<view class="food-stats">
+			
+			<view class="exercise-card btn-hover" @click="goToExercise">
+				<image src="/static/common/img/sports.png" class="exercise-icon"></image>
+				<view class="exercise-details">
+					<text class="exercise-title">今日活动</text>
+					<view class="exercise-stats">
+						<view class="stat-item">
+							<u-icon name="star" size="24" color="#ffd66b"></u-icon>
 							<text>2 活动</text>
-							<text class="calories" style="color: #ff9500;">-545 kcal</text>
+						</view>
+						<view class="stat-item">
+							<u-icon name="fire" size="24" color="#ff9500"></u-icon>
+							<text class="calories negative">-545 kcal</text>
 						</view>
 					</view>
-					<u-icon name="arrow-right" size="30" color="#42d392"></u-icon>
+				</view>
+				<view class="arrow-icon">
+					<u-icon name="arrow-right" size="30" color="#ff5e3a"></u-icon>
 				</view>
 			</view>
 		</view>
-
-		<!-- 日期选择器 -->
-		<u-picker
-			v-model="showCalendar"
-			mode="time"
-			@confirm="confirmDate"
-			@cancel="closeCalendar"
-		>
+		
+		<!-- 保留原有的功能组件 -->
+		<u-picker v-model="showCalendar" mode="time" @confirm="confirmDate" @cancel="closeCalendar">
 			<u-calendar
 				:show="showCalendar"
 				mode="single"
@@ -198,8 +244,7 @@
 				color="#42d392"
 			></u-calendar>
 		</u-picker>
-
-		<!-- 添加操作菜单 -->
+		
 		<u-action-sheet
 			:list="actionList"
 			v-model="showActions"
@@ -207,7 +252,6 @@
 			:border-radius="20"
 			cancel-text="取消"
 		></u-action-sheet>
-
 	</view>
 </template>
 
@@ -342,34 +386,33 @@ export default {
 
 <style lang="scss">
 @import 'index.scss';
+
 page {
 	background-color: #f8f8f8;
 	font-family: "Microsoft YaHei", sans-serif;
 }
 
 .container {
-	padding: 40rpx;
+	padding: 30rpx;
 	background-color: #f8f8f8;
 }
 
-.header {
+/* 顶部区域样式 */
+.header-section {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: calc(4vh);
-	padding: calc(2vh) calc(2vw);
+	margin-bottom: 40rpx;
 	
-	.avatar {
-		width: calc(20vw);
-		height: calc(20vw);
-		min-width: 80rpx;
-		min-height: 80rpx;
-		max-width: 120rpx;
-		max-height: 120rpx;
+	.avatar-wrapper {
+		width: 100rpx;
+		height: 100rpx;
 		border-radius: 50%;
 		overflow: hidden;
+		box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.1);
+		border: 3rpx solid rgba(66, 211, 146, 0.3);
 		
-		image {
+		.avatar-img {
 			width: 100%;
 			height: 100%;
 			border-radius: 50%;
@@ -380,72 +423,69 @@ page {
 		flex: 1;
 		display: flex;
 		justify-content: center;
-		align-items: center;
 		
 		.date-text {
-			font-size: clamp(40rpx, 3.2vw, 32rpx);
+			font-size: 32rpx;
 			font-weight: bold;
 			color: #333;
+			background: rgba(66, 211, 146, 0.1);
+			padding: 10rpx 20rpx;
+			border-radius: 30rpx;
 		}
 	}
 	
-	.date-picker {
-		width: calc(20vw);
-		height: calc(20vw);
-		min-width: 80rpx;
-		min-height: 80rpx;
-		max-width: 120rpx;
-		max-height: 120rpx;
+	.date-picker-btn {
+		width: 100rpx;
+		height: 100rpx;
 		border-radius: 50%;
-		background: #42d392;
+		background: linear-gradient(135deg, #42d392, #2cc17e);
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		box-shadow: 0 4rpx 12rpx rgba(66, 211, 146, 0.3);
+		box-shadow: 0 6rpx 16rpx rgba(66, 211, 146, 0.3);
+		transition: all 0.3s;
+	}
+}
+
+/* 欢迎区域样式 */
+.welcome-section {
+	margin: 20rpx 0 40rpx;
+	background: linear-gradient(135deg, #fbfbfb, #f0f0f0);
+	border-radius: 30rpx;
+	padding: 30rpx;
+	text-align: center;
+	box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.05);
+	
+	.greeting {
+		font-size: 44rpx;
+		font-weight: bold;
+		color: #333;
+		margin-bottom: 20rpx;
+		background: linear-gradient(45deg, #42d392, #4eb8f0);
+		-webkit-background-clip: text;
+		color: transparent;
+	}
+	
+	.progress-message {
+		font-size: 28rpx;
+		color: #666;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		
-		.u-icon {
-			display: flex;
-			align-items: center;
-			justify-content: center;
+		text {
+			margin-left: 10rpx;
 		}
 	}
 }
 
-.text-content {
-	margin: 40rpx 20rpx;  // 改用上下左右margin确保边距自适应
-	text-align: center;
-	display: flex;          // 改用flex布局
-	flex-direction: column; // 垂直方向排列
-	justify-content: center;// 居中对齐
-	width: auto;           // 自适应宽度
-	
-	.hello {
-		font-size: calc(40rpx + 2vw); // 使用calc和vw使字体大小自适应
-		font-weight: bold;
-		color: #333;
-		margin-bottom: 4vh;  // 使用vh单位使间距自适应
-	}
-	
-	.weight-tip {
-		font-size: calc(24rpx + 1vw); // 使用calc和vw使字体大小自适应
-		font-weight: bold;
-		color: #666;
-	}
-}
-
-.content {
-	background: transparent;
-	border-radius: 50rpx;
-	padding: 0 20rpx;
-}
-
-.simple-card {
-	background-color: rgb(235, 246, 214);
-	border-radius: 50rpx;
+/* 卡路里卡片样式 */
+.fitness-card {
+	background: linear-gradient(135deg, rgb(235, 246, 214), rgb(220, 240, 200));
+	border-radius: 30rpx;
 	padding: 40rpx 30rpx;
-	margin-bottom: 40rpx;
-	box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
-	text-align: center;
+	margin-bottom: 30rpx;
+	box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.07);
 	
 	.card-header {
 		display: flex;
@@ -453,26 +493,38 @@ page {
 		justify-content: center;
 		margin-bottom: 30rpx;
 		
-		.fire-icon {
-			font-size: 40rpx;
-			margin-right: 10rpx;
+		.icon-circle {
+			width: 60rpx;
+			height: 60rpx;
+			border-radius: 50%;
+			background: rgba(255, 151, 54, 0.2);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-right: 15rpx;
+			
+			.fire-icon {
+				font-size: 36rpx;
+			}
 		}
 		
 		.card-title {
-			font-size: 34rpx;
+			font-size: 36rpx;
 			color: #333;
-			font-weight: 500;
+			font-weight: 600;
 		}
 	}
 	
 	.card-content {
 		margin: 30rpx 0;
+		text-align: center;
 		
 		.current-value {
-			font-size: 80rpx;
-			color: #333;
+			font-size: 90rpx;
+			background: linear-gradient(45deg, #42d392, #ff9736);
+			-webkit-background-clip: text;
+			color: transparent;
 			font-weight: 700;
-			line-height: 1.2;
 		}
 		
 		.unit {
@@ -490,13 +542,26 @@ page {
 			height: 16rpx;
 			background-color: rgba(255, 255, 255, 0.6);
 			border-radius: 50rpx;
-			overflow: hidden;
+			overflow: visible;
+			position: relative;
 			
 			.progress-fill {
 				height: 100%;
-				background-color: #42d392;
+				background: linear-gradient(90deg, #42d392, #ff9736);
 				border-radius: 50rpx;
-				transition: width 0.3s ease-in-out;
+				transition: width 0.5s ease-out;
+			}
+			
+			.progress-indicator {
+				position: absolute;
+				width: 30rpx;
+				height: 30rpx;
+				background: #ffffff;
+				border: 6rpx solid #42d392;
+				border-radius: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+				box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.2);
 			}
 		}
 	}
@@ -510,34 +575,49 @@ page {
 		
 		text {
 			background-color: rgba(255, 255, 255, 0.6);
-			padding: 8rpx 16rpx;
+			padding: 10rpx 20rpx;
 			border-radius: 50rpx;
+			font-weight: 500;
 		}
 	}
 }
 
+/* 营养卡片样式 */
 .nutrition-cards {
-	margin: 30rpx 20rpx;
+	margin: 30rpx 0;
 	display: flex;
-	flex-direction: row;
 	gap: 20rpx;
 	
 	.nutrition-card {
 		flex: 1;
-		background-color: rgb(240, 241, 241);
-		border-radius: 50rpx;
+		border-radius: 30rpx;
 		padding: 24rpx;
-		box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+		box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.07);
+		transition: all 0.3s;
+		
+		&.carbs-card {
+			background: linear-gradient(135deg, #fff6e5, #ffe8c0);
+		}
+		
+		&.fat-card {
+			background: linear-gradient(135deg, #ffe5e5, #ffcaca);
+		}
 		
 		.card-top {
 			display: flex;
 			flex-direction: column;
 			margin-bottom: 16rpx;
 			
+			.nutrient-icon {
+				font-size: 36rpx;
+				margin-bottom: 10rpx;
+			}
+			
 			.nutrient-title {
-				font-size: 26rpx;
+				font-size: 28rpx;
 				color: #666;
-				margin-bottom: 8rpx;
+				margin-bottom: 10rpx;
+				font-weight: 600;
 			}
 			
 			.nutrient-value {
@@ -545,15 +625,15 @@ page {
 				align-items: baseline;
 				
 				.number {
-					font-size: 44rpx;
+					font-size: 50rpx;
 					font-weight: bold;
 					color: #333;
 				}
 				
 				.unit {
-					font-size: 26rpx;
+					font-size: 28rpx;
 					color: #999;
-					margin-left: 4rpx;
+					margin-left: 8rpx;
 				}
 			}
 		}
@@ -561,28 +641,29 @@ page {
 		.progress-info {
 			.percentage {
 				font-size: 30rpx;
-				color: #42d392;
-				margin-bottom: 20rpx;
+				font-weight: bold;
+				margin-bottom: 15rpx;
 				display: block;
 				text-align: right;
 			}
 			
 			.progress-bar {
-				height: 8rpx;
-				background-color: #eee;
+				height: 10rpx;
+				background-color: rgba(255, 255, 255, 0.6);
 				border-radius: 50rpx;
 				overflow: hidden;
 				
 				.progress {
 					height: 100%;
 					border-radius: 50rpx;
+					transition: width 0.5s ease-out;
 					
 					&.carbs {
-						background-color: #ffaa00;
+						background: linear-gradient(90deg, #ffaa00, #ff8800);
 					}
 					
 					&.fat {
-						background-color: #ff6b6b;
+						background: linear-gradient(90deg, #ff6b6b, #ff4545);
 					}
 				}
 			}
@@ -590,91 +671,177 @@ page {
 	}
 }
 
-.content-area {
+/* 内容区域样式 */
+.content-section {
 	margin-top: 40rpx;
+	animation: fadeIn 0.5s ease-out;
 	
-	.today-header {
+	.section-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin: 30rpx 0 40rpx;
+		margin-bottom: 30rpx;
 		
-		.title {
-			font-size: 32rpx;
-			font-weight: bold;
-			color: #333;
-			margin-left: 20rpx;
+		.title-with-icon {
+			display: flex;
+			align-items: center;
+			
+			.section-title {
+				font-size: 36rpx;
+				font-weight: bold;
+				color: #333;
+				margin-left: 15rpx;
+			}
 		}
 		
-		.more-btn {
-			width: 120rpx;
+		.action-btn {
+			width: 80rpx;
 			height: 80rpx;
-			background-color: rgb(23, 52, 48);
-			border-radius: 40rpx;
+			border-radius: 50%;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			margin-right: 20rpx;
+			background: #42d392;
+			box-shadow: 0 6rpx 12rpx rgba(66, 211, 146, 0.3);
+			transition: all 0.3s;
 			
-			.u-icon {
-				transform: scale(0.8);
+			&.water-btn {
+				background: linear-gradient(135deg, #4eb8f0, #33a3e1);
+				box-shadow: 0 6rpx 12rpx rgba(78, 184, 240, 0.3);
+			}
+			
+			&.exercise-btn {
+				background: linear-gradient(135deg, #ff9500, #ff5e3a);
+				box-shadow: 0 6rpx 12rpx rgba(255, 94, 58, 0.3);
 			}
 		}
 	}
-
-	.diet-list, .water-section {
-		background-color: rgb(240, 241, 241);
-		border-radius: 50rpx;
-		padding: 30rpx;
-		margin-bottom: 30rpx;
+	
+	/* 饮食列表样式 */
+	.meal-list {
+		display: flex;
+		flex-direction: column;
+		gap: 20rpx;
 	}
 	
-	.diet-list {
-		.food-item {
-			display: flex;
-			align-items: center;
-			padding: 30rpx;
-			background: #f8f8f8;
-			border-radius: 50rpx;
-			margin-bottom: 20rpx;
+	.meal-card {
+		display: flex;
+		align-items: center;
+		padding: 30rpx;
+		background: #ffffff;
+		border-radius: 30rpx;
+		box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.05);
+		transition: all 0.3s;
+		
+		.meal-icon {
+			width: 90rpx;
+			height: 90rpx;
+			border-radius: 50%;
+			background: rgba(66, 211, 146, 0.1);
+			padding: 15rpx;
+		}
+		
+		.meal-details {
+			flex: 1;
+			margin-left: 30rpx;
 			
-			&:last-child {
-				margin-bottom: 0;
+			.meal-name {
+				font-size: 34rpx;
+				color: #333;
+				font-weight: bold;
+				margin-bottom: 10rpx;
 			}
 			
-			.meal-icon {
-				width: 80rpx;
-				height: 80rpx;
-			}
-			
-			.food-info {
-				flex: 1;
-				margin-left: 30rpx;
+			.meal-stats {
+				display: flex;
+				gap: 30rpx;
 				
-				.meal-type {
-					font-size: 32rpx;
-					color: #333;
-					font-weight: bold;
-					margin-bottom: 10rpx;
-				}
-				
-				.food-stats {
-					font-size: 28rpx;
-					color: #666;
+				.stat-item {
 					display: flex;
-					gap: 20rpx;
-					font-weight: bold;
+					align-items: center;
+					
+					text {
+						font-size: 28rpx;
+						color: #666;
+						margin-left: 10rpx;
+						font-weight: 500;
+					}
 					
 					.calories {
 						color: #42d392;
+						
+						&.negative {
+							color: #ff9500;
+						}
 					}
 				}
 			}
 		}
+		
+		.arrow-icon {
+			width: 60rpx;
+			display: flex;
+			justify-content: center;
+		}
+		
+		&:hover {
+			transform: translateY(-5rpx);
+		}
 	}
 	
+	/* 水分摄入区域 */
 	.water-section {
-		background-color: rgb(25, 184, 136);
+		background: linear-gradient(135deg, #4eb8f0, #33a3e1);
+		border-radius: 30rpx;
+		padding: 40rpx 30rpx;
+		box-shadow: 0 8rpx 20rpx rgba(78, 184, 240, 0.3);
+		
+		.water-level {
+			height: 200rpx;
+			background: rgba(255, 255, 255, 0.2);
+			border-radius: 20rpx;
+			margin-bottom: 30rpx;
+			position: relative;
+			overflow: hidden;
+			
+			.water-wave {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				background: rgba(255, 255, 255, 0.6);
+				border-radius: 20rpx 20rpx 0 0;
+			}
+			
+			.water-stats {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				
+				text {
+					color: #ffffff;
+					font-weight: bold;
+					font-size: 36rpx;
+					text-shadow: 0 2rpx 5rpx rgba(0, 0, 0, 0.2);
+				}
+				
+				.separator {
+					margin: 0 10rpx;
+				}
+				
+				.percentage {
+					margin-left: 30rpx;
+					background: rgba(255, 255, 255, 0.3);
+					padding: 6rpx 16rpx;
+					border-radius: 20rpx;
+				}
+			}
+		}
 		
 		.water-cups {
 			display: flex;
@@ -685,10 +852,10 @@ page {
 				position: relative;
 				width: 45rpx;
 				height: 65rpx;
-				background: rgb(177, 212, 184);  // 未满杯子的背景色
-				clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);  // 创建梯形形状
+				background: rgba(255, 255, 255, 0.3);
+				clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
+				transition: all 0.3s;
 				
-				// 杯口边缘
 				&::after {
 					content: '';
 					position: absolute;
@@ -696,47 +863,85 @@ page {
 					left: 0;
 					width: 100%;
 					height: 4rpx;
-					background: rgba(255, 255, 255, 0.3);
+					background: rgba(255, 255, 255, 0.5);
 				}
 				
 				&.active {
-					background: rgb(255, 255, 255);  // 已满杯子的背景色
+					background: rgba(255, 255, 255, 0.8);
+					transform: translateY(-5rpx);
 					
 					&::after {
-						background: rgba(255, 255, 255, 0.8);
+						background: rgba(255, 255, 255, 1);
 					}
 				}
 			}
 		}
+	}
+	
+	/* 运动卡片样式 */
+	.exercise-card {
+		display: flex;
+		align-items: center;
+		padding: 30rpx;
+		background: #ffffff;
+		border-radius: 30rpx;
+		box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.05);
+		transition: all 0.3s;
 		
-		.water-stats {
-			text-align: center;
-			font-size: 28rpx;
-			color: #ffffff;
-			font-weight: bold;
-			.separator {
-				margin: 0 10rpx;
+		.exercise-icon {
+			width: 90rpx;
+			height: 90rpx;
+			border-radius: 50%;
+			background: rgba(255, 94, 58, 0.1);
+			padding: 15rpx;
+		}
+		
+		.exercise-details {
+			flex: 1;
+			margin-left: 30rpx;
+			
+			.exercise-title {
+				font-size: 34rpx;
+				color: #333;
+				font-weight: bold;
+				margin-bottom: 10rpx;
 			}
 			
-			.percentage {
-				margin-left: 20rpx;
+			.exercise-stats {
+				display: flex;
+				gap: 30rpx;
 				
+				.stat-item {
+					display: flex;
+					align-items: center;
+					
+					text {
+						font-size: 28rpx;
+						color: #666;
+						margin-left: 10rpx;
+						font-weight: 500;
+					}
+					
+					.calories {
+						&.negative {
+							color: #ff9500;
+							font-weight: bold;
+						}
+					}
+				}
 			}
 		}
 	}
 }
 
-.food-stats {
-	.calories {
-		&.negative {
-			color: #ff9500;  // 运动消耗卡路里显示为橙色
-		}
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(20rpx);
 	}
-}
-
-.more-btn {
-	&:active {
-		opacity: 0.8;
+	to {
+		opacity: 1;
+		transform: translateY(0);
 	}
 }
 </style>

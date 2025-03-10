@@ -10,20 +10,18 @@
 			<view class="center">
 				<text class="title">饮食详情</text>
 			</view>
-
 		</view>
 		
-
 		<!-- 卡路里统计卡片 -->
-		<view class="calorie-card" style="background-color: rgb(255, 232, 215);">
+		<view class="calorie-card">
 			<view class="calorie-total">
 				<text class="number">1194</text>
 				<text class="unit">kcal</text>
 			</view>
 			<view class="date-info">
-				<text>12月1日</text>
-				<text class="exercise-count">3 食物</text>
-                <text class="exercise-count">49 kcal 剩余</text>
+				<text class="date">12月1日</text>
+				<text class="food-count">3 食物</text>
+                <text class="remaining">49 kcal 剩余</text>
 			</view>
 			
 			<!-- 图表区域 -->
@@ -39,31 +37,39 @@
 		
 		<!-- 底部统计数据 -->
 		<view class="stats-container">
-			<view class="stat-item increase">
+			<view class="stat-item calories">
+				<view class="stat-icon">🔥</view>
 				<text class="value">1739 kcal</text>
 				<text class="label">总热量</text>
 				<text class="percentage">59%</text>
 			</view>
-			<view class="stat-item decrease">
+			<view class="stat-item carbs">
+				<view class="stat-icon">🌾</view>
 				<text class="value">58 g</text>
 				<text class="label">碳水化合物</text>
 				<text class="percentage">58 g</text>
 			</view>
 
-            <view class="stat-item increase">
+            <view class="stat-item fat">
+				<view class="stat-icon">🥑</view>
 				<text class="value">26 g</text>
 				<text class="label">脂肪</text>
 				<text class="percentage">59%</text>
 			</view>
-			<view class="stat-item decrease">
+			<view class="stat-item protein">
+				<view class="stat-icon">🥩</view>
 				<text class="value">28 g</text>
 				<text class="label">蛋白质</text>
 				<text class="percentage">45 g</text>
 			</view>  
 		</view>
 
-		<!-- 已完成运动列表 -->
-		<view class="exercise-title">饮食数据</view>
+		<!-- 饮食数据列表 -->
+		<view class="section-header">
+			<view class="header-icon">🍽️</view>
+			<text class="section-title">饮食数据</text>
+		</view>
+		
 		<view class="food-list">       
 			<template v-for="food in $store.state.meal.foodList">
 				<view class="food-item" :key="food.id">
@@ -81,11 +87,11 @@
 						<text class="nutrition-item protein">{{ food.protein }} g</text>
 					</view>
 					<view class="action-buttons">
-						<view class="delete-btn" @click="handleDelete(food.id)">
-							<u-icon name="close" color="#ff4c4c" :size="32"></u-icon>
-						</view>
 						<view class="edit-btn" @click="handleEdit(food)">
-							<u-icon name="edit-pen" color="#42d392" :size="32"></u-icon>
+							<u-icon name="edit-pen" color="#42d392" :size="28"></u-icon>
+						</view>
+						<view class="delete-btn" @click="handleDelete(food.id)">
+							<u-icon name="trash" color="#ff4c4c" :size="28"></u-icon>
 						</view>
 					</view>
 				</view>
@@ -94,14 +100,13 @@
 
 		<view class="action-buttons-container">
 			<view class="manual-btn" @click="handleManualAdd">
+				<u-icon name="plus" color="#ffffff" :size="24"></u-icon>
 				<text>手动添加</text>
-				<u-icon name="plus" color="#42d392" :size="40"></u-icon>
 			</view>
 			<view class="scan-btn" @click="handleScan">
+				<u-icon name="scan" color="#ffffff" :size="24"></u-icon>
 				<text>扫描添加</text>
-				<u-icon name="scan" color="#42d392" :size="40"></u-icon>
 			</view>
-			
 		</view>
 	</view>
 </template>
@@ -220,8 +225,8 @@ export default {
 <style lang="scss" scoped>
 .container {
 	min-height: 100vh;
-	background-color: #ffffff;
-	padding: 0 25rpx;
+	background-color: #f8f9fa;
+	padding: 0 30rpx;
 	padding-bottom: 40rpx;
 	position: relative;
 	
@@ -229,20 +234,27 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 10rpx 20rpx;
-		background-color: #ffffff;
+		padding: 20rpx 0;
+		background-color: transparent;
 		position: relative;
-		height: 120px;
+		height: 100rpx;
 		
 		.left {
+			z-index: 1;
 			.back-button {
-				width: 120rpx;
-				height: 120rpx;
-				background-color: rgb(246, 247, 247);
+				width: 80rpx;
+				height: 80rpx;
+				background-color: rgba(255, 255, 255, 0.9);
 				border-radius: 50%;
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+				transition: all 0.2s;
+				
+				&:active {
+					transform: scale(0.95);
+				}
 			}
 		}
 		
@@ -253,260 +265,373 @@ export default {
 			transform: translate(-50%, -50%);
 			
 			.title {
-				font-size: 45rpx;
+				font-size: 38rpx;
 				font-weight: bold;
 				color: #333;
 			}
 		}
 	}
 	
+	/* 卡路里卡片 */
 	.calorie-card {
-		margin: 20rpx;
-		padding: 30rpx;
-		background-color: #ffffff;
-		border-radius: 50rpx;
-		box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+		background: linear-gradient(135deg, #42d392, #3abeaf);
+		border-radius: 30rpx;
+		padding: 40rpx 30rpx;
+		margin: 20rpx 0 40rpx;
+		color: #fff;
+		box-shadow: 0 10rpx 20rpx rgba(66, 211, 146, 0.2);
+		overflow: hidden;
+		position: relative;
+		
+		&::before {
+			content: '';
+			position: absolute;
+			top: -20rpx;
+			right: -20rpx;
+			width: 180rpx;
+			height: 180rpx;
+			border-radius: 50%;
+			background: rgba(255, 255, 255, 0.1);
+		}
+		
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: -40rpx;
+			left: -40rpx;
+			width: 220rpx;
+			height: 220rpx;
+			border-radius: 50%;
+			background: rgba(255, 255, 255, 0.08);
+		}
 		
 		.calorie-total {
-			text-align: center;
-			margin-bottom: 15rpx;
+			display: flex;
+			align-items: baseline;
+			margin-bottom: 20rpx;
+			position: relative;
+			z-index: 1;
 			
 			.number {
-				font-size: 48rpx;
+				font-size: 68rpx;
 				font-weight: bold;
-				color: #333;
+				letter-spacing: -1rpx;
 			}
 			
 			.unit {
-				font-size: 28rpx;
-				color: #666;
+				font-size: 34rpx;
+				opacity: 0.9;
 				margin-left: 10rpx;
 			}
 		}
 		
 		.date-info {
 			display: flex;
-			justify-content: center;
 			align-items: center;
-			gap: 20rpx;
-			color: #666;
-			font-size: 28rpx;
-			margin-bottom: 20rpx;
+			font-size: 26rpx;
+			opacity: 0.9;
+			margin-bottom: 30rpx;
+			position: relative;
+			z-index: 1;
+			
+			.date {
+				font-weight: 500;
+				margin-right: 30rpx;
+			}
+			
+			.food-count, .remaining {
+				position: relative;
+				padding-left: 20rpx;
+				margin-left: 20rpx;
+				
+				&::before {
+					content: '';
+					position: absolute;
+					left: 0;
+					top: 50%;
+					transform: translateY(-50%);
+					width: 6rpx;
+					height: 6rpx;
+					border-radius: 50%;
+					background: #fff;
+					opacity: 0.8;
+				}
+			}
+			
+			.remaining {
+				font-weight: 500;
+			}
 		}
 	}
 	
+	/* 统计数据 */
 	.stats-container {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: center;
+		justify-content: space-between;
 		gap: 20rpx;
-		padding: 20rpx;
+		margin-bottom: 50rpx;
 		
 		.stat-item {
 			width: calc(50% - 10rpx);
-			margin: 0;
-			padding: 30rpx;
-			background-color: rgb(240, 241, 241);
-			border-radius: 50rpx;
-			box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+			background: #fff;
+			border-radius: 24rpx;
+			padding: 25rpx 20rpx;
+			display: flex;
+			flex-direction: column;
+			box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.04);
+			position: relative;
+			overflow: hidden;
+			
+			&::after {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 8rpx;
+				height: 100%;
+				opacity: 0.7;
+			}
+			
+			.stat-icon {
+				position: absolute;
+				top: 15rpx;
+				right: 15rpx;
+				font-size: 28rpx;
+				opacity: 0.7;
+			}
 			
 			.value {
-				font-size: 36rpx;
+				font-size: 40rpx;
 				font-weight: bold;
-				display: block;
-				margin-bottom: 20rpx;
+				margin-bottom: 8rpx;
 			}
 			
 			.label {
 				font-size: 24rpx;
 				color: #666;
+				margin-bottom: 15rpx;
 			}
 			
 			.percentage {
 				font-size: 24rpx;
-				margin-left: 10rpx;
+				font-weight: 500;
+				padding: 6rpx 14rpx;
+				border-radius: 20rpx;
+				align-self: flex-start;
 			}
-
-			// 总热量 - 绿色
-			&:nth-child(1) .value {
-				color: #42d392;
+			
+			&.calories {
+				&::after { background-color: #42d392; }
+				.value { color: #42d392; }
+				.percentage { 
+					background-color: rgba(66, 211, 146, 0.1);
+					color: #42d392;
+				}
 			}
-
-			// 碳水化合物 - 红色
-			&:nth-child(2) .value {
-				color: #ff6b6b;
+			
+			&.carbs {
+				&::after { background-color: #ff9736; }
+				.value { color: #ff9736; }
+				.percentage { 
+					background-color: rgba(255, 151, 54, 0.1);
+					color: #ff9736;
+				}
 			}
-
-			// 脂肪 - 橙色
-			&:nth-child(3) .value {
-				color: #ffa500;
+			
+			&.fat {
+				&::after { background-color: #ff5e3a; }
+				.value { color: #ff5e3a; }
+				.percentage { 
+					background-color: rgba(255, 94, 58, 0.1);
+					color: #ff5e3a;
+				}
 			}
-
-			// 蛋白质 - 紫色
-			&:nth-child(4) .value {
-				color: #8a2be2;
+			
+			&.protein {
+				&::after { background-color: #4eb8f0; }
+				.value { color: #4eb8f0; }
+				.percentage { 
+					background-color: rgba(78, 184, 240, 0.1);
+					color: #4eb8f0;
+				}
 			}
 		}
 	}
-
-	.exercise-title {
-		font-size: 32rpx;
-		font-weight: bold;
-		color: #333;
-		margin-left: 20rpx;
-		margin: 20rpx;
-	}
-
-	.food-list {
-		padding: 0 20rpx;
-		margin-bottom: 40rpx;
+	
+	/* 饮食数据标题 */
+	.section-header {
+		display: flex;
+		align-items: center;
+		margin: 40rpx 0 30rpx;
 		
+		.header-icon {
+			font-size: 40rpx;
+			margin-right: 15rpx;
+		}
+		
+		.section-title {
+			font-size: 34rpx;
+			font-weight: bold;
+			color: #333;
+			position: relative;
+			
+			&::after {
+				content: '';
+				position: absolute;
+				left: 0;
+				bottom: -10rpx;
+				width: 40rpx;
+				height: 4rpx;
+				background: #42d392;
+				border-radius: 2rpx;
+			}
+		}
+	}
+	
+	/* 食物列表 */
+	.food-list {
 		.food-item {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 30rpx;
-			background-color: rgb(235, 246, 214);
-			border-radius: 50rpx;
+			background: #fff;
+			border-radius: 20rpx;
+			padding: 25rpx;
 			margin-bottom: 20rpx;
+			box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.03);
+			transition: all 0.2s;
+			
+			&:active {
+				transform: scale(0.99);
+			}
 			
 			.food-basic-info {
 				display: flex;
 				align-items: center;
-				flex: 1;
+				margin-bottom: 20rpx;
 				
 				.food-icon {
 					width: 80rpx;
 					height: 80rpx;
-					margin-right: 20rpx;
+					border-radius: 20rpx;
+					background: rgba(66, 211, 146, 0.1);
+					padding: 10rpx;
 				}
 				
 				.food-main-info {
-					display: flex;
-					flex-direction: column;
+					margin-left: 20rpx;
 					
 					.food-name {
-						font-size: 32rpx;
-						color: #333;
+						font-size: 30rpx;
 						font-weight: bold;
-						margin-bottom: 20rpx;
+						color: #333;
+						margin-bottom: 8rpx;
+						display: block;
 					}
 					
 					.food-portion {
 						font-size: 24rpx;
-						color: #666;
+						color: #999;
 					}
 				}
 			}
 			
 			.food-nutrition {
 				display: flex;
-				flex-direction: column;
-				align-items: flex-end;
-				margin-right: 70rpx;
-				font-weight: bold;
-				min-width: 120rpx;
+				flex-wrap: wrap;
+				gap: 12rpx;
+				margin-bottom: 20rpx;
 				
 				.nutrition-item {
-					font-size: 26rpx;
-					margin-bottom: 8rpx;
+					padding: 6rpx 16rpx;
+					font-size: 22rpx;
+					border-radius: 20rpx;
 					
 					&.calories {
 						color: #42d392;
+						background: rgba(66, 211, 146, 0.1);
 					}
 					
 					&.carbs {
-						color: #ff6b6b;
+						color: #ff9736;
+						background: rgba(255, 151, 54, 0.1);
 					}
 					
 					&.fat {
-						color: #ffa500;
+						color: #ff5e3a;
+						background: rgba(255, 94, 58, 0.1);
 					}
 					
 					&.protein {
-						color: #8a2be2;
+						color: #4eb8f0;
+						background: rgba(78, 184, 240, 0.1);
 					}
 				}
 			}
 			
 			.action-buttons {
 				display: flex;
-				flex-direction: column;
-				gap: 25rpx;
-				margin-left: 10rpx;
-
+				justify-content: flex-end;
+				gap: 15rpx;
+				
 				.edit-btn, .delete-btn {
-					width: 80rpx;
-					height: 80rpx;
+					width: 60rpx;
+					height: 60rpx;
+					border-radius: 50%;
 					display: flex;
 					align-items: center;
 					justify-content: center;
-					border-radius: 50%;
-					background-color: rgba(255, 255, 255, 0.9);
-					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-					box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
-					position: relative;
-					overflow: hidden;
-					
-					/deep/ .u-icon {
-						transform: scale(1.8);
-						font-weight: bold;
-						transition: all 0.2s ease;
-					}
+					transition: all 0.2s;
 					
 					&:active {
-						transform: scale(0.92);
-						box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.2);
+						transform: scale(0.9);
 					}
 				}
 				
 				.edit-btn {
-					&:active {
-						background-color: rgba(66, 211, 146, 0.1);
-					}
+					background: rgba(66, 211, 146, 0.1);
 				}
 				
 				.delete-btn {
-					&:active {
-						background-color: rgba(255, 76, 76, 0.1);
-					}
+					background: rgba(255, 76, 76, 0.1);
 				}
 			}
 		}
 	}
-
+	
+	/* 底部操作按钮 */
 	.action-buttons-container {
 		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
 		gap: 20rpx;
-		padding: 30rpx;
-		margin-top: 20rpx;
-
-		.scan-btn, .manual-btn {
+		margin-top: 40rpx;
+		
+		.manual-btn, .scan-btn {
 			flex: 1;
+			height: 90rpx;
+			border-radius: 45rpx;
 			display: flex;
 			align-items: center;
-			justify-content: space-between;
-			padding: 30rpx 40rpx;
-			background-color: rgb(240, 241, 241);
-			border-radius: 50rpx;
-			transition: all 0.2s ease;
-
-			text {
-				font-size: 32rpx;
-				font-weight: bold;
-				color: #333;
+			justify-content: center;
+			color: #fff;
+			font-size: 28rpx;
+			font-weight: bold;
+			box-shadow: 0 6rpx 15rpx rgba(0, 0, 0, 0.1);
+			transition: all 0.3s;
+			
+			u-icon {
+				margin-right: 10rpx;
 			}
-
+			
 			&:active {
-				transform: scale(0.98);
-				background-color: rgb(235, 236, 236);
+				transform: translateY(2rpx);
+				box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
 			}
 		}
-
+		
+		.manual-btn {
+			background: linear-gradient(135deg, #42d392, #2cc17e);
+		}
+		
 		.scan-btn {
-			background: rgb(235, 246, 214);
+			background: linear-gradient(135deg, #4facfe, #00f2fe);
 		}
 	}
 }

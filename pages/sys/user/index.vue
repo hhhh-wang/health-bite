@@ -2,16 +2,30 @@
 	<view class="user-container">
 		<!-- 用户信息区域 -->
 		<view class="user-info-section">
+			<view class="info-bg-decoration">
+				<view class="decoration-circle circle-1"></view>
+				<view class="decoration-circle circle-2"></view>
+			</view>
+			
 			<view class="avatar-container">
 				<image class="avatar" :src="avatarUrl"></image>
 			</view>
 			<view class="user-name">变量</view>
 			<view class="user-stats">
-				<text>{{age}} 岁</text>
-				<text class="stat-divider">|</text>
-				<text>{{height}}cm</text>
-				<text class="stat-divider">|</text>
-				<text>{{weight}}kg</text>
+				<view class="stat-item">
+					<text class="stat-value">{{age}}</text>
+					<text class="stat-label">岁</text>
+				</view>
+				<view class="stat-divider"></view>
+				<view class="stat-item">
+					<text class="stat-value">{{height}}</text>
+					<text class="stat-label">cm</text>
+				</view>
+				<view class="stat-divider"></view>
+				<view class="stat-item">
+					<text class="stat-value">{{weight}}</text>
+					<text class="stat-label">kg</text>
+				</view>
 			</view>
 		</view>
 		
@@ -19,7 +33,7 @@
 		<view class="menu-grid">
 			<!-- 订阅 -->
 			<view class="menu-item subscription" @click="navTo('/pages/sys/user/subscription')">
-				<view class="menu-icon-box green">
+				<view class="menu-icon-box">
 					<u-icon name="level" size="36" color="#4CAF50"></u-icon>
 				</view>
 				<view class="menu-content">
@@ -30,7 +44,7 @@
 			
 			<!-- 个人主页 -->
 			<view class="menu-item profile" @click="navTo('/pages/sys/user/about')">
-				<view class="menu-icon-box blue">
+				<view class="menu-icon-box">
 					<u-icon name="account" size="36" color="#2196F3"></u-icon>
 				</view>
 				<view class="menu-content">
@@ -41,7 +55,7 @@
 			
 			<!-- 帮助中心 -->
 			<view class="menu-item help" @click="navTo('/pages/sys/user/help')">
-				<view class="menu-icon-box grey">
+				<view class="menu-icon-box">
 					<u-icon name="headphone" size="36" color="#607D8B"></u-icon>
 				</view>
 				<view class="menu-content">
@@ -52,7 +66,7 @@
 			
 			<!-- 设置 -->
 			<view class="menu-item settings" @click="navTo('/pages/settings/index')">
-				<view class="menu-icon-box mint">
+				<view class="menu-icon-box">
 					<u-icon name="setting" size="36" color="#4DB6AC"></u-icon>
 				</view>
 				<view class="menu-content">
@@ -66,6 +80,7 @@
 		<view class="nutrition-tips-section">
 			<view class="section-header">
 				<text class="section-title">饮食健康小知识</text>
+				<view class="section-divider"></view>
 				<text class="refresh-tip" @click="refreshNutritionTip">换一条</text>
 			</view>
 			
@@ -216,25 +231,64 @@ export default {
 .user-container {
 	min-height: 100vh;
 	background-color: #F8F9FA;
-	padding: 40rpx 30rpx;
+	padding: 20rpx 30rpx 80rpx;
 	display: flex;
 	flex-direction: column;
 }
 
 .user-info-section {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 30rpx 0 50rpx;
+	padding: 60rpx 40rpx;
+	margin-bottom: 40rpx;
+	background: linear-gradient(135deg, #42d392 0%, #3bb2b8 100%);
+	border-radius: 30rpx;
+	overflow: hidden;
+	box-shadow: 0 10rpx 30rpx rgba(66, 211, 146, 0.2);
+	
+	.info-bg-decoration {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+		overflow: hidden;
+		
+		.decoration-circle {
+			position: absolute;
+			border-radius: 50%;
+			background-color: rgba(255, 255, 255, 0.1);
+			
+			&.circle-1 {
+				width: 300rpx;
+				height: 300rpx;
+				top: -100rpx;
+				right: -120rpx;
+			}
+			
+			&.circle-2 {
+				width: 200rpx;
+				height: 200rpx;
+				bottom: -80rpx;
+				left: -80rpx;
+			}
+		}
+	}
 	
 	.avatar-container {
+		position: relative;
+		z-index: 1;
 		width: 160rpx;
 		height: 160rpx;
 		border-radius: 50%;
-		background-color: #E3F2FD;
-		border: 6rpx solid #BBDEFB;
+		background-color: rgba(255, 255, 255, 0.2);
+		border: 6rpx solid rgba(255, 255, 255, 0.6);
 		overflow: hidden;
-		margin-bottom: 24rpx;
+		margin-bottom: 30rpx;
+		box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.1);
 		
 		.avatar {
 			width: 100%;
@@ -244,21 +298,47 @@ export default {
 	}
 	
 	.user-name {
-		font-size: 38rpx;
+		position: relative;
+		z-index: 1;
+		font-size: 42rpx;
 		font-weight: bold;
-		color: #263238;
-		margin-bottom: 16rpx;
+		color: #FFFFFF;
+		margin-bottom: 20rpx;
+		text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
 	}
 	
 	.user-stats {
+		position: relative;
+		z-index: 1;
 		display: flex;
 		align-items: center;
-		color: #607D8B;
-		font-size: 28rpx;
+		background-color: rgba(255, 255, 255, 0.15);
+		padding: 12rpx 30rpx;
+		border-radius: 40rpx;
+		box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.05);
+		
+		.stat-item {
+			display: flex;
+			align-items: baseline;
+			
+			.stat-value {
+				font-size: 32rpx;
+				font-weight: bold;
+				color: #FFFFFF;
+				margin-right: 4rpx;
+			}
+			
+			.stat-label {
+				font-size: 24rpx;
+				color: rgba(255, 255, 255, 0.9);
+			}
+		}
 		
 		.stat-divider {
-			margin: 0 20rpx;
-			color: #B0BEC5;
+			width: 2rpx;
+			height: 30rpx;
+			background-color: rgba(255, 255, 255, 0.3);
+			margin: 0 24rpx;
 		}
 	}
 }
@@ -268,52 +348,59 @@ export default {
 	
 	.menu-item {
 		background-color: #FFFFFF;
-		border-radius: 16rpx;
+		border-radius: 20rpx;
 		padding: 28rpx 24rpx;
 		margin-bottom: 20rpx;
 		display: flex;
 		align-items: center;
-		box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+		box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+		transition: all 0.3s;
+		
+		&:active {
+			transform: translateX(6rpx);
+			box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.02);
+		}
 		
 		&.subscription {
-			background-color: #F1F8E9;
+			background-color: rgba(76, 175, 80, 0.05);
 		}
 		
 		&.profile {
-			background-color: #E1F5FE;
+			background-color: rgba(33, 150, 243, 0.05);
 		}
 		
 		&.help {
-			background-color: #F5F5F5;
+			background-color: rgba(96, 125, 139, 0.05);
 		}
 		
 		&.settings {
-			background-color: #E0F2F1;
+			background-color: rgba(77, 182, 172, 0.05);
 		}
 		
 		.menu-icon-box {
 			width: 80rpx;
 			height: 80rpx;
-			border-radius: 50%;
+			border-radius: 16rpx;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			margin-right: 24rpx;
+			box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.06);
 			
 			&.green {
-				background-color: #E8F5E9;
+				background: linear-gradient(135deg, #4CAF50, #8BC34A);
 			}
 			
 			&.blue {
-				background-color: #E3F2FD;
+				background: linear-gradient(135deg, #2196F3, #03A9F4);
 			}
 			
 			&.grey {
-				background-color: #ECEFF1;
+				background: linear-gradient(135deg, #607D8B, #90A4AE);
 			}
 			
 			&.mint {
-				background-color: #E0F2F1;
+				background: linear-gradient(135deg, #4DB6AC, #80CBC4);
 			}
 		}
 		
@@ -322,55 +409,75 @@ export default {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-		}
-		
-		.menu-text {
-			font-size: 30rpx;
-			color: #37474F;
-			font-weight: 500;
+			
+			.menu-text {
+				font-size: 32rpx;
+				font-weight: 500;
+				color: #333333;
+			}
+			
+			.arrow-icon {
+				opacity: 0.6;
+			}
 		}
 	}
 }
 
 .nutrition-tips-section {
+	background-color: #FFFFFF;
+	border-radius: 20rpx;
+	padding: 30rpx;
 	margin-bottom: 40rpx;
+	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
 	
 	.section-header {
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
-		margin-bottom: 16rpx;
+		margin-bottom: 24rpx;
 		
 		.section-title {
 			font-size: 32rpx;
 			font-weight: bold;
-			color: #263238;
+			color: #333;
+		}
+		
+		.section-divider {
+			flex: 1;
+			height: 2rpx;
+			background: linear-gradient(90deg, #42d392 30%, transparent);
+			margin: 0 20rpx;
 		}
 		
 		.refresh-tip {
-			font-size: 24rpx;
-			color: #2196F3;
+			font-size: 26rpx;
+			color: #42d392;
+			padding: 6rpx 16rpx;
+			border-radius: 30rpx;
+			background-color: rgba(66, 211, 146, 0.08);
+			transition: all 0.3s;
+			
+			&:active {
+				background-color: rgba(66, 211, 146, 0.15);
+			}
 		}
 	}
 	
 	.nutrition-tip-card {
-		background-color: #FFF8E1;
-		border-radius: 16rpx;
-		padding: 24rpx;
 		display: flex;
-		align-items: center;
-		box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+		background-color: #F9FCFA;
+		padding: 24rpx;
+		border-radius: 16rpx;
+		border-left: 6rpx solid #FF9800;
 		
 		.tip-icon {
+			margin-right: 20rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			width: 70rpx;
 			height: 70rpx;
 			border-radius: 50%;
-			background-color: #FFECB3;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin-right: 20rpx;
-			flex-shrink: 0;
+			background-color: rgba(255, 152, 0, 0.1);
 		}
 		
 		.tip-content {
@@ -379,14 +486,13 @@ export default {
 			.tip-title {
 				font-size: 30rpx;
 				font-weight: bold;
-				color: #FF9800;
-				margin-bottom: 8rpx;
-				display: block;
+				color: #333;
+				margin-bottom: 10rpx;
 			}
 			
 			.tip-description {
 				font-size: 26rpx;
-				color: #5D4037;
+				color: #666;
 				line-height: 1.5;
 			}
 		}
@@ -395,18 +501,23 @@ export default {
 
 .logout-button {
 	margin-top: auto;
-	background-color: #ffffff;
-	border-radius: 16rpx;
-	height: 88rpx;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+	background: linear-gradient(135deg, #ff7675, #d63031);
+	color: white;
+	padding: 28rpx 0;
+	border-radius: 50rpx;
+	text-align: center;
+	font-size: 32rpx;
+	font-weight: bold;
+	box-shadow: 0 6rpx 16rpx rgba(214, 48, 49, 0.2);
+	transition: all 0.3s;
+	
+	&:active {
+		transform: translateY(4rpx);
+		box-shadow: 0 2rpx 8rpx rgba(214, 48, 49, 0.15);
+	}
 	
 	text {
-		font-size: 30rpx;
-		color: #F44336;
-		font-weight: 500;
+		color: #FFFFFF;
 	}
 }
 </style>
