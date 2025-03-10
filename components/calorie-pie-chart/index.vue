@@ -110,6 +110,22 @@ export default {
         }]
       };
     }
+  },
+  methods: {
+    drawPieChart() {
+      // ... 其他代码
+      
+      // 调整饼图在画布中的位置和大小
+      const radius = Math.min(width, height - 80) / 2 * 0.8; // 减小半径留出底部空间
+      const centerY = (height - 80) / 2; // 将饼图向上移动一些
+      
+      // ... 其他绘图代码
+      
+      // 确保图例有足够的空间
+      const legendY = centerY + radius + 40; // 图例位置下移
+      
+      // ... 绘制图例的代码
+    }
   }
 }
 </script>

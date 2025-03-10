@@ -33,10 +33,12 @@
 				<view class="chart-divider"></view>
 			</view>
 			
-			<calorie-pie-chart 
-				:mealData="pieChartData" 
-				canvasId="calories-tab-pie"
-			/>
+			<view class="pie-chart-container">
+				<calorie-pie-chart 
+					:mealData="pieChartData" 
+					canvasId="calories-tab-pie"
+				/>
+			</view>
 		</view>
 		
 		<!-- 下方详细数据卡片 -->
@@ -322,6 +324,8 @@ export default {
 	.chart-card {
 		background-color: #ffffff;
 		padding: 30rpx;
+		padding-bottom: 80rpx; /* 增加底部内边距，为图例留出足够空间 */
+		margin-bottom: 30rpx;
 		height: 600rpx; // 给饼图足够的高度
 		border-radius: 24rpx;
 		box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.05);
@@ -344,6 +348,12 @@ export default {
 				background: linear-gradient(90deg, #42d392, transparent);
 			}
 		}
+	}
+	
+	.pie-chart-container {
+		height: 480rpx; /* 指定一个固定高度，确保有足够空间 */
+		position: relative;
+		margin-top: 20rpx;
 	}
 	
 	// 餐食详情区域

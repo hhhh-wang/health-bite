@@ -7,13 +7,13 @@
 		{
 			"path": "pages/splash/index",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
 			"path": "pages/guide/index",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
@@ -83,7 +83,7 @@
 		{
 			"path": "pages/sys/user/about",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
@@ -125,13 +125,13 @@
 		{
 			"path": "pages/guide/guide2",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
 			"path": "pages/guide/guide3",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
@@ -144,31 +144,31 @@
 		{
 			"path": "pages/meal/settings/index",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
 			"path": "pages/sys/exercise/detail",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
 			"path": "pages/sys/exercise/add",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
 			"path": "pages/meal/detail/index",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
 			"path": "pages/meal/detail/addoredit",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
@@ -187,7 +187,7 @@
 		{
 			"path": "pages/sys/user/subscription",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
