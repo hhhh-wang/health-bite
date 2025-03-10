@@ -373,7 +373,7 @@ export default {
 		margin-bottom: 50rpx;
 		
 		.stat-item {
-			width: calc(50% - 10rpx);
+			width: calc(50% - 20rpx); /* 强制两列布局，考虑间距 */
 			background: #fff;
 			border-radius: 24rpx;
 			padding: 25rpx 20rpx;
