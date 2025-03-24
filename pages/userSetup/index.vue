@@ -20,7 +20,7 @@
       <view class="title-section">
         <text class="main-title">输入您的用户名</text>
         <text class="sub-title">我们使用这些数据为您提供更好的饮食类型</text>
-        <image class="healthy-icon" src="/static/images/healthy-user.png" mode="aspectFit"></image>
+        <image class="healthy-icon" src="/static/images/default-avatar.png" mode="aspectFit"></image>
       </view>
 
       <!-- 输入区域 -->
