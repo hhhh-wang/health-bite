@@ -115,6 +115,7 @@
 <script>
 import PageHeader from '@/components/page-header/index.vue'
 import NutritionChart from '@/components/nutrition-chart/index.vue'
+import planCompleteMock from '@/mock/planComplete.js'
 
 export default {
   components: {
@@ -124,31 +125,31 @@ export default {
   
   data() {
     return {
-      currentWeight: 60,
-      targetWeight: 72,
-      duration: 16,
-      weeklyGain: 0.75,
+      currentWeight: 0,
+      targetWeight: 0,
+      duration: 0,
+      weeklyGain: 0,
       selectedProgress: 'beginner',
       meals: ['今天', '结束日期'],
       nutritionData: [
-        [60, 72]
+        [0, 0]
       ],
       yAxisConfig: {
-        min: 55,
-        max: 75
+        min: 0,
+        max: 0
       },
-      dailyCalories: 2925,
+      dailyCalories: 0,
       nutritionRatio: [
-        { name: '碳水化合物', percentage: 50, color: '#42d392' },
-        { name: '脂肪', percentage: 30, color: '#ff7875' },
-        { name: '蛋白质', percentage: 20, color: '#597ef7' },
+        { name: '碳水化合物', percentage: 0, color: '#42d392' },
+        { name: '脂肪', percentage: 0, color: '#ff7875' },
+        { name: '蛋白质', percentage: 0, color: '#597ef7' },
       ],
     }
   },
 
   computed: {
     totalWeightGain() {
-      return this.targetWeight - this.currentWeight
+      return (this.targetWeight - this.currentWeight).toFixed(2)
     },
     
     endDate() {
@@ -206,10 +207,32 @@ export default {
         min: this.chartConfig.min,
         max: this.chartConfig.max
       }
+    },
+
+    async fetchPlanData() {
+      try {
+        // 模拟API请求延迟
+        const response = await new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(planCompleteMock.getPlanData())
+          }, 500)
+        })
+        
+        // 更新数据
+        this.dailyCalories = response.dailyCalories
+        this.nutritionRatio = response.nutritionRatio
+      } catch (error) {
+        console.error('获取计划数据失败:', error)
+        uni.showToast({
+          title: '获取数据失败',
+          icon: 'none'
+        })
+      }
     }
   },
 
-  mounted() {
+  async mounted() {
+    await this.fetchPlanData()
     this.initChartData()
   },
 
